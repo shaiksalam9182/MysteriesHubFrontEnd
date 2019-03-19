@@ -19,6 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://code.angularjs.org/1.7.6/angular-cookies.js"></script>
     <script src="https://code.angularjs.org/1.7.6/angular-route.js"></script>
+    <script src="https://unpkg.com/@uirouter/angularjs@1.0.5/release/angular-ui-router.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/home.css">
     <script src="app.js"></script>
 </head>
@@ -30,23 +31,23 @@
         <!-- <a class="navbar-brand" href="#">Posts</a> -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/posts">Posts</a>
+                <a class="nav-link" ui-sref="posts" ui-sref-active="active">Posts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/places">Places</a>
+                <a class="nav-link" ui-sref="places" ui-sref-active="active">Places</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/aliens">Aliens</a>
+                <a class="nav-link" ui-sref="aliens" ui-sref-active="active">Aliens</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/movies">Movies</a>
+                <a class="nav-link" ui-sref="movies" ui-sref-active="active">Movies</a>
             </li>
         </ul>
     </nav>
-
-
-    <!-- <div ng-view></div> -->
-
+    <div class="content" >
+        <ui-view></ui-view>
+    </div>
+    
 </body>
 
 </html>

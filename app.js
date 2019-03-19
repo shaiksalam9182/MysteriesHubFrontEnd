@@ -1,4 +1,4 @@
-var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute']);
+var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute','ui.router']);
 
 
 helloModule.config(function($routeProvider) {
@@ -10,26 +10,42 @@ helloModule.config(function($routeProvider) {
         .when("/home", {
             templateUrl: "home.html",
             controller: 'homeController'
-        })
-        .when("/blue", {
-            templateUrl: "blue.htm"
-        })
-        .when("/posts", {
-            templateUrl: "posts.html"
-        })
-        .when("/places", {
-            templateUrl: "places.html"
-        })
-        .when("/aliens", {
-            templateUrl: "aliens.html"
-        })
-        .when("/movies", {
-            templateUrl: "movies.html"
         }).
     otherwise({
         redirectTo: '/login'
     })
 });
+
+helloModule.config(function($stateProvider){
+    var postState = {
+        name:'posts',
+        // url:'/posts',
+        templateUrl:'posts.html'
+    }
+
+    var placesState = {
+        name:'places',
+        // url:'/places',
+        templateUrl:'places.html'
+    }
+
+    var alienState = {
+        name:'aliens',
+        // url:'/aliens',
+        templateUrl:'aliens.html'
+    }
+
+    var movieState = {
+        name:'movies',
+        // url:'/movies',
+        templateUrl:'movies.html'
+    }
+
+    $stateProvider.state(postState);
+    $stateProvider.state(placesState);
+    $stateProvider.state(alienState);
+    $stateProvider.state(movieState);
+})
 
 
 helloModule.controller('hello', function($scope, $http, $cookies, $location) {

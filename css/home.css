@@ -24,6 +24,14 @@ p {
     width: 100%;
     height: 5%;
 }
+.content{
+    top: 50%;
+}
+.cardContent{
+    width: 92%;
+    height: 30%;
+    margin: 3%;
+}
 
 
 /*body{
