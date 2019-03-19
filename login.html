@@ -1,0 +1,51 @@
+</!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="https://code.angularjs.org/1.7.6/angular-cookies.js"></script>
+<script src="https://code.angularjs.org/1.7.6/angular-route.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/home.css">
+	<script src="app.js"></script>
+</head>
+<body ng-controller = 'hello'>
+	<!-- <p>Firstname: {{student.firstname}}</p>
+	<p>Lastname: {{student.lastname}}</p> -->
+	<div class="cardView">
+	<div class="card bg-success text-white">
+		<div class="card-body">
+			<center><p>Login</p></center>
+
+
+			<form>
+    <div class="form-group">
+      <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" ng-model="phone" required>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" ng-model="password" required>
+    </div>
+    <center><button class="btn btn-primary" ng-click="authenticate()">
+    	<span class="spinner-border spinner-border-sm" ng-show="calling==true"></span>
+    Submit
+</button></center>
+  </form>
+  <center><p ng-model="message">{{message}}</p></center>
+		</div>
+	</div>
+	</div>
+
+</body>
+</html>
