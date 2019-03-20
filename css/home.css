@@ -35,6 +35,12 @@ p {
     margin: 3%;
 }
 
+.cardContentdescription {
+    width: 92%;
+    height: 90%;
+    margin: 3%;
+}
+
 
 /*body{
 	background-image: url('../img/login_background.jpg');

@@ -12,16 +12,12 @@
     <script src="app.js"></script>
 </head>
 
-<body ng-controller="postbody">
+<body ng-controller="descriptionController">
 
-    <div class="card cardContent" ng-model="maincard" ng-repeat="o in dataArray">
+    <div class="card cardContentdescription">
         <div class="card-body">
-            <a class="nav-link" ui-sref="{{o.post_id}}" ui-sref-active="active">
-                <h4 class="card-title" ng-model="cardtitle">{{o.title}}</h4>
-            </a>
-            <!-- <p class="card-text" ng-bind-html="o.description"></p> -->
-            <a href="#" class="card-link">View Post</a>
-            <a href="#" class="card-link">Share</a>
+            <h4 class="card-title" ng-model="cardtitle">{{cardtitle}}</h4>
+            <p class="card-text" ng-bind-html="carddescription"></p>
         </div>
     </div>
 

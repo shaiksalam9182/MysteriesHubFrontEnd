@@ -1,3 +1,4 @@
+var $stateprovideRef = null;
 var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize']);
 
 
@@ -49,6 +50,7 @@ helloModule.config(function($stateProvider) {
     $stateProvider.state(placesState);
     $stateProvider.state(alienState);
     $stateProvider.state(movieState);
+    $stateprovideRef = $stateProvider;
 })
 
 
@@ -109,7 +111,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
 })
 
-helloModule.controller('postbody', function($scope, $http, $cookies) {
+helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -123,6 +125,16 @@ helloModule.controller('postbody', function($scope, $http, $cookies) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.dataArray = msg.data.data
+            var post_id;
+            angular.forEach($scope.dataArray, function(item) {
+                var state = {
+                    name: item.post_id,
+                    templateUrl: 'description.html',
+                    params: item,
+                    controller: 'descriptionController'
+                }
+                $stateprovideRef.state(state);
+            })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
         }
@@ -144,6 +156,16 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.dataArray = msg.data.data
+            var post_id;
+            angular.forEach($scope.dataArray, function(item) {
+                var state = {
+                    name: item.place_id,
+                    templateUrl: 'description.html',
+                    params: item,
+                    controller: 'descriptionController'
+                }
+                $stateprovideRef.state(state);
+            })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
         }
@@ -189,6 +211,13 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
             console.log(msg.data.message);
         }
     })
+})
+
+
+helloModule.controller('descriptionController', function($scope, $stateParams) {
+    console.log($stateParams.title);
+    $scope.cardtitle = $stateParams.title;
+    $scope.carddescription = $stateParams.description;
 })
 
 helloModule.controller('authenticate', function($scope) {
