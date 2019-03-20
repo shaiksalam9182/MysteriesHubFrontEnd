@@ -187,6 +187,16 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.dataArray = msg.data.data
+            var post_id;
+            angular.forEach($scope.dataArray, function(item) {
+                var state = {
+                    name: item.alienPost_id,
+                    templateUrl: 'description.html',
+                    params: item,
+                    controller: 'descriptionController'
+                }
+                $stateprovideRef.state(state);
+            })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
         }
@@ -207,6 +217,16 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.dataArray = msg.data.data
+            var post_id;
+            angular.forEach($scope.dataArray, function(item) {
+                var state = {
+                    name: item.movie_id,
+                    templateUrl: 'description.html',
+                    params: item,
+                    controller: 'descriptionController'
+                }
+                $stateprovideRef.state(state);
+            })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
         }

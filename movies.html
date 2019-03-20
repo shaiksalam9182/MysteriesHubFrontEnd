@@ -15,7 +15,9 @@
 
     <div class="card cardContent" ng-model="maincard" ng-repeat="o in dataArray">
         <div class="card-body">
-            <h4 class="card-title" ng-model="cardtitle">{{o.title}}</h4>
+            <a class="nav-link" ui-sref="{{o.movie_id}}" ui-sref-active="active">
+                <h4 class="card-title" ng-model="cardtitle">{{o.title}}</h4>
+            </a>
             <p class="card-text" ng-model="cardtext">CardText</p>
             <a href="#" class="card-link">Card link</a>
             <a href="#" class="card-link">Another link</a>
