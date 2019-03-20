@@ -1,4 +1,4 @@
-var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute','ui.router']);
+var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize']);
 
 
 helloModule.config(function($routeProvider) {
@@ -16,29 +16,33 @@ helloModule.config(function($routeProvider) {
     })
 });
 
-helloModule.config(function($stateProvider){
+helloModule.config(function($stateProvider) {
     var postState = {
-        name:'posts',
+        name: 'posts',
         // url:'/posts',
-        templateUrl:'posts.html'
+        templateUrl: 'posts.html',
+        controller: 'postbody'
     }
 
     var placesState = {
-        name:'places',
+        name: 'places',
         // url:'/places',
-        templateUrl:'places.html'
+        templateUrl: 'places.html',
+        controller: 'placebody'
     }
 
     var alienState = {
-        name:'aliens',
+        name: 'aliens',
         // url:'/aliens',
-        templateUrl:'aliens.html'
+        templateUrl: 'aliens.html',
+        controller: 'alienbody'
     }
 
     var movieState = {
-        name:'movies',
+        name: 'movies',
         // url:'/movies',
-        templateUrl:'movies.html'
+        templateUrl: 'movies.html',
+        controller: 'moviebody'
     }
 
     $stateProvider.state(postState);
@@ -103,6 +107,88 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
     }
 
 
+})
+
+helloModule.controller('postbody', function($scope, $http, $cookies) {
+    $scope.cardtitle = "Salam"
+    $scope.arr = [];
+    $scope.arr.length = 0;
+
+    $scope.token = $cookies.get("token");
+    var data = {
+        token: $scope.token
+    }
+
+    $http.post("https://naaradh.in/demo_post_limit", data).then(function(msg) {
+        console.log(msg);
+        if (msg.data.status == "success") {
+            $scope.dataArray = msg.data.data
+        } else if (msg.data.status = "Failed") {
+            console.log(msg.data.message);
+        }
+    })
+})
+
+
+helloModule.controller('placebody', function($scope, $http, $cookies) {
+    $scope.cardtitle = "Salam"
+    $scope.arr = [];
+    $scope.arr.length = 0;
+
+    $scope.token = $cookies.get("token");
+    var data = {
+        token: $scope.token
+    }
+
+    $http.post("https://naaradh.in/demo_place_limit", data).then(function(msg) {
+        console.log(msg);
+        if (msg.data.status == "success") {
+            $scope.dataArray = msg.data.data
+        } else if (msg.data.status = "Failed") {
+            console.log(msg.data.message);
+        }
+    })
+})
+
+
+helloModule.controller('alienbody', function($scope, $cookies, $http) {
+    $scope.cardtitle = "Salam"
+    $scope.arr = [];
+    $scope.arr.length = 0;
+
+    $scope.token = $cookies.get("token");
+    var data = {
+        token: $scope.token
+    }
+
+    $http.post("https://naaradh.in/demo_alien_limit", data).then(function(msg) {
+        console.log(msg);
+        if (msg.data.status == "success") {
+            $scope.dataArray = msg.data.data
+        } else if (msg.data.status = "Failed") {
+            console.log(msg.data.message);
+        }
+    })
+})
+
+helloModule.controller('moviebody', function($scope, $http, $cookies) {
+    $scope.cardtitle = "Salam"
+    $scope.arr = [];
+    $scope.arr.length = 0;
+
+    $scope.token = $cookies.get("token");
+    var data = {
+        token: $scope.token
+    }
+
+    $http.post("https://naaradh.in/demo_movie_limit", data).then(function(msg) {
+        console.log(msg);
+        if (msg.data.status == "success") {
+            $scope.dataArray = msg.data.data
+        } else if (msg.data.status = "Failed") {
+            console.log(msg.data.message);
+        }
+    })
 })
 
 helloModule.controller('authenticate', function($scope) {
