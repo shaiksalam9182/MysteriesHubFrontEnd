@@ -46,34 +46,6 @@
 </head>
 
 <body ng-controller='homeController'>
-
-    <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" ui-sref="posts" ui-sref-active="active">Posts</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" ui-sref="places" ui-sref-active="active">Places</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" ui-sref="aliens" ui-sref-active="active">Aliens</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" ui-sref="movies" ui-sref-active="active">Movies</a>
-            </li>
-        </ul>
-    </nav> -->
-
-    <!-- <nav class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-            <a class="navbar-brand" ui-sref="#">AngularUI Router</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a ui-sref="home">Home</a></li>
-            <li><a ui-sref="about">About</a></li>
-        </ul>
-    </nav> -->
-
     <md-content class="md-padding">
         <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
             <md-nav-item md-nav-sref="Home.Posts" name="Posts">
@@ -88,24 +60,8 @@
             <md-nav-item md-nav-sref="Home.Movies" name="Movies">
                 Movies
             </md-nav-item>
-            <!-- these require actual routing with ui-router or ng-route, so they
-          won't work in the demo
-          <md-nav-item md-nav-href="#page4" name="page5">Page Four</md-nav-item>
-          <md-nav-item md-nav-sref="app.page5" name="page4">Page Five</md-nav-item>
-          You can also add options for the <code>ui-sref-opts</code> attribute.
-          <md-nav-item md-nav-sref="page6" sref-opts="{reload:true, notify:true}">
-            Page Six
-          </md-nav-item>
-          -->
         </md-nav-bar>
-        <!-- <span>{{status}}</span>
-        <div class="ext-content">
-            External content for `<span>{{currentNavItem}}</span>`.
-        </div> -->
-
     </md-content>
-
-    <!-- <div data-ui-view=""></div> -->
     <div ui-view>
 
     </div>
