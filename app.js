@@ -1,55 +1,46 @@
 var $stateprovideRef = null;
-var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize']);
+var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngMessages']);
 
 
-helloModule.config(function($routeProvider) {
-    $routeProvider
-        .when("/login", {
-            templateUrl: "login.html",
-            controller: 'hello'
+helloModule.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.when("", "/Posts");
+
+    $stateProvider
+        .state('Home.Posts', {
+            name: 'Posts',
+            url: '/Posts',
+            templateUrl: 'posts.html',
+            controller: 'postbody'
         })
-        .when("/home", {
-            templateUrl: "home.html",
-            controller: 'homeController'
-        }).
-    otherwise({
-        redirectTo: '/login'
-    })
-});
 
-helloModule.config(function($stateProvider) {
-    var postState = {
-        name: 'posts',
-        // url:'/posts',
-        templateUrl: 'posts.html',
-        controller: 'postbody'
-    }
-
-    var placesState = {
-        name: 'places',
-        // url:'/places',
+    .state('Home.Places', {
+        name: 'Places',
+        url: '/Places',
         templateUrl: 'places.html',
         controller: 'placebody'
-    }
+    })
 
-    var alienState = {
-        name: 'aliens',
-        // url:'/aliens',
+    .state('Home.Aliens', {
+        name: 'Aliens',
+        url: '/Aliens',
         templateUrl: 'aliens.html',
         controller: 'alienbody'
-    }
+    })
 
-    var movieState = {
-        name: 'movies',
-        // url:'/movies',
+    .state('Home.Movies', {
+        name: 'Movies',
+        url: '/Movies',
         templateUrl: 'movies.html',
         controller: 'moviebody'
-    }
+    })
 
-    $stateProvider.state(postState);
-    $stateProvider.state(placesState);
-    $stateProvider.state(alienState);
-    $stateProvider.state(movieState);
+    .state('Home', {
+        name: 'Home',
+        url: '',
+        templateUrl: 'home.html',
+        controller: 'homeController'
+    })
+
     $stateprovideRef = $stateProvider;
 })
 

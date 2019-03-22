@@ -37,8 +37,24 @@ p {
 
 .cardContentdescription {
     width: 92%;
-    height: 90%;
+    height: auto;
+    overflow: hidden;
     margin: 3%;
+}
+
+.active {
+    color: red;
+    font-weight: bold;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navBardemoBasicUsage md-content .ext-content {
+    padding: 50px;
+    margin: 20px;
+    background-color: rgba(37, 235, 80, 0.418);
 }
 
 
