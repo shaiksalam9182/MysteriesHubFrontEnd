@@ -41,6 +41,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'homeController'
     })
 
+    .state('Home.Login', {
+        name: 'Login',
+        url: '/Login',
+        templateUrl: 'login.html',
+        controller: 'hello'
+    })
+
     $stateprovideRef = $stateProvider;
 })
 
