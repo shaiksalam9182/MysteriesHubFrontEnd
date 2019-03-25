@@ -118,6 +118,7 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
+                // item.description = item.description.replace(/<img[^>]*>/g,"");
                 var state = {
                     name: item.post_id,
                     templateUrl: 'description.html',
@@ -235,6 +236,35 @@ helloModule.controller('authenticate', function($scope) {
     console.log('submit clicked');
 })
 
-helloModule.controller('homeController', function($scope) {
+helloModule.controller('homeController', function($scope, $mdDialog) {
+    console.log('Inside advanced function');
+    $scope.showAdvanced = function(ev) {
+        $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'login.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                // fullscreen: $scope.customFullscreen
+            })
+            .then(function(answer) {
 
+            }, function() {
+
+            })
+    };
 })
+
+function DialogController($scope, $mdDialog) {
+    $scope.hide = function() {
+        $mdDialog.hide();
+    };
+
+    $scope.cancel = function() {
+        $mdDialog.cancel();
+    };
+
+    $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+    };
+}
