@@ -128,7 +128,7 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
-                item.description = item.description.replace(/<[^>]+>/gm, "");
+                // item.description = item.description.replace(/<[^>]+>/gm, "");
 
                 // console.log('itemDescription', item.description.replace(/<[^>]+>/gm, ""));
                 var state = {
@@ -145,6 +145,11 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
             console.log(msg.data.message);
         }
     })
+
+    $scope.formatText = function(data) {
+        var forData = data.replace(/<[^>]+>/gm, '')
+        return forData.replace('from internet', '');
+    }
 })
 
 
@@ -166,7 +171,7 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
-                item.description = item.description.replace(/<[^>]+>/gm, "");
+                // item.description = item.description.replace(/<[^>]+>/gm, "");
                 var state = {
                     name: 'Home.' + item.place_id,
                     templateUrl: 'description.html',
@@ -181,6 +186,11 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
             $scope.isLoading = false;
         }
     })
+
+    $scope.formatText = function(data) {
+        var forData = data.replace(/<[^>]+>/gm, '')
+        return forData.replace('from internet', '');
+    }
 })
 
 
@@ -202,7 +212,7 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
-                item.description = item.description.replace(/<[^>]+>/gm, "");
+                // item.description = item.description.replace(/<[^>]+>/gm, "");
                 var state = {
                     name: 'Home.' + item.alienPost_id,
                     templateUrl: 'description.html',
@@ -217,6 +227,11 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
             $scope.isLoading = false;
         }
     })
+
+    $scope.formatText = function(data) {
+        var forData = data.replace(/<[^>]+>/gm, '')
+        return forData.replace('from internet', '');
+    }
 })
 
 helloModule.controller('moviebody', function($scope, $http, $cookies) {
@@ -236,7 +251,7 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
-                item.description = item.description.replace(/<[^>]+>/gm, "");
+                // item.description = item.description.replace(/<[^>]+>/gm, "");
                 var state = {
                     name: 'Home.' + item.movie_id,
                     templateUrl: 'description.html',
@@ -251,6 +266,11 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
             $scope.isLoading = false;
         }
     })
+
+    $scope.formatText = function(data) {
+        var forData = data.replace(/<[^>]+>/gm, '')
+        return forData.replace('from internet', '');
+    }
 })
 
 
