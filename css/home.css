@@ -36,10 +36,11 @@ p {
 }
 
 .cardContentdescription {
-    width: 92%;
+    width: 70%;
     height: auto;
     overflow: hidden;
     margin: 3%;
+    text-align: left;
 }
 
 .active {
@@ -55,6 +56,24 @@ p {
     padding: 50px;
     margin: 20px;
     background-color: rgba(37, 235, 80, 0.418);
+}
+
+.cardMaterial {
+    width: 70%;
+    text-align: left;
+}
+
+.navbarhome {
+    width: 70%;
+    text-align: left;
+}
+
+.md-subhead {
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
 }
 
 

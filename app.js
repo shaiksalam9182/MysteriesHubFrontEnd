@@ -48,6 +48,7 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'hello'
     })
 
+
     $stateprovideRef = $stateProvider;
 })
 
@@ -113,6 +114,7 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
+    $scope.isLoading = true;
 
     $scope.token = $cookies.get("token");
     var data = {
@@ -122,19 +124,24 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
     $http.post("https://naaradh.in/demo_post_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
+            $scope.isLoading = false;
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
-                // item.description = item.description.replace(/<img[^>]*>/g,"");
+                item.description = item.description.replace(/<[^>]+>/gm, "");
+
+                // console.log('itemDescription', item.description.replace(/<[^>]+>/gm, ""));
                 var state = {
-                    name: item.post_id,
+                    name: 'Home.' + item.post_id,
                     templateUrl: 'description.html',
                     params: item,
+                    url: '/post',
                     controller: 'descriptionController'
                 }
                 $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
+            $scope.isLoading = false;
             console.log(msg.data.message);
         }
     })
@@ -145,6 +152,7 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
+    $scope.isLoading = true;
 
     $scope.token = $cookies.get("token");
     var data = {
@@ -154,19 +162,23 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
     $http.post("https://naaradh.in/demo_place_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
+            $scope.isLoading = false;
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
+                item.description = item.description.replace(/<[^>]+>/gm, "");
                 var state = {
-                    name: item.place_id,
+                    name: 'Home.' + item.place_id,
                     templateUrl: 'description.html',
                     params: item,
+                    url: '/place',
                     controller: 'descriptionController'
                 }
                 $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
+            $scope.isLoading = false;
         }
     })
 })
@@ -176,6 +188,7 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
+    $scope.isLoading = true;
 
     $scope.token = $cookies.get("token");
     var data = {
@@ -185,19 +198,23 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
     $http.post("https://naaradh.in/demo_alien_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
+            $scope.isLoading = false;
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
+                item.description = item.description.replace(/<[^>]+>/gm, "");
                 var state = {
-                    name: item.alienPost_id,
+                    name: 'Home.' + item.alienPost_id,
                     templateUrl: 'description.html',
                     params: item,
+                    url: '/alien',
                     controller: 'descriptionController'
                 }
                 $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
+            $scope.isLoading = false;
         }
     })
 })
@@ -206,7 +223,7 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
-
+    $scope.isLoading = true;
     $scope.token = $cookies.get("token");
     var data = {
         token: $scope.token
@@ -215,19 +232,23 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
     $http.post("https://naaradh.in/demo_movie_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
+            $scope.isLoading = false;
             $scope.dataArray = msg.data.data
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
+                item.description = item.description.replace(/<[^>]+>/gm, "");
                 var state = {
-                    name: item.movie_id,
+                    name: 'Home.' + item.movie_id,
                     templateUrl: 'description.html',
                     params: item,
+                    url: '/movie',
                     controller: 'descriptionController'
                 }
                 $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
+            $scope.isLoading = false;
         }
     })
 })

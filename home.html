@@ -39,26 +39,30 @@
 </head>
 
 <body ng-controller='homeController'>
-    <md-content class="md-padding">
-        <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-            <md-nav-item md-nav-sref="Home.Posts" name="Posts">
-                Posts
-            </md-nav-item>
-            <md-nav-item md-nav-sref="Home.Places" name="Places">
-                Places
-            </md-nav-item>
-            <md-nav-item md-nav-sref="Home.Aliens" name="Aliens">
-                Aliens
-            </md-nav-item>
-            <md-nav-item md-nav-sref="Home.Movies" name="Movies">
-                Movies
-            </md-nav-item>
-            <span flex></span>
-            <md-button class="md-icon-button" aria-label="Favorite" md-nav-sref="Home.Login" name="Login">
-                <md-icon md-svg-icon="img/avatar.svg"></md-icon>
-            </md-button>
-        </md-nav-bar>
-    </md-content>
+    <center>
+        <div class="navbarhome">
+            <md-content class="md-padding">
+                <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                    <md-nav-item md-nav-sref="Home.Posts" name="Posts">
+                        Posts
+                    </md-nav-item>
+                    <md-nav-item md-nav-sref="Home.Places" name="Places">
+                        Places
+                    </md-nav-item>
+                    <md-nav-item md-nav-sref="Home.Aliens" name="Aliens">
+                        Aliens
+                    </md-nav-item>
+                    <md-nav-item md-nav-sref="Home.Movies" name="Movies">
+                        Movies
+                    </md-nav-item>
+                    <span flex></span>
+                    <md-button class="md-icon-button" aria-label="Favorite" md-nav-sref="Home.Login" name="Login">
+                        <md-icon md-svg-icon="img/avatar.svg"></md-icon>
+                    </md-button>
+                </md-nav-bar>
+            </md-content>
+        </div>
+    </center>
     <div ui-view>
 
     </div>
