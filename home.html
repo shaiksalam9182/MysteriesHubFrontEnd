@@ -56,9 +56,27 @@
                         Movies
                     </md-nav-item>
                     <span flex></span>
-                    <md-button class="md-icon-button" aria-label="Favorite" md-nav-sref="Home.Login" name="Login">
-                        <md-icon md-svg-icon="img/avatar.svg"></md-icon>
-                    </md-button>
+                    <!-- <a ui-sref="Home.Login" class="md-button"></a> -->
+                    <md-menu>
+                        <md-button class="md-icon-button" ng-click="openMenu($mdMenu,$event)">
+                            <md-icon md-svg-icon="img/avatar.svg"></md-icon>
+                        </md-button>
+                        <md-menu-content width="4">
+                            <md-menu-item>
+                                <md-button>Account</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Notifications</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>Feedback</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="logout()">Logout</md-button>
+                            </md-menu-item>
+
+                        </md-menu-content>
+                    </md-menu>
                 </md-nav-bar>
             </md-content>
         </div>

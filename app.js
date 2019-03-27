@@ -93,15 +93,15 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
                         $cookies.put('token', msg.data.token);
                         $cookies.put('user', msg.data.phone);
                         $scope.message = msg.data.message;
-                        $location.path('/home');
-                    } else if (msg.data.status == "Failed") {
+                        $location.path('/Posts');
+                    } else {
                         $scope.message = msg.message;
                     }
                 } else if (msg.status == 400) {
                     console.log(msg.data);
-                    $scope.message = msg.data;
+                    $scope.message = msg.data
                 } else {
-                    $scope.message = "Another error"
+                    $scope.message = "Error occurred"
                 }
             })
         }
@@ -118,7 +118,8 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
 
     $scope.token = $cookies.get("token");
     var data = {
-        token: $scope.token
+        token: $scope.token,
+        testin: 'testing'
     }
 
     $http.post("https://naaradh.in/demo_post_limit", data).then(function(msg) {
@@ -161,7 +162,8 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
 
     $scope.token = $cookies.get("token");
     var data = {
-        token: $scope.token
+        token: $scope.token,
+        testin: 'testing'
     }
 
     $http.post("https://naaradh.in/demo_place_limit", data).then(function(msg) {
@@ -202,7 +204,8 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
 
     $scope.token = $cookies.get("token");
     var data = {
-        token: $scope.token
+        token: $scope.token,
+        testin: 'testing'
     }
 
     $http.post("https://naaradh.in/demo_alien_limit", data).then(function(msg) {
@@ -241,7 +244,8 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
     $scope.isLoading = true;
     $scope.token = $cookies.get("token");
     var data = {
-        token: $scope.token
+        token: $scope.token,
+        testin: 'testing'
     }
 
     $http.post("https://naaradh.in/demo_movie_limit", data).then(function(msg) {
@@ -284,22 +288,31 @@ helloModule.controller('authenticate', function($scope) {
     console.log('submit clicked');
 })
 
-helloModule.controller('homeController', function($scope, $mdDialog) {
-    console.log('Inside advanced function');
-    $scope.showAdvanced = function(ev) {
-        $mdDialog.show({
-                controller: DialogController,
-                templateUrl: 'login.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                // fullscreen: $scope.customFullscreen
-            })
-            .then(function(answer) {
+helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log) {
+    $scope.openMenu = function($mdMenu, ev) {
+        $scope.phone = $cookies.get("user");
+        $scope.token = $cookies.get("token");
+        console.log('cookiesdata', $scope.phone, $scope.token);
+        if ($scope.phone == "" || $scope.token == "") {
+            $location.path('/Login')
+        } else {
+            $mdMenu.open(ev);
+        }
+    }
 
-            }, function() {
-
-            })
+    $scope.logout = function() {
+        $cookies.put("phone", "");
+        $cookies.put("token", "");
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Successfully logged out')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
     };
 })
 

@@ -21,68 +21,38 @@
     <script src="https://code.angularjs.org/1.7.6/angular-route.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/home.css">
     <script src="app.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/home.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
-
-    <!-- Angular Material Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
 </head>
 
-<!-- <body ng-controller='hello'>
+<body ng-controller='hello'>
     <!-- <p>Firstname: {{student.firstname}}</p>
 	<p>Lastname: {{student.lastname}}</p> -->
-<!-- <md-dialog>
-        <div class="cardView">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <center>
-                        <p>Login</p>
-                    </center> -->
+    <div class="cardView">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <center>
+                    <p>Login</p>
+                </center>
 
-<!-- 
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" ng-model="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" ng-model="password" required>
-                        </div>
-                        <center><button class="btn btn-primary" ng-click="answer(phone,password)">
+
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" ng-model="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" ng-model="password" required>
+                    </div>
+                    <center><button class="btn btn-primary" ng-click="authenticate()">
     	<span class="spinner-border spinner-border-sm" ng-show="calling==true"></span>
     Submit
 </button></center>
-                    </form>
-                    <center>
-                        <p ng-model="message">{{message}}</p>
-                    </center>
-                </div>
+                </form>
+                <center>
+                    <p ng-model="message">{{message}}</p>
+                </center>
             </div>
-        </div> -->
-<!-- </md-dialog> -->
-
-<body ng-controller='hello'>
-    <md-dialog>
-        <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
-
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" name="phone" ng-model="phone" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" ng-model="password" required>
-                </div>
-                <center><button class="btn btn-primary" ng-click="answer(phone,password)">
-    	                <span class="spinner-border spinner-border-sm" ng-show="calling==true"></span>
-                Submit
-                </button></center>
-            </form>
-        </md-card>
-    </md-dialog>
+        </div>
+    </div>
 
 </body>
-
 
 </html>
