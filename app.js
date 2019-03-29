@@ -48,6 +48,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'hello'
     })
 
+    .state('Home.Write', {
+        name: 'WriteStory',
+        url: '/WriteStory',
+        templateUrl: 'Write.html',
+        controller: 'writerController'
+    })
+
 
     $stateprovideRef = $stateProvider;
 })
@@ -314,6 +321,11 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
                 $log.log('Toast failed or was forced to close early by another toast.');
             });
     };
+})
+
+
+helloModule.controller('writerController', function($scope) {
+
 })
 
 function DialogController($scope, $mdDialog) {
