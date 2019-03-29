@@ -407,7 +407,7 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
         $scope.phone = $cookies.get("user");
         $scope.token = $cookies.get("token");
         console.log('cookiesdata', $scope.phone, $scope.token);
-        if ($scope.phone == "" || $scope.token == "") {
+        if (($scope.phone == "" || $scope.token == "") || ($scope.phone == undefined || $scope.token == undefined)) {
             $location.path('/Login')
         } else {
             $mdMenu.open(ev);
@@ -415,7 +415,7 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
     }
 
     $scope.logout = function() {
-        $cookies.put("phone", "");
+        $cookies.put("user", "");
         $cookies.put("token", "");
         $mdToast.show(
                 $mdToast.simple()
@@ -431,7 +431,16 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
 })
 
 
-helloModule.controller('writerController', function($scope) {
+helloModule.controller('writerController', function($scope, $cookies) {
+    $scope.user = $cookies.get("user");
+    $scope.token = $cookies.get("token");
+
+
+    if (($scope.phone == "" || $scope.token == "") || ($scope.phone == undefined || $scope.token == undefined)) {
+        $scope.message = "Not LoggedIn";
+    } else {
+        $scope.message = "LoggedIn";
+    }
 
 })
 
