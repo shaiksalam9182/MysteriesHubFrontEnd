@@ -48,6 +48,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'hello'
     })
 
+    .state('Home.Write', {
+        name: 'WriteStory',
+        url: '/WriteStory',
+        templateUrl: 'Write.html',
+        controller: 'writerController'
+    })
+
 
     $stateprovideRef = $stateProvider;
 })
@@ -76,7 +83,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
             $scope.message = "phone number is invalid"
             console.log('phone length is invalid');
         } else {
-            var url = "https://naaradh.in/login"
+            var url = "https://admin.naaradh.in/login"
             var data = {
                 phone: $scope.phone,
                 password: $scope.password,
@@ -122,7 +129,7 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
         testin: 'testing'
     }
 
-    $http.post("https://naaradh.in/demo_post_limit", data).then(function(msg) {
+    $http.post("https://admin.naaradh.in/demo_post_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -166,7 +173,7 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
         testin: 'testing'
     }
 
-    $http.post("https://naaradh.in/demo_place_limit", data).then(function(msg) {
+    $http.post("https://admin.naaradh.in/demo_place_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -208,7 +215,7 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
         testin: 'testing'
     }
 
-    $http.post("https://naaradh.in/demo_alien_limit", data).then(function(msg) {
+    $http.post("https://admin.naaradh.in/demo_alien_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -248,7 +255,7 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
         testin: 'testing'
     }
 
-    $http.post("https://naaradh.in/demo_movie_limit", data).then(function(msg) {
+    $http.post("https://admin.naaradh.in/demo_movie_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -314,6 +321,11 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
                 $log.log('Toast failed or was forced to close early by another toast.');
             });
     };
+})
+
+
+helloModule.controller('writerController', function($scope) {
+
 })
 
 function DialogController($scope, $mdDialog) {
