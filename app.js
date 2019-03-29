@@ -117,7 +117,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
 })
 
-helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
+helloModule.controller('postbody', function($scope, $http, $cookies, $state, $mdToast) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -158,10 +158,36 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state) {
         var forData = data.replace(/<[^>]+>/gm, '')
         return forData.replace('from internet', '');
     }
+
+    $scope.likeButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
+
+    $scope.shareButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
 })
 
 
-helloModule.controller('placebody', function($scope, $http, $cookies) {
+helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -200,10 +226,37 @@ helloModule.controller('placebody', function($scope, $http, $cookies) {
         var forData = data.replace(/<[^>]+>/gm, '')
         return forData.replace('from internet', '');
     }
+
+
+    $scope.likeButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
+
+    $scope.shareButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
 })
 
 
-helloModule.controller('alienbody', function($scope, $cookies, $http) {
+helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -242,9 +295,36 @@ helloModule.controller('alienbody', function($scope, $cookies, $http) {
         var forData = data.replace(/<[^>]+>/gm, '')
         return forData.replace('from internet', '');
     }
+
+
+    $scope.likeButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
+
+    $scope.shareButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
 })
 
-helloModule.controller('moviebody', function($scope, $http, $cookies) {
+helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -281,6 +361,33 @@ helloModule.controller('moviebody', function($scope, $http, $cookies) {
     $scope.formatText = function(data) {
         var forData = data.replace(/<[^>]+>/gm, '')
         return forData.replace('from internet', '');
+    }
+
+
+    $scope.likeButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
+    }
+
+    $scope.shareButton = function() {
+        $mdToast.show(
+                $mdToast.simple()
+                .textContent('Under Construction')
+                .position('top right')
+                .hideDelay(3000))
+            .then(function() {
+                $log.log('Toast dismissed.');
+            }).catch(function() {
+                $log.log('Toast failed or was forced to close early by another toast.');
+            });
     }
 })
 
