@@ -76,18 +76,24 @@
                         <md-button class="md-icon-button" ng-click="openMenu($mdMenu,$event)">
                             <md-icon md-svg-icon="img/avatar.svg"></md-icon>
                         </md-button>
-                        <md-menu-content width="4">
-                            <md-menu-item>
+                        <md-menu-content width={{number}}>
+                            <md-menu-item ng-show="showUserOptions">
                                 <md-button>Account</md-button>
                             </md-menu-item>
-                            <md-menu-item>
+                            <md-menu-item ng-show="showUserOptions">
                                 <md-button>Notifications</md-button>
                             </md-menu-item>
-                            <md-menu-item>
+                            <md-menu-item ng-show="showUserOptions">
                                 <md-button>Feedback</md-button>
                             </md-menu-item>
-                            <md-menu-item>
+                            <md-menu-item ng-show="showUserOptions">
                                 <md-button ng-click="logout()">Logout</md-button>
+                            </md-menu-item>
+                            <md-menu-item ng-show="showLoginOptions">
+                                <md-button ng-click="goToLogin()">Login</md-button>
+                            </md-menu-item>
+                            <md-menu-item ng-show="showLoginOptions">
+                                <md-button ng-click="goToRegister();">Register</md-button>
                             </md-menu-item>
 
                         </md-menu-content>
