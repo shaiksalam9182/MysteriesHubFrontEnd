@@ -91,7 +91,17 @@ p {
 }
 
 .registerPanel {
-    width: 60%;
+    width: 100%;
+    left: 10%;
+}
+
+.md-block{
+    left: 33%;
+    width: 35%;
+}
+
+.registerSpan{
+    left: 50%;
 }
 
 @media only screen and (max-width: 600px) {

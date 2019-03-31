@@ -554,7 +554,23 @@ helloModule.controller('writerController', function($scope, $cookies) {
 
 
 helloModule.controller('registerController', function($scope) {
+    $scope.register = function(){
+        console.log('Entered');
+        if($scope.name==""|| $scope.name==undefined){
+            $scope.message = "Name is empty"
+        }else if($scope.mobile==""|| $scope.mobile==undefined){
+            $scope.message = "Mobile Number is empty";
+        }else if($scope.password=="" || $scope.password==undefined){
+            $scope.message = "Password is empty";
+        }else if($scope.cpassword==""|| $scope.cpassword==undefined){
+            $scope.message = "Confirm password is empty";
+        }else if($scope.password!=$scope.cpassword){
+            $scope.message = "Passwords are not matching";
+        }else{
+            $scope.message = "All good";
 
+        }
+    }
 })
 
 function DialogController($scope, $mdDialog) {

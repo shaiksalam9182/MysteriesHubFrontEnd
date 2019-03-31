@@ -6,14 +6,31 @@
 
 <body ng-controller="registerController">
 
-    <center>
         <div class="registerPanel">
+               <center> <span class="registerSpan"> Register</span></center>
             <md-input-container class="md-block" flex-gt-sm>
-                <label>First name</label>
-                <input ng-model="user.firstName">
+                <label>Fullname</label>
+                <input ng-model="name" required id="name" name="name"> 
             </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Mobilenumber</label>
+                <input ng-model="mobile" required id="mobile" name="mobile">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Email(optional)</label>
+                <input ng-model="email" id="email" name="email">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Password</label>
+                <input ng-model="password" type="password" required id="password" name="password">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Confirm Password</label>
+                <input ng-model="cpassword" type="password" required id="cpassword" name="cpassword">
+            </md-input-container>
+            <center><span>{{message}}</span></center>
+            <center><md-button class="md-raised md-primary" ng-click="register()">Register</md-button></center>
         </div>
-    </center>
 </body>
 
 </html>
