@@ -104,6 +104,10 @@ p {
     left: 50%;
 }
 
+.linearProgress{
+    width: 70%;
+}
+
 @media only screen and (max-width: 600px) {
     .cardMaterial {
         width: 100%;

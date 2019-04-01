@@ -1,5 +1,5 @@
 var $stateprovideRef = null;
-var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngMessages']);
+var helloModule = angular.module('firstApp', ['ngCookies','ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngMessages']);
 
 
 helloModule.config(function($stateProvider, $urlRouterProvider) {
