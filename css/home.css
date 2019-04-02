@@ -61,7 +61,7 @@ p {
 
 .cardMaterial a:hover {
     text-decoration: none;
-    background-color: #5bc48f;
+    font-size: 30px;
 }
 
 .navbarhome {
@@ -79,6 +79,42 @@ p {
 
 p {
     font-size: 20px;
+}
+
+#editor {
+    height: 375px;
+    width: 90%;
+}
+
+.ql-toolbar {
+    width: 90%;
+}
+
+.registerPanel {
+    width: 100%;
+    left: 10%;
+}
+
+.loginPanel {
+    font-size: 15px;
+}
+
+.md-block {
+    left: 33%;
+    width: 35%;
+}
+
+.registerSpan {
+    left: 50%;
+}
+
+.linearProgress {
+    width: 70%;
+}
+
+.titleInput {
+    left: 15%;
+    width: 70%;
 }
 
 @media only screen and (max-width: 600px) {

@@ -55,6 +55,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'writerController'
     })
 
+    .state('Home.Register', {
+        name: "Register",
+        url: '/Register',
+        templateUrl: 'register.html',
+        controller: 'registerController',
+    })
+
 
     $stateprovideRef = $stateProvider;
 })
@@ -68,7 +75,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
     $scope.authenticate = function() {
         console.log($scope.phone, $scope.password);
-        $scope.calling = true;
+        $scope.calling = false;
         $scope.message = "";
         if ($scope.phone == "") {
             $scope.calling = false;
@@ -92,8 +99,9 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
                 login_by: "manual",
                 fcm_token: "fGnniI7jCHo:APA91bFAMJaSouAJZaVLbjhZGRD6m4rPfFFCfAFQ93naYY6AqZ3Xy4j52T2Tf9KZlhtn833J9xMjFg8-AHMQly-L3nPftZ34JSljRmkACKgkfwgtfECbTS_2fBwzs2iwVIAX74Oog7Fw"
             }
+            $scope.calling = true;
             $http.post(url, data).then(function(msg) {
-                $scope.calling = false;
+                $scope.calling = true;
                 console.log(msg);
                 if (msg.status == 200) {
                     if (msg.data.status == "success") {
@@ -408,14 +416,30 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
         $scope.token = $cookies.get("token");
         console.log('cookiesdata', $scope.phone, $scope.token);
         if ($scope.phone == "" || $scope.token == "") {
-            $location.path('/Login')
+            console.log('userNotLoggedIN');
+            $scope.showLoginOptions = true;
+            $scope.showUserOptions = false;
+            $scope.number = "2";
+            $mdMenu.open(ev);
         } else {
+            console.log('userLoggedIn');
+            $scope.showLoginOptions = false;
+            $scope.showUserOptions = true;
+            $scope.number = "4";
             $mdMenu.open(ev);
         }
     }
 
+    $scope.goToLogin = function() {
+        $location.path("/Login");
+    }
+
+    $scope.goToRegister = function() {
+        $location.path("/Register");
+    }
+
     $scope.logout = function() {
-        $cookies.put("phone", "");
+        $cookies.put("user", "");
         $cookies.put("token", "");
         $mdToast.show(
                 $mdToast.simple()
@@ -431,8 +455,124 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
 })
 
 
-helloModule.controller('writerController', function($scope) {
+helloModule.controller('writerController', function($scope, $cookies) {
+        $scope.user = $cookies.get("user");
+        $scope.token = $cookies.get("token");
+        $scope.story = "";
 
+
+        console.log($scope.user, $scope.token, "salam");
+
+
+        if ($scope.user == "" || $scope.token == "") {
+            console.log('user Not Logged In');
+            $scope.loggedIn = false;
+            $scope.quillDataJSON = "Please login to write a story";
+            $scope.quillDataText = "Please login to write a story";
+            $scope.quillDataHTML = "Please login to write a story";
+        } else {
+            console.log('user Logged In');
+            $scope.loggedIn = true;
+            $scope.quillDataJSON = "Preview will be displayed here";
+            $scope.quillDataText = "Preview will be displayed here";
+            $scope.quillDataHTML = "Preview will be displayed here";
+        }
+
+
+
+        // $scope.quillDataJSON = "Preview will be displayed here";
+        // $scope.quillDataText = "Preview will be displayed here";
+        // $scope.quillDataHTML = "Preview will be displayed here";
+
+        $scope.quillData = "hahaha";
+        $scope.quillConfig = "hahaConfig";
+
+        $scope.changeData = function() {
+            $scope.quillData = "config";
+        };
+
+        $scope.clickMe = function() {
+            alert("thanks!");
+        };
+
+        $scope.postStory = function() {
+            console.log("Entered Story", $scope.story);
+        }
+
+    })
+    .directive('quillEditor', function($compile) {
+        return {
+            restrict: 'E',
+            link: function($scope, $element) {
+                var template = '<div id="editor">' +
+                    '<p>Start your story here</p>' +
+                    '<p><br></p>'
+                '</div>';
+                var linkFunc = $compile(template);
+                var content = linkFunc($scope);
+                $element.append(content);
+
+                // setup quill config after adding to DOM
+                var quill = new Quill('#editor', {
+                    modules: {
+                        // ImageResize: {},
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            // [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+                            ['bold', 'italic', 'underline', 'strike', 'link'],
+                            [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+                            [{ 'font': [] }],
+                            [{ 'align': [] }],
+                            ['clean'], // remove formatting button
+                            ['blockquote', 'code-block'],
+                            ['video', 'image'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+                            [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+                        ]
+                    },
+                    placeholder: 'Compose an epic...',
+                    theme: 'snow' // or 'bubble'
+                });
+
+                quill.on('text-change', function() {
+                    var delta = quill.getContents();
+                    var text = quill.getText();
+                    var justHtml = quill.root.innerHTML;
+
+                    console.log(justHtml);
+
+                    $scope.$apply(function() {
+                        $scope.quillDataJSON = JSON.stringify(delta);
+                        $scope.quillDataText = text;
+                        $scope.quillDataHTML = justHtml;
+                        $scope.story = justHtml;
+                    });
+                });
+            },
+        };
+    })
+
+
+helloModule.controller('registerController', function($scope) {
+    $scope.register = function() {
+        console.log('Entered');
+        if ($scope.name == "" || $scope.name == undefined) {
+            $scope.message = "Name is empty"
+        } else if ($scope.mobile == "" || $scope.mobile == undefined) {
+            $scope.message = "Mobile Number is empty";
+        } else if ($scope.password == "" || $scope.password == undefined) {
+            $scope.message = "Password is empty";
+        } else if ($scope.cpassword == "" || $scope.cpassword == undefined) {
+            $scope.message = "Confirm password is empty";
+        } else if ($scope.password != $scope.cpassword) {
+            $scope.message = "Passwords are not matching";
+        } else {
+            $scope.message = "All good";
+
+        }
+    }
 })
 
 function DialogController($scope, $mdDialog) {

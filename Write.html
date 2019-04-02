@@ -13,13 +13,38 @@
 
         gtag('config', 'UA-107044558-6');
     </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+    <!--   <script src="http://rawgit.com/kensnyder/quill-image-resize-module/master/image-resize.min.js"></script> -->
+
+
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.2.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
 </head>
 
-<body ng-controller="writerController">
+<body>
+    <md-input-container class="titleInput" ng-show="loggedIn">
+        <label>Title of the story</label>
+        <input ng-model="title" required>
+    </md-input-container>
     <center>
-        <h3>
-            UnderConstruction
-        </h3>
+        <div class="container" ng-controller="writerController">
+            <quill-editor ng-show="loggedIn" quill-data="writerController.quillData" quill-config="writerController.quillConfig">
+            </quill-editor>
+
+            <br/>
+            <md-button ng-show="loggedIn" ng-click="postStory()" class="md-raised md-primary">Submit Your Story</md-button>
+            <br/>
+            <div ng-bind-html="quillDataHTML">
+            </div>
+            <script src="https://cdn.quilljs.com/1.2.6/quill.js"></script>
+            <script>
+            </script>
+        </div>
     </center>
 
 </body>
