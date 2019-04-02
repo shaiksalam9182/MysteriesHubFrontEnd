@@ -1,5 +1,5 @@
 var $stateprovideRef = null;
-var helloModule = angular.module('firstApp', ['ngCookies','ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngMessages']);
+var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngMessages']);
 
 
 helloModule.config(function($stateProvider, $urlRouterProvider) {
@@ -75,7 +75,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
     $scope.authenticate = function() {
         console.log($scope.phone, $scope.password);
-        $scope.calling = true;
+        $scope.calling = false;
         $scope.message = "";
         if ($scope.phone == "") {
             $scope.calling = false;
@@ -99,8 +99,9 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
                 login_by: "manual",
                 fcm_token: "fGnniI7jCHo:APA91bFAMJaSouAJZaVLbjhZGRD6m4rPfFFCfAFQ93naYY6AqZ3Xy4j52T2Tf9KZlhtn833J9xMjFg8-AHMQly-L3nPftZ34JSljRmkACKgkfwgtfECbTS_2fBwzs2iwVIAX74Oog7Fw"
             }
+            $scope.calling = true;
             $http.post(url, data).then(function(msg) {
-                $scope.calling = false;
+                $scope.calling = true;
                 console.log(msg);
                 if (msg.status == 200) {
                     if (msg.data.status == "success") {
@@ -457,6 +458,7 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
 helloModule.controller('writerController', function($scope, $cookies) {
         $scope.user = $cookies.get("user");
         $scope.token = $cookies.get("token");
+        $scope.story = "";
 
 
         console.log($scope.user, $scope.token, "salam");
@@ -492,14 +494,18 @@ helloModule.controller('writerController', function($scope, $cookies) {
         $scope.clickMe = function() {
             alert("thanks!");
         };
+
+        $scope.postStory = function() {
+            console.log("Entered Story", $scope.story);
+        }
+
     })
     .directive('quillEditor', function($compile) {
         return {
             restrict: 'E',
             link: function($scope, $element) {
                 var template = '<div id="editor">' +
-                    '<p>Hello World!</p>' +
-                    '<p>Some initial <strong>bold</strong> text</p>' +
+                    '<p>Start your story here</p>' +
                     '<p><br></p>'
                 '</div>';
                 var linkFunc = $compile(template);
@@ -535,38 +541,34 @@ helloModule.controller('writerController', function($scope, $cookies) {
                     var text = quill.getText();
                     var justHtml = quill.root.innerHTML;
 
-                    console.log(JSON.stringify(delta));
+                    console.log(justHtml);
 
                     $scope.$apply(function() {
-                        console.log("ha");
-                        console.log($scope);
                         $scope.quillDataJSON = JSON.stringify(delta);
                         $scope.quillDataText = text;
                         $scope.quillDataHTML = justHtml;
+                        $scope.story = justHtml;
                     });
                 });
             },
         };
-
-
-
     })
 
 
 helloModule.controller('registerController', function($scope) {
-    $scope.register = function(){
+    $scope.register = function() {
         console.log('Entered');
-        if($scope.name==""|| $scope.name==undefined){
+        if ($scope.name == "" || $scope.name == undefined) {
             $scope.message = "Name is empty"
-        }else if($scope.mobile==""|| $scope.mobile==undefined){
+        } else if ($scope.mobile == "" || $scope.mobile == undefined) {
             $scope.message = "Mobile Number is empty";
-        }else if($scope.password=="" || $scope.password==undefined){
+        } else if ($scope.password == "" || $scope.password == undefined) {
             $scope.message = "Password is empty";
-        }else if($scope.cpassword==""|| $scope.cpassword==undefined){
+        } else if ($scope.cpassword == "" || $scope.cpassword == undefined) {
             $scope.message = "Confirm password is empty";
-        }else if($scope.password!=$scope.cpassword){
+        } else if ($scope.password != $scope.cpassword) {
             $scope.message = "Passwords are not matching";
-        }else{
+        } else {
             $scope.message = "All good";
 
         }

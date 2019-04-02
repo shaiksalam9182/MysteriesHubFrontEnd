@@ -61,7 +61,7 @@ p {
 
 .cardMaterial a:hover {
     text-decoration: none;
-    background-color: #5bc48f;
+    font-size: 30px;
 }
 
 .navbarhome {
@@ -95,16 +95,25 @@ p {
     left: 10%;
 }
 
-.md-block{
+.loginPanel {
+    font-size: 15px;
+}
+
+.md-block {
     left: 33%;
     width: 35%;
 }
 
-.registerSpan{
+.registerSpan {
     left: 50%;
 }
 
-.linearProgress{
+.linearProgress {
+    width: 70%;
+}
+
+.titleInput {
+    left: 15%;
     width: 70%;
 }
 

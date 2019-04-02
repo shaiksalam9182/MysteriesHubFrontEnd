@@ -27,13 +27,17 @@
 </head>
 
 <body>
+    <md-input-container class="titleInput" ng-show="loggedIn">
+        <label>Title of the story</label>
+        <input ng-model="title" required>
+    </md-input-container>
     <center>
         <div class="container" ng-controller="writerController">
             <quill-editor ng-show="loggedIn" quill-data="writerController.quillData" quill-config="writerController.quillConfig">
             </quill-editor>
 
             <br/>
-            <md-button ng-show="loggedIn" class="md-raised md-primary">Submit Your Story</md-button>
+            <md-button ng-show="loggedIn" ng-click="postStory()" class="md-raised md-primary">Submit Your Story</md-button>
             <br/>
             <div ng-bind-html="quillDataHTML">
             </div>

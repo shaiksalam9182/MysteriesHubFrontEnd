@@ -30,23 +30,25 @@
         <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
         <br>
         <div class="cardMaterial" ng-repeat="o in dataArray">
-            <a ui-sref="Home.{{o.post_id}}" href="Home.{{o.post_id}}" ui-sref-active="active">
-                <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
+
+            <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <a ui-sref="Home.{{o.post_id}}" href="Home.{{o.post_id}}" ui-sref-active="active">
                             <span class="md-headline">{{o.title}}</span>
-                            <span class="md-subhead">{{formatText(o.description)}}</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-md card-media"><img src="{{o.image}}"></div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button ng-click="likeButton()">Like</md-button>
-                        <md-button ng-click="shareButton()">Share</md-button>
-                    </md-card-actions>
-                </md-card>
-            </a>
+                        </a>
+                        <span class="md-subhead">{{formatText(o.description)}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-md card-media"><img src="{{o.image}}"></div>
+                    </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="likeButton()">Like</md-button>
+                    <md-button ng-click="shareButton()">Share</md-button>
+                </md-card-actions>
+            </md-card>
+
         </div>
     </center>
 
