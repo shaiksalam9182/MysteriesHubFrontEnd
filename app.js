@@ -97,7 +97,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
                 device_type: "Web",
                 android_id: "123456789",
                 login_by: "manual",
-                fcm_token: "fGnniI7jCHo:APA91bFAMJaSouAJZaVLbjhZGRD6m4rPfFFCfAFQ93naYY6AqZ3Xy4j52T2Tf9KZlhtn833J9xMjFg8-AHMQly-L3nPftZ34JSljRmkACKgkfwgtfECbTS_2fBwzs2iwVIAX74Oog7Fw"
+                fcm_token: ""
             }
             $scope.calling = true;
             $http.post(url, data).then(function(msg) {
@@ -555,7 +555,7 @@ helloModule.controller('writerController', function($scope, $cookies) {
     })
 
 
-helloModule.controller('registerController', function($scope) {
+helloModule.controller('registerController', function($scope, $http) {
     $scope.register = function() {
         console.log('Entered');
         if ($scope.name == "" || $scope.name == undefined) {
@@ -569,7 +569,31 @@ helloModule.controller('registerController', function($scope) {
         } else if ($scope.password != $scope.cpassword) {
             $scope.message = "Passwords are not matching";
         } else {
-            $scope.message = "All good";
+            var data = {
+                fullname: $scope.name,
+                device_type: "web",
+                login_by: "manual",
+                verified: 'No',
+                password: $scope.password,
+                phone: $scope.mobile,
+                email: $scope.email
+            }
+            var url = "https://admin.naaradh.in/register"
+            $http.post(url, data).then(function(data) {
+                if (data.status == 200) {
+                    if (data.data.status == "success") {
+                        console.log(data.data);
+                    } else if (data.data.code == 300) {
+                        console.log(data.data);
+                    } else if (data.data.code == 301) {
+                        console.log(data.data);
+                    } else {
+                        console.log('Error occured First');
+                    }
+                } else {
+                    console.log('Error Occured');
+                }
+            })
 
         }
     }
