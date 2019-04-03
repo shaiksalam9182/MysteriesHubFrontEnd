@@ -77,22 +77,18 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
         console.log($scope.phone, $scope.password);
         $scope.calling = false;
         $scope.message = "";
-        if ($scope.phone == "") {
+        if ($scope.email == "") {
             $scope.calling = false;
-            $scope.message = "phone is empty"
+            $scope.message = "Email is empty"
             console.log('phone is empty');
         } else if ($scope.password == "") {
             $scope.calling = false;
             $scope.message = 'password is empty'
             console.log('password is empty');
-        } else if (($scope.phone + "").length < 10) {
-            $scope.calling = false;
-            $scope.message = "phone number is invalid"
-            console.log('phone length is invalid');
-        } else {
+        }  else {
             var url = "https://admin.naaradh.in/login"
             var data = {
-                phone: $scope.phone,
+                email: $scope.email,
                 password: $scope.password,
                 device_type: "Web",
                 android_id: "123456789",
@@ -106,7 +102,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
                 if (msg.status == 200) {
                     if (msg.data.status == "success") {
                         $cookies.put('token', msg.data.token);
-                        $cookies.put('user', msg.data.phone);
+                        $cookies.put('user', msg.data.user_id);
                         $scope.message = msg.data.message;
                         $location.path('/Posts');
                     } else {
@@ -555,13 +551,11 @@ helloModule.controller('writerController', function($scope, $cookies) {
     })
 
 
-helloModule.controller('registerController', function($scope, $http) {
+helloModule.controller('registerController', function($scope, $http,$location,$mdToast) {
     $scope.register = function() {
         console.log('Entered');
         if ($scope.name == "" || $scope.name == undefined) {
             $scope.message = "Name is empty"
-        } else if ($scope.mobile == "" || $scope.mobile == undefined) {
-            $scope.message = "Mobile Number is empty";
         } else if ($scope.password == "" || $scope.password == undefined) {
             $scope.message = "Password is empty";
         } else if ($scope.cpassword == "" || $scope.cpassword == undefined) {
@@ -573,22 +567,28 @@ helloModule.controller('registerController', function($scope, $http) {
                 fullname: $scope.name,
                 device_type: "web",
                 login_by: "manual",
-                verified: 'No',
                 password: $scope.password,
-                phone: $scope.mobile,
                 email: $scope.email
             }
             var url = "https://admin.naaradh.in/register"
             $http.post(url, data).then(function(data) {
                 if (data.status == 200) {
                     if (data.data.status == "success") {
-                        console.log(data.data);
-                    } else if (data.data.code == 300) {
-                        console.log(data.data);
-                    } else if (data.data.code == 301) {
-                        console.log(data.data);
-                    } else {
-                        console.log('Error occured First');
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Successfully registered')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                        $location.path('/Login')
+                    } else if (data.data.status == "Failed") {
+                       $scope.message = data.data.message;
+                    } else{
+                        $scope.message = "Error occurred";
                     }
                 } else {
                     console.log('Error Occured');
