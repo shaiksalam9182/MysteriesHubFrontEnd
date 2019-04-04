@@ -42,8 +42,8 @@
                         <div class="md-media-md card-media"><img src="{{o.image}}"></div>
                     </md-card-title-media>
                 </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button ng-click="likeButton()">Like</md-button>
+                <md-card-actions layout="row" layout-align="end center" class="movie_buttons">
+                    <md-button ng-click="likeButton(o.movie_id,$index)" value="{{likesCount}}">Likes: {{o.likes_count}}</md-button>
                     <md-button ng-click="shareButton()">Share</md-button>
                 </md-card-actions>
             </md-card>
