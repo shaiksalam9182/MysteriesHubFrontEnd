@@ -685,7 +685,7 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
 })
 
 
-helloModule.controller('writerController', function($scope, $cookies, $mdToast) {
+helloModule.controller('writerController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog) {
         $scope.user_id = $cookies.get("user_id");
         $scope.token = $cookies.get("token");
         $scope.story = "";
@@ -727,8 +727,19 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast) 
         };
 
         $scope.postStory = function() {
-            console.log("Entered Story", $scope.story);
-            if ($scope.story == "") {
+            console.log($scope.story);
+            if ($scope.postCategory == undefined || $scope.postCategory == "") {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Please Select category')
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            } else if ($scope.story == undefined || $scope.story == "" || $scope.story == "<p><br></p>") {
                 $mdToast.show(
                         $mdToast.simple()
                         .textContent('Story is empty')
@@ -739,8 +750,73 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast) 
                     }).catch(function() {
                         $log.log('Toast failed or was forced to close early by another toast.');
                     });
+
+            } else if ($scope.title == undefined || $scope.title == "") {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Story title is empty')
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
             } else {
-                console.log($scope.storyType);
+                var data = {
+                        user_id: $cookies.get('user_id'),
+                        email: $cookies.get('email'),
+                        token: $cookies.get('token'),
+                        title: $scope.title,
+                        description: $scope.story,
+                    }
+                    // console.log($scope.postCategory)
+                if ($scope.postCategory == "Post") {
+                    var url = "https://admin.naaradh.in/send_post";
+                } else if ($scope.postCategory == "Place") {
+                    var url = "https://admin.naaradh.in/send_place";
+                } else if ($scope.postCategory == "Alien") {
+                    var url = "https://admin.naaradh.in/send_alien";
+                } else if ($scope.postCategory == "Movie") {
+                    var url = "https://admin.naaradh.in/send_movie";
+                }
+
+
+                $http.post(url, data).then(function(data) {
+                    if (data.data.status == "success") {
+                        $mdDialog.show(
+                            $mdDialog.alert()
+                            .clickOutsideToClose(true)
+                            .title('Under Review')
+                            .textContent('You post is successfully posted. We will notify you once it is published.\nThanks for your contribution')
+                            .ariaLabel('Under Review')
+                            .ok('Got it!')
+                        );
+                    } else if (data.data.status == "Failed") {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Error occurred. Sorry for the inconvenience')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+                })
+
             }
         }
 
