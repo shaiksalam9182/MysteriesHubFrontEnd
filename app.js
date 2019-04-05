@@ -177,25 +177,77 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
             user_id: $scope.user_id
         }
 
-        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
-        $http.post("https://admin.naaradh.in/like_post", data).then(function(data) {
-            console.log('like_data', data);
-            if (data.data.status == "success") {
-                if (data.data.delete == 1) {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('Removed your like')
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
+
+        if ($scope.email == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else if ($scope.token == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+
+        } else if ($scope.user_id == "" || $scope.user_id == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else {
+            $http.post("https://admin.naaradh.in/like_post", data).then(function(data) {
+                console.log('like_data', data);
+                if (data.data.status == "success") {
+                    if (data.data.delete == 1) {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Removed your like')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Liked')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+
+
+                    // $scope.likesCount = ;
+                    $scope.dataArray[index].likes_count = data.data.likes_count;
+
                 } else {
                     $mdToast.show(
                             $mdToast.simple()
-                            .textContent('Liked')
+                            .textContent('Error occurred')
                             .position('top right')
                             .hideDelay(3000))
                         .then(function() {
@@ -204,24 +256,11 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
                             $log.log('Toast failed or was forced to close early by another toast.');
                         });
                 }
+            })
+        }
 
+        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
 
-                // $scope.likesCount = ;
-                $scope.dataArray[index].likes_count = data.data.likes_count;
-
-            } else {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Error occurred')
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            }
-        })
 
 
     }
@@ -276,25 +315,76 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) 
             user_id: $scope.user_id
         }
 
-        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
-        $http.post("https://admin.naaradh.in/like_place", data).then(function(data) {
-            console.log('like_data', data);
-            if (data.data.status == "success") {
-                if (data.data.delete == 1) {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('Removed your like')
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
+        if ($scope.email == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else if ($scope.token == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+
+        } else if ($scope.user_id == "" || $scope.user_id == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else {
+            $http.post("https://admin.naaradh.in/like_place", data).then(function(data) {
+                console.log('like_data', data);
+                if (data.data.status == "success") {
+                    if (data.data.delete == 1) {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Removed your like')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Liked')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+
+
+                    // $scope.likesCount = ;
+                    $scope.dataArray[index].likes_count = data.data.likes_count;
+
                 } else {
                     $mdToast.show(
                             $mdToast.simple()
-                            .textContent('Liked')
+                            .textContent('Error occurred')
                             .position('top right')
                             .hideDelay(3000))
                         .then(function() {
@@ -303,24 +393,11 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) 
                             $log.log('Toast failed or was forced to close early by another toast.');
                         });
                 }
+            })
 
+        }
 
-                // $scope.likesCount = ;
-                $scope.dataArray[index].likes_count = data.data.likes_count;
-
-            } else {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Error occurred')
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            }
-        })
+        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
 
 
     }
@@ -431,25 +508,77 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
             user_id: $scope.user_id
         }
 
-        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
-        $http.post("https://admin.naaradh.in/like_alien", data).then(function(data) {
-            console.log('like_data', data);
-            if (data.data.status == "success") {
-                if (data.data.delete == 1) {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('Removed your like')
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
+
+        if ($scope.email == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else if ($scope.token == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+
+        } else if ($scope.user_id == "" || $scope.user_id == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else {
+            $http.post("https://admin.naaradh.in/like_alien", data).then(function(data) {
+                console.log('like_data', data);
+                if (data.data.status == "success") {
+                    if (data.data.delete == 1) {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Removed your like')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Liked')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+
+
+                    // $scope.likesCount = ;
+                    $scope.dataArray[index].likes_count = data.data.likes_count;
+
                 } else {
                     $mdToast.show(
                             $mdToast.simple()
-                            .textContent('Liked')
+                            .textContent('Error occurred')
                             .position('top right')
                             .hideDelay(3000))
                         .then(function() {
@@ -458,24 +587,11 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
                             $log.log('Toast failed or was forced to close early by another toast.');
                         });
                 }
+            })
+        }
 
+        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
 
-                // $scope.likesCount = ;
-                $scope.dataArray[index].likes_count = data.data.likes_count;
-
-            } else {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Error occurred')
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            }
-        })
 
 
     }
@@ -556,25 +672,77 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) 
             user_id: $scope.user_id
         }
 
-        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
-        $http.post("https://admin.naaradh.in/like_movie", data).then(function(data) {
-            console.log('like_data', data);
-            if (data.data.status == "success") {
-                if (data.data.delete == 1) {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('Removed your like')
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
+
+        if ($scope.email == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else if ($scope.token == "" || $scope.email == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+
+        } else if ($scope.user_id == "" || $scope.user_id == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please login to like')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else {
+            $http.post("https://admin.naaradh.in/like_movie", data).then(function(data) {
+                console.log('like_data', data);
+                if (data.data.status == "success") {
+                    if (data.data.delete == 1) {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Removed your like')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Liked')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+
+
+                    // $scope.likesCount = ;
+                    $scope.dataArray[index].likes_count = data.data.likes_count;
+
                 } else {
                     $mdToast.show(
                             $mdToast.simple()
-                            .textContent('Liked')
+                            .textContent('Error occurred')
                             .position('top right')
                             .hideDelay(3000))
                         .then(function() {
@@ -583,24 +751,13 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) 
                             $log.log('Toast failed or was forced to close early by another toast.');
                         });
                 }
+            })
+
+        }
 
 
-                // $scope.likesCount = ;
-                $scope.dataArray[index].likes_count = data.data.likes_count;
 
-            } else {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Error occurred')
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            }
-        })
+        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
 
 
     }
@@ -641,11 +798,18 @@ helloModule.controller('authenticate', function($scope) {
 
 helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log) {
     $scope.openMenu = function($mdMenu, ev) {
-        $scope.phone = $cookies.get("user");
+        $scope.user_id = $cookies.get("user_id");
         $scope.token = $cookies.get("token");
+        $scope.email = $cookies.get('email');
         console.log('cookiesdata', $scope.phone, $scope.token);
-        if ($scope.phone == "" || $scope.token == "") {
+        if ($scope.user_id == "" || $scope.token == "" || $scope.email == "") {
             console.log('userNotLoggedIN');
+            $scope.showLoginOptions = true;
+            $scope.showUserOptions = false;
+            $scope.number = "2";
+            $mdMenu.open(ev);
+        } else if ($scope.user_id == undefined || $scope.token == undefined || $scope.email == undefined) {
+            console.log('userNotLoggedIn-2')
             $scope.showLoginOptions = true;
             $scope.showUserOptions = false;
             $scope.number = "2";
@@ -668,9 +832,10 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
     }
 
     $scope.logout = function() {
-        $cookies.put("user_id", "");
-        $cookies.put("token", "");
-        $cookies.put('email', "");
+        $cookies.remove('user_id');
+        $cookies.remove('token');
+        $cookies.remove('email');
+        $location.path('/Login');
         $mdToast.show(
                 $mdToast.simple()
                 .textContent('Successfully logged out')
@@ -688,6 +853,7 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
 helloModule.controller('writerController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog) {
         $scope.user_id = $cookies.get("user_id");
         $scope.token = $cookies.get("token");
+        $scope.email = $cookies.get('email');
         $scope.story = "";
         $scope.storyType = $scope.postCategory;
 
@@ -695,8 +861,13 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
         console.log($scope.user, $scope.token, "salam");
 
 
-        if ($scope.user_id == "" || $scope.token == "") {
+        if ($scope.user_id == "" || $scope.token == "" || $scope.email == "") {
             console.log('user Not Logged In');
+            $scope.loggedIn = false;
+            $scope.quillDataJSON = "Please login to write a story";
+            $scope.quillDataText = "Please login to write a story";
+            $scope.quillDataHTML = "Please login to write a story";
+        } else if ($scope.user_id == undefined || $scope.token == undefined || $scope.email == undefined) {
             $scope.loggedIn = false;
             $scope.quillDataJSON = "Please login to write a story";
             $scope.quillDataText = "Please login to write a story";

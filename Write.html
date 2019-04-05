@@ -39,7 +39,7 @@
             <br/>
 
             <center>
-                <md-radio-group ng-model="postCategory" layout="row" class="radioGroup">
+                <md-radio-group ng-model="postCategory" layout="row" class="radioGroup" ng-show="loggedIn">
                     <md-radio-button value="Post" class="md-primary">Post</md-radio-button>
                     <md-radio-button value="Place" class="md-primary"> Place </md-radio-button>
                     <md-radio-button value="Alien" class="md-primary">Alien</md-radio-button>
