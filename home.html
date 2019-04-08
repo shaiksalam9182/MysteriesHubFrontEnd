@@ -81,10 +81,10 @@
                                 <md-button>Account</md-button>
                             </md-menu-item>
                             <md-menu-item ng-show="showUserOptions">
-                                <md-button>Notifications</md-button>
+                                <md-button ng-click="goToNotifications()">Notifications</md-button>
                             </md-menu-item>
                             <md-menu-item ng-show="showUserOptions">
-                                <md-button>Feedback</md-button>
+                                <md-button ng-click="goToFeedback()">Feedback</md-button>
                             </md-menu-item>
                             <md-menu-item ng-show="showUserOptions">
                                 <md-button ng-click="logout()">Logout</md-button>

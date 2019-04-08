@@ -104,6 +104,16 @@ p {
     width: 35%;
 }
 
+.md-blockinside {
+    left: 1%;
+    width: 98%;
+}
+
+.notificationContent {
+    left: 15%;
+    width: 71%;
+}
+
 .registerSpan {
     left: 50%;
 }
@@ -156,6 +166,10 @@ p {
     p {
         font-size: 15px;
     }
+    .md-block {
+        /* left: 33%; */
+        width: 95%;
+    }
 }
 
 
@@ -173,6 +187,10 @@ p {
     }
     p {
         font-size: 15px;
+    }
+    .md-block {
+        /* left: 33%; */
+        width: 85%;
     }
 }
 
@@ -192,6 +210,10 @@ p {
     p {
         font-size: 18px
     }
+    .md-block {
+        left: 33%;
+        width: 35%;
+    }
 }
 
 
@@ -209,5 +231,9 @@ p {
     }
     p {
         font-size: 20px;
+    }
+    .md-block {
+        left: 33%;
+        width: 35%;
     }
 }

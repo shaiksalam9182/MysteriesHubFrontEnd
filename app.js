@@ -62,6 +62,20 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'registerController',
     })
 
+    .state('Home.Feedback', {
+        name: 'Feedback',
+        url: '/Feedback',
+        templateUrl: 'feedback.html',
+        controller: 'feedbackController'
+    })
+
+    .state('Home.Notifications', {
+        name: 'Notifications',
+        url: '/Notifications',
+        templateUrl: 'notifications.html',
+        controller: 'notificationsController'
+    })
+
 
     $stateprovideRef = $stateProvider;
 })
@@ -831,6 +845,14 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
         $location.path("/Register");
     }
 
+    $scope.goToFeedback = function() {
+        $location.path("/Feedback")
+    }
+
+    $scope.goToNotifications = function() {
+        $location.path("/Notifications");
+    }
+
     $scope.logout = function() {
         $cookies.remove('user_id');
         $cookies.remove('token');
@@ -1093,6 +1115,92 @@ helloModule.controller('registerController', function($scope, $http, $location, 
 
         }
     }
+})
+
+
+helloModule.controller('feedbackController', function($scope, $mdToast, $log, $http, $cookies) {
+    $scope.submitFeedback = function() {
+        if ($scope.feedbackType == "" || $scope.feedbackType == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please select feedback type')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else if ($scope.feedbackInput == "" || $scope.feedbackInput == undefined) {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Feedback is empty')
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else {
+            // console.log('All good');
+            var data = {
+                user_id: $cookies.get('user_id'),
+                token: $cookies.get('token'),
+                email: $cookies.get('email'),
+                type: $scope.feedbackType,
+                message: $scope.feedbackInput
+            }
+
+            $http.post('https://admin.naaradh.in/send_feedback', data).then(function(data) {
+                if (data.data.status == "success") {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Feedback submitted successfully')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else if (data.data.status == "Failed") {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('An error occurred')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+        }
+    }
+})
+
+helloModule.controller('notificationsController', function($scope, $cookies, $http) {
+    var data = {
+        email: $cookies.get('email'),
+        user_id: $cookies.get('user_id'),
+        token: $cookies.get('token')
+    }
+    $http.post('https://admin.naaradh.in/read_notification', data).then(function(data) {
+        console.log('readFeedbackRes', data);
+    })
 })
 
 function DialogController($scope, $mdDialog) {
