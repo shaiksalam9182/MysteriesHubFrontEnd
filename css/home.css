@@ -104,6 +104,10 @@ p {
     width: 35%;
 }
 
+.md-headline {
+    color: blue;
+}
+
 .md-blockinside {
     left: 1%;
     width: 98%;

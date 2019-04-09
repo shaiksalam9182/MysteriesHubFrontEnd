@@ -1,5 +1,5 @@
 var $stateprovideRef = null;
-var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngMessages']);
+var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngclipboard', 'ngMessages']);
 
 
 helloModule.config(function($stateProvider, $urlRouterProvider) {
@@ -76,6 +76,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'notificationsController'
     })
 
+    .state('Home.Details', {
+        name: 'Details',
+        url: '/Details',
+        templateUrl: 'description.html',
+        controller: 'descriptionController'
+    })
+
 
     $stateprovideRef = $stateProvider;
 })
@@ -136,7 +143,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
 })
 
-helloModule.controller('postbody', function($scope, $http, $cookies, $state, $mdToast, $log) {
+helloModule.controller('postbody', function($scope, $http, $cookies, $state, $mdToast, $log, $location) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -153,20 +160,6 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
         if (msg.data.status == "success") {
             $scope.isLoading = false;
             $scope.dataArray = msg.data.data
-            var post_id;
-            angular.forEach($scope.dataArray, function(item) {
-                // item.description = item.description.replace(/<[^>]+>/gm, "");
-
-                // console.log('itemDescription', item.description.replace(/<[^>]+>/gm, ""));
-                var state = {
-                    name: 'Home.' + item.post_id,
-                    templateUrl: 'description.html',
-                    params: item,
-                    url: '/post',
-                    controller: 'descriptionController'
-                }
-                $stateprovideRef.state(state);
-            })
         } else if (msg.data.status = "Failed") {
             $scope.isLoading = false;
             console.log(msg.data.message);
@@ -279,10 +272,10 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
 
     }
 
-    $scope.shareButton = function() {
+    $scope.shareButton = function(id) {
         $mdToast.show(
                 $mdToast.simple()
-                .textContent('Under Construction')
+                .textContent('Link copied to clipboard')
                 .position('top right')
                 .hideDelay(3000))
             .then(function() {
@@ -300,10 +293,16 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
             return "Likes: " + data;
         }
     }
+
+    $scope.goToDescription = function(id) {
+        $location.path('/Details').search({ id: id, type: "posts" });
+    }
+
+
 })
 
 
-helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) {
+helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, $location) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -424,14 +423,14 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) 
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
                 // item.description = item.description.replace(/<[^>]+>/gm, "");
-                var state = {
-                    name: 'Home.' + item.place_id,
-                    templateUrl: 'description.html',
-                    params: item,
-                    url: '/place',
-                    controller: 'descriptionController'
-                }
-                $stateprovideRef.state(state);
+                // var state = {
+                //     name: 'Home.' + item.place_id,
+                //     templateUrl: 'description.html',
+                //     params: item,
+                //     url: '/place',
+                //     controller: 'descriptionController'
+                // }
+                // $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
@@ -447,7 +446,7 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) 
     $scope.shareButton = function() {
         $mdToast.show(
                 $mdToast.simple()
-                .textContent('Under Construction')
+                .textContent('Link copied to clipboard')
                 .position('top right')
                 .hideDelay(3000))
             .then(function() {
@@ -465,10 +464,14 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast) 
             return "Likes: " + data;
         }
     }
+
+    $scope.goToDescription = function(id) {
+        $location.path('/Details').search({ id: id, type: "places" });
+    }
 })
 
 
-helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, $log) {
+helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, $log, $location) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -488,14 +491,14 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
                 // item.description = item.description.replace(/<[^>]+>/gm, "");
-                var state = {
-                    name: 'Home.' + item.alienPost_id,
-                    templateUrl: 'description.html',
-                    params: item,
-                    url: '/alien',
-                    controller: 'descriptionController'
-                }
-                $stateprovideRef.state(state);
+                // var state = {
+                //     name: 'Home.' + item.alienPost_id,
+                //     templateUrl: 'description.html',
+                //     params: item,
+                //     url: '/alien',
+                //     controller: 'descriptionController'
+                // }
+                // $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
@@ -613,7 +616,7 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
     $scope.shareButton = function() {
         $mdToast.show(
                 $mdToast.simple()
-                .textContent('Under Construction')
+                .textContent('Link copied to clipboard')
                 .position('top right')
                 .hideDelay(3000))
             .then(function() {
@@ -631,9 +634,13 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
             return "Likes: " + data;
         }
     }
+
+    $scope.goToDescription = function(id) {
+        $location.path('/Details').search({ id: id, type: 'aliens' });
+    }
 })
 
-helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) {
+helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, $location) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -652,14 +659,14 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) 
             var post_id;
             angular.forEach($scope.dataArray, function(item) {
                 // item.description = item.description.replace(/<[^>]+>/gm, "");
-                var state = {
-                    name: 'Home.' + item.movie_id,
-                    templateUrl: 'description.html',
-                    params: item,
-                    url: '/movie',
-                    controller: 'descriptionController'
-                }
-                $stateprovideRef.state(state);
+                // var state = {
+                //     name: 'Home.' + item.movie_id,
+                //     templateUrl: 'description.html',
+                //     params: item,
+                //     url: '/movie',
+                //     controller: 'descriptionController'
+                // }
+                // $stateprovideRef.state(state);
             })
         } else if (msg.data.status = "Failed") {
             console.log(msg.data.message);
@@ -779,7 +786,7 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) 
     $scope.shareButton = function() {
         $mdToast.show(
                 $mdToast.simple()
-                .textContent('Under Construction')
+                .textContent('Link copied to clipboard')
                 .position('top right')
                 .hideDelay(3000))
             .then(function() {
@@ -797,13 +804,52 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast) 
             return "Likes: " + data;
         }
     }
+
+
+    $scope.goToDescription = function(id) {
+        $location.path('/Details').search({ id: id, type: 'movies' });
+    }
 })
 
 
-helloModule.controller('descriptionController', function($scope, $stateParams) {
-    console.log($stateParams.title);
-    $scope.cardtitle = $stateParams.title;
-    $scope.carddescription = $stateParams.description;
+helloModule.controller('descriptionController', function($scope, $location, $http, $mdToast) {
+    $scope.id = $location.search().id;
+    $scope.type = $location.search().type;
+    var data = {
+        id: $scope.id,
+        type: $scope.type
+    }
+    $http.post("https://admin.naaradh.in/get_data", data).then(function(data) {
+            if (data.data.status == "success") {
+                console.log(data.data);
+                $scope.cardtitle = data.data.data.title;
+                $scope.carddescription = data.data.data.description;
+            } else if (data.data.status == "Failed") {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            } else {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent("Error occurred")
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            }
+        })
+        // $scope.cardtitle = $location.search().paramTitle;
+        // $scope.carddescription = $location.search().paramDescription;
 })
 
 helloModule.controller('authenticate', function($scope) {
