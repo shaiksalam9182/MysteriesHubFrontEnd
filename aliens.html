@@ -34,9 +34,9 @@
             <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
                 <md-card-title>
                     <md-card-title-text>
-                        <a ui-sref="Home.{{o.alienPost_id}}" href="Home.{{o.alienPost_id}}" ui-sref-active="active">
-                            <span class="md-headline">{{o.title}}</span>
-                        </a>
+                        <!-- <a ui-sref="Home.{{o.alienPost_id}}" href="Home.{{o.alienPost_id}}" ui-sref-active="active"> -->
+                        <span class="md-headline" ng-click="goToDescription(o.alienPost_id)">{{o.title}}</span>
+                        <!-- </a> -->
                         <span class="md-subhead">{{formatText(o.description)}}</span>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -45,7 +45,7 @@
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="end center">
                     <md-button ng-click="likeButton(o.alienPost_id,$index)" value="{{likesCount}}">Likes: {{o.likes_count}}</md-button>
-                    <md-button ng-click="shareButton()">Share</md-button>
+                    <md-button ng-click="shareButton()" ngclipboard data-clipboard-text="https://naaradh.in/#!/Details?id={{o.alienPost_id}}&type=aliens">Share</md-button>
                 </md-card-actions>
             </md-card>
 
