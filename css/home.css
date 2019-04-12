@@ -66,7 +66,16 @@ p {
 
 .navbarhome {
     width: 70%;
+    height: 30%;
+    position: relative;
     text-align: left;
+}
+
+.md-padding {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
 }
 
 .md-subhead {
@@ -120,6 +129,10 @@ p {
 
 .registerSpan {
     left: 50%;
+}
+
+[ng-click] {
+    cursor: pointer;
 }
 
 .linearProgress {
