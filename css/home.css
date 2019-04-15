@@ -115,13 +115,8 @@ p {
 }
 
 .md-headline {
-    color: #000000;
+    color: #3b96f8;
     font-weight: bold;
-}
-
-.md-subhead .md-blockinside {
-    left: 1%;
-    width: 98%;
 }
 
 .notificationContent {
@@ -131,6 +126,24 @@ p {
 
 .registerSpan {
     left: 50%;
+}
+.md-button.md-default-theme.md-accent, .md-button.md-accent{
+    color:#3b96f8;
+}
+
+md-nav-bar.md-default-theme md-nav-ink-bar, md-nav-bar md-nav-ink-bar{
+    background-color: #3b96f8;
+}
+md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card md-card-header md-card-header-text .md-subhead, md-card.md-default-theme md-card-title md-card-title-text:not(:only-child) .md-subhead, md-card md-card-title md-card-title-text:not(:only-child) .md-subhead{
+    color: #000000;
+}
+.actionButtons{
+    background-color: #3b96f8;
+    color: white;
+}
+
+.actionButtons a:hover{
+    background-color: #3b96f8;
 }
 
 [ng-click] {
