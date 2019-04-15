@@ -66,9 +66,9 @@ p {
 
 .navbarhome {
     width: 70%;
-    height: 30%;
     position: relative;
     text-align: left;
+    height: 15%;
 }
 
 .md-padding {
@@ -79,6 +79,7 @@ p {
 }
 
 .md-subhead {
+    color: #000000;
     text-overflow: ellipsis;
     word-wrap: break-word;
     overflow: hidden;
@@ -114,10 +115,11 @@ p {
 }
 
 .md-headline {
-    color: blue;
+    color: #000000;
+    font-weight: bold;
 }
 
-.md-blockinside {
+.md-subhead .md-blockinside {
     left: 1%;
     width: 98%;
 }
