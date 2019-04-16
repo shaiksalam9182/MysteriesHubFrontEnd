@@ -68,7 +68,7 @@ p {
 
 .navbarhome {
     width: 70%;
-    position: relative;
+    position: fixed;
     text-align: left;
     height: 15%;
 }
@@ -119,6 +119,7 @@ p {
 .md-headline {
     color: #3b96f8;
     font-weight: bold;
+    font-size: 15px;
 }
 
 .notificationContent {
@@ -145,11 +146,13 @@ md-card md-card-header md-card-header-text .md-subhead,
 md-card.md-default-theme md-card-title md-card-title-text:not(:only-child) .md-subhead,
 md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
     color: #000000;
+    font-size: 13px;
 }
 
 .actionButtons {
     background-color: #3b96f8;
     color: white;
+    font-size: 10px;
 }
 
 .actionButtons a:hover {
@@ -192,7 +195,7 @@ md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
 }
 
 ul {
-    font-size: 14px;
+    font-size: 12px;
     padding-left: 0px;
     padding-top: 10px;
 }

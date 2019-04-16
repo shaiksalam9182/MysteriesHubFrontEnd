@@ -857,6 +857,7 @@ helloModule.controller('authenticate', function($scope) {
 })
 
 helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log) {
+   $scope.navItem = "Posts";
     $scope.openMenu = function($mdMenu, ev) {
         $scope.user_id = $cookies.get("user_id");
         $scope.token = $cookies.get("token");
