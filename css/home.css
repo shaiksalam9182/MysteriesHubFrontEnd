@@ -55,8 +55,10 @@ p {
 }
 
 .cardMaterial {
-    width: 100%;
+    width: 50%;
     text-align: left;
+    margin-left: 15%;
+    /* float: left; */
 }
 
 .cardMaterial a:hover {
@@ -127,22 +129,30 @@ p {
 .registerSpan {
     left: 50%;
 }
-.md-button.md-default-theme.md-accent, .md-button.md-accent{
-    color:#3b96f8;
+
+.md-button.md-default-theme.md-accent,
+.md-button.md-accent {
+    color: #3b96f8;
 }
 
-md-nav-bar.md-default-theme md-nav-ink-bar, md-nav-bar md-nav-ink-bar{
+md-nav-bar.md-default-theme md-nav-ink-bar,
+md-nav-bar md-nav-ink-bar {
     background-color: #3b96f8;
 }
-md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card md-card-header md-card-header-text .md-subhead, md-card.md-default-theme md-card-title md-card-title-text:not(:only-child) .md-subhead, md-card md-card-title md-card-title-text:not(:only-child) .md-subhead{
+
+md-card.md-default-theme md-card-header md-card-header-text .md-subhead,
+md-card md-card-header md-card-header-text .md-subhead,
+md-card.md-default-theme md-card-title md-card-title-text:not(:only-child) .md-subhead,
+md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
     color: #000000;
 }
-.actionButtons{
+
+.actionButtons {
     background-color: #3b96f8;
     color: white;
 }
 
-.actionButtons a:hover{
+.actionButtons a:hover {
     background-color: #3b96f8;
 }
 
@@ -167,9 +177,31 @@ md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card
     margin-right: 15%;
 }
 
+.sidebar {
+    float: right;
+    margin-right: 16%;
+    width: 17%;
+    height: auto;
+    color: black;
+    border-width: 2px;
+    border-color: #3b96f8;
+    border-style: solid;
+    border-radius: 3px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+ul {
+    font-size: 14px;
+    padding-left: 0px;
+    padding-top: 10px;
+}
+
 @media only screen and (max-width: 600px) {
     .cardMaterial {
-        width: 100%;
+        width: 70%;
+        margin-left: 15%;
+        /* float: left; */
     }
     .navbarhome {
         width: 100%;
@@ -187,7 +219,9 @@ md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card
 
 @media only screen and (min-width: 600px) {
     .cardMaterial {
-        width: 100%;
+        width: 70%;
+        margin-left: 15%;
+        /* float: left; */
     }
     .navbarhome {
         width: 100%;
@@ -209,7 +243,9 @@ md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card
 
 @media only screen and (min-width: 768px) {
     .cardMaterial {
-        width: 100%;
+        width: 70%;
+        margin-left: 15%;
+        /* float: left; */
     }
     .navbarhome {
         width: 100%;
@@ -231,7 +267,9 @@ md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card
 
 @media only screen and (min-width: 992px) {
     .cardMaterial {
-        width: 70%;
+        width: 50%;
+        margin-left: 15%;
+        /* float: left; */
     }
     .navbarhome {
         width: 70%;
@@ -253,7 +291,9 @@ md-card.md-default-theme md-card-header md-card-header-text .md-subhead, md-card
 
 @media only screen and (min-width: 1200px) {
     .cardMaterial {
-        width: 70%;
+        width: 50%;
+        margin-left: 15%;
+        /* float: left; */
     }
     .navbarhome {
         width: 70%;

@@ -26,44 +26,43 @@
 </head>
 
 <body ng-controller="postbody">
-    <center>
-        <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
-        <br>
-        <div class="cardMaterial" ng-repeat="o in dataArray">
+    <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+    <br>
+    <div class="sideBar">
+        <h2 style="color:#3b96f8">Recent Posts:</h2>
+        <ul ng-repeat="o in dataArray">
+            <p ng-click="goToDescription(o.post_id)" style="font-size:16px">{{o.title}}</p>
+            <hr/>
+        </ul>
+        <script type="text/javascript" language="javascript">
+            var aax_size = '300x250';
+            var aax_pubname = 'naaradh-21';
+            var aax_src = '302';
+        </script>
+        <script type="text/javascript" language="javascript" src="http://c.amazon-adsystem.com/aax2/assoc.js"></script>
 
-            <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
-                <md-card-title>
-                    <md-card-title-text>
-                        <!-- <a ui-sref="Home.{{o.post_id}}" href="Home.{{o.post_id}}" ui-sref-active="active"> -->
-                        <span class="md-headline" ng-click="goToDescription(o.post_id)">{{o.title}}</span>
-                        <!-- </a> -->
-                        <span class="md-subhead">{{formatText(o.description)}}</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-md card-media"><img src="{{o.image}}"></div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button class="actionButtons" ng-hover="myStyle={background-color='black'}"ng-click="likeButton(o.post_id,$index)" value="{{likesCount}}">Likes: {{o.likes_count}}</md-button>
-                    <md-button class="actionButtons" ng-click="shareButton(o.post_id)" ngclipboard data-clipboard-text="https://naaradh.in/#!/Details?id={{o.post_id}}&type=posts" id="postShare">Share</md-button>
-                </md-card-actions>
-            </md-card>
-        </div>
-    </center>
+    </div>
+    <div class="cardMaterial" ng-repeat="o in dataArray">
 
+        <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <!-- <a ui-sref="Home.{{o.post_id}}" href="Home.{{o.post_id}}" ui-sref-active="active"> -->
+                    <span class="md-headline" ng-click="goToDescription(o.post_id)">{{o.title}}</span>
+                    <!-- </a> -->
+                    <span class="md-subhead">{{formatText(o.description)}}</span>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <div class="md-media-md card-media"><img src="{{o.image}}"></div>
+                </md-card-title-media>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="actionButtons" ng-hover="myStyle={background-color='black'}" ng-click="likeButton(o.post_id,$index)" value="{{likesCount}}">Likes: {{o.likes_count}}</md-button>
+                <md-button class="actionButtons" ng-click="shareButton(o.post_id)" ngclipboard data-clipboard-text="https://naaradh.in/#!/Details?id={{o.post_id}}&type=posts" id="postShare">Share</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
 
-
-
-    <!-- <div class="card cardContent" ng-model="maincard" ng-repeat="o in dataArray">
-        <div class="card-body">
-            <a class="nav-link" ui-sref="{{o.post_id}}" ui-sref-active="active">
-                <h4 class="card-title" ng-model="cardtitle">{{o.title}}</h4>
-            </a>
-            <!-- <p class="card-text" ng-bind-html="o.description"></p> -->
-    <!-- <a href="#" class="card-link">View Post</a>
-            <a href="#" class="card-link">Share</a>
-        </div>
-    </div> -->
 
 </body>
 
