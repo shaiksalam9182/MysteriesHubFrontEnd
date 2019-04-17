@@ -67,17 +67,18 @@ p {
 }
 
 .navbarhome {
-    width: 70%;
-    position: relative;
+    width: 100%;
+    position: fixed;
     text-align: left;
-    height: 15%;
+    height: 7%;
+    background-color: #fafafa;
 }
 
 .md-padding {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    left: 0;
+    width: 71%;
+    left: 14%;
 }
 
 .md-subhead {
@@ -119,6 +120,7 @@ p {
 .md-headline {
     color: #3b96f8;
     font-weight: bold;
+    font-size: 15px;
 }
 
 .notificationContent {
@@ -145,11 +147,13 @@ md-card md-card-header md-card-header-text .md-subhead,
 md-card.md-default-theme md-card-title md-card-title-text:not(:only-child) .md-subhead,
 md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
     color: #000000;
+    font-size: 13px;
 }
 
 .actionButtons {
     background-color: #3b96f8;
     color: white;
+    font-size: 10px;
 }
 
 .actionButtons a:hover {
@@ -192,7 +196,7 @@ md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
 }
 
 ul {
-    font-size: 14px;
+    font-size: 12px;
     padding-left: 0px;
     padding-top: 10px;
 }
@@ -272,7 +276,7 @@ ul {
         /* float: left; */
     }
     .navbarhome {
-        width: 70%;
+        width: 100%;
     }
     .cardContentdescription {
         width: 70%;
@@ -296,7 +300,7 @@ ul {
         /* float: left; */
     }
     .navbarhome {
-        width: 70%;
+        width: 100%;
     }
     .cardContentdescription {
         width: 70%;

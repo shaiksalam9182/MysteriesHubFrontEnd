@@ -26,12 +26,14 @@
 </head>
 
 <body ng-controller="postbody">
-    <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+    <center>
+        <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+    </center>
     <br>
     <div class="sideBar">
-        <h2 style="color:#3b96f8">Recent Posts:</h2>
+        <h2 style="color:#3b96f8;font-size: 15px">Recent Posts:</h2>
         <ul ng-repeat="o in dataArray">
-            <p ng-click="goToDescription(o.post_id)" style="font-size:16px">{{o.title}}</p>
+            <p ng-click="goToDescription(o.post_id)" style="font-size:13px">{{o.title}}</p>
             <hr/>
         </ul>
         <script type="text/javascript" language="javascript">
