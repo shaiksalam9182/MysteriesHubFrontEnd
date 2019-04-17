@@ -67,17 +67,18 @@ p {
 }
 
 .navbarhome {
-    width: 70%;
+    width: 100%;
     position: fixed;
     text-align: left;
-    height: 15%;
+    height: 7%;
+    background-color: #fafafa;
 }
 
 .md-padding {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    left: 0;
+    width: 71%;
+    left: 14%;
 }
 
 .md-subhead {
@@ -275,7 +276,7 @@ ul {
         /* float: left; */
     }
     .navbarhome {
-        width: 70%;
+        width: 100%;
     }
     .cardContentdescription {
         width: 70%;
@@ -299,7 +300,7 @@ ul {
         /* float: left; */
     }
     .navbarhome {
-        width: 70%;
+        width: 100%;
     }
     .cardContentdescription {
         width: 70%;
