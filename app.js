@@ -265,11 +265,6 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
                 }
             })
         }
-
-        // console.log('cookiesData', $scope.post_id, $scope.email, $scope.token, $scope.user_id);
-
-
-
     }
 
     $scope.shareButton = function(id) {
@@ -857,7 +852,7 @@ helloModule.controller('authenticate', function($scope) {
 })
 
 helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log) {
-   $scope.navItem = "Posts";
+    $scope.navItem = "Posts";
     $scope.openMenu = function($mdMenu, ev) {
         $scope.user_id = $cookies.get("user_id");
         $scope.token = $cookies.get("token");
@@ -1061,7 +1056,7 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
         }
 
     })
-    .directive('quillEditor', function($compile) {
+    .directive('quillEditor', function($compile, $http) {
         return {
             restrict: 'E',
             link: function($scope, $element) {
@@ -1096,6 +1091,49 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
                     placeholder: 'Compose an epic...',
                     theme: 'snow' // or 'bubble'
                 });
+
+
+                quill.getModule('toolbar').addHandler('image', () => {
+                    selectLocalImage();
+                });
+
+
+                selectLocalImage = function() {
+                    console.log('Clicked on select localImage');
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.click();
+
+                    input.onchange = () => {
+                        const file = input.files[0];
+                        if (/^image\//.test(file.type)) {
+                            saveToServer(file);
+                        } else {
+                            console.warn('You could only upload images.');
+                        }
+                    }
+                }
+
+                saveToServer = function(file) {
+                    console.log('on save to server');
+                    var fd = new FormData();
+                    fd.append('upload', file);
+
+                    $http.post('https://admin.naaradh.in/upload', fd, {
+                        withCredentials: false,
+                        headers: { 'Content-Type': undefined },
+                        transformRequest: angular.identity
+                    }).then(function(data) {
+                        insertInEditor(data.data);
+                    })
+                }
+
+                insertInEditor = function(data) {
+                    const range = quill.getSelection();
+                    console.log('')
+                    quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
+                }
+
 
                 quill.on('text-change', function() {
                     var delta = quill.getContents();
