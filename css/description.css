@@ -1,0 +1,60 @@
+.cardContentdescription {
+    width: 70%;
+    height: auto;
+    overflow: hidden;
+    margin: 3%;
+    text-align: left;
+}
+
+@media only screen and (max-width: 600px) {
+    .cardContentdescription {
+        width: 100%;
+    }
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+
+@media only screen and (min-width: 600px) {
+    .cardContentdescription {
+        width: 100%;
+    }
+}
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+
+@media only screen and (min-width: 768px) {
+    .cardContentdescription {
+        width: 100%;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+@media only screen and (min-width: 992px) {
+    .cardContentdescription {
+        width: 70%;
+    }
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+@media only screen and (min-width: 1200px) {
+    .cardContentdescription {
+        width: 70%;
+    }
+}
+
+img {
+    width: 30%;
+    height: 30%;
+}
+
+.noDescription {
+    width: 22%;
+    margin-left: 23%;
+    margin-top: 4.5%;
+}
