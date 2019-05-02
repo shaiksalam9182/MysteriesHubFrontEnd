@@ -307,8 +307,73 @@ ul {
     }
 }
 
-@media screen and (min-width:1101px) and (max-width:1400px) {}
+@media screen and (min-width:1101px) and (max-width:1400px) {
+    .sideBar {
+        width: 32%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 2%;
+    }
+    .navbarhome {
+        height: 7%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        width: 65%;
+        text-align: left;
+    }
+    .noDescription {
+        width: 35%;
+        margin-left: 23%;
+        margin-top: 2%;
+    }
+    .logoTitle {
+        margin-right: 30%;
+        margin-top: 2%;
+    }
+}
 
-@media screen and (min-width:1401px) and (max-width:1700px) {}
+@media screen and (min-width:1401px) and (max-width:1700px) {
+    .logoTitle {
+        margin-right: 11%;
+        margin-top: 8%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        width: 63%;
+        text-align: left;
+    }
+    .sideBar {
+        width: 24%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 10%;
+    }
+}
 
-@media screen and (min-width:1701px) and (max-width:2000px) {}
+@media screen and (min-width:1701px) and (max-width:2000px) {
+    .logoTitle {
+        margin-right: 19%;
+        margin-top: 10%;
+    }
+    .cardMaterial {
+        margin-left: 3%;
+        width: 66%;
+        text-align: left;
+    }
+    .sideBar {
+        width: 19%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 10%;
+    }
+}
