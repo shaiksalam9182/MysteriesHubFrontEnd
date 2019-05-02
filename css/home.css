@@ -235,7 +235,8 @@ ul {
         height: 7%;
     }
     .logoTitle {
-        margin-right: -23%;
+        margin-right: -37%;
+        font-size: 13px;
     }
     .noDescription {
         width: 72%;
