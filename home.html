@@ -41,65 +41,11 @@
 </head>
 
 <body ng-controller='homeController'>
-    <center>
 
-        <div class="navbarhome">
-            <div style="width:10%">
-                <img class="noDescription" src="img/nn_logo.png" alt="logo">
-                <h4 class="logoTitle">Naaradh</h4>
+    <div class="sidebarHome">
 
-            </div>
-
-            <md-content class="md-padding">
-                <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="navItem" nav-bar-aria-label="navigation links">
-                    <md-nav-item md-nav-sref="Home.Posts" name="Posts">
-                        Posts
-                    </md-nav-item>
-                    <md-nav-item md-nav-sref="Home.Places" name="Places">
-                        Places
-                    </md-nav-item>
-                    <md-nav-item md-nav-sref="Home.Aliens" name="Aliens">
-                        Aliens
-                    </md-nav-item>
-                    <md-nav-item md-nav-sref="Home.Movies" name="Movies">
-                        Movies
-                    </md-nav-item>
-                    <md-nav-item md-nav-sref="Home.Write" name="WriteStory">
-                        Write a story
-                    </md-nav-item>
-                    <span flex></span>
-                    <!-- <a ui-sref="Home.Login" class="md-button"></a> -->
-                    <md-menu>
-                        <md-button class="md-icon-button" ng-click="openMenu($mdMenu,$event)">
-                            <md-icon md-svg-icon="img/avatar.svg"></md-icon>
-                        </md-button>
-                        <md-menu-content width={{number}}>
-                            <!-- <md-menu-item ng-show="showUserOptions">
-                                <md-button>Account</md-button>
-                            </md-menu-item> -->
-                            <md-menu-item ng-show="showUserOptions">
-                                <md-button ng-click="goToNotifications()">Notifications</md-button>
-                            </md-menu-item>
-                            <md-menu-item ng-show="showUserOptions">
-                                <md-button ng-click="goToFeedback()">Feedback</md-button>
-                            </md-menu-item>
-                            <md-menu-item ng-show="showUserOptions">
-                                <md-button ng-click="logout()">Logout</md-button>
-                            </md-menu-item>
-                            <md-menu-item ng-show="showLoginOptions">
-                                <md-button ng-click="goToLogin()">Login</md-button>
-                            </md-menu-item>
-                            <md-menu-item ng-show="showLoginOptions">
-                                <md-button ng-click="goToRegister();">Register</md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </md-nav-bar>
-            </md-content>
-        </div>
-    </center>
-    <br><br><br><br>
-    <div ui-view>
+    </div>
+    <div class="detailsHome" ui-view>
 
     </div>
 

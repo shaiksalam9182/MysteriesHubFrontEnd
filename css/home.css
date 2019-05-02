@@ -110,11 +110,18 @@ p {
 
 .loginPanel {
     font-size: 15px;
+    border-width: 2px;
+    border-color: #3b96f8;
+    border-style: solid;
+    border-radius: 3px;
+    width: 26%;
+    margin-left: 39%;
+    margin-top: 12%;
 }
 
 .md-block {
-    left: 33%;
-    width: 35%;
+    left: 1%;
+    width: 97%;
 }
 
 .md-headline {
@@ -376,4 +383,17 @@ ul {
         border-radius: 3px;
         margin-right: 10%;
     }
+}
+
+.sidebarHome {
+    width: 20%;
+    background-color: #000000;
+    height: 100%;
+}
+
+.detailsHome {
+    width: 80%;
+    background-color: #3b96f8;
+    margin-left: 20%;
+    height: 100%;
 }

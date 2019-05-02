@@ -3,7 +3,7 @@ var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router
 
 
 helloModule.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.when("", "/Posts");
+    $urlRouterProvider.when("", "/Login");
 
     $stateProvider
         .state('Home.Posts', {
@@ -41,7 +41,7 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'homeController'
     })
 
-    .state('Home.Login', {
+    .state('Login', {
         name: 'Login',
         url: '/Login',
         templateUrl: 'login.html',
@@ -88,7 +88,7 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
 })
 
 
-helloModule.controller('hello', function($scope, $http, $cookies, $location) {
+helloModule.controller('hello', function($scope, $http, $cookies, $location, $mdDialog) {
     $scope.student = {
         firstname: 'salam',
         lastname: 'shaik'
@@ -122,18 +122,30 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
                 console.log(msg);
                 if (msg.status == 200) {
                     if (msg.data.status == "success") {
+                        $scope.calling = false;
                         $cookies.put('token', msg.data.token);
                         $cookies.put('user_id', msg.data.user_id);
                         $cookies.put('email', msg.data.email);
                         $scope.message = msg.data.message;
                         $location.path('/Posts');
                     } else {
+                        $scope.calling = false;
                         $scope.message = msg.message;
+                        $mdDialog.show(
+                            $mdDialog.alert()
+                            .clickOutsideToClose(true)
+                            .title('Message')
+                            .textContent(msg.data.message)
+                            .ariaLabel('Under Review')
+                            .ok('Ok')
+                        );
                     }
                 } else if (msg.status == 400) {
+                    $scope.calling = false;
                     console.log(msg.data);
                     $scope.message = msg.data
                 } else {
+                    $scope.calling = false;
                     $scope.message = "Error occurred"
                 }
             })

@@ -40,25 +40,28 @@
         <center>
             <md-progress-linear md-mode="indeterminate" class="linearProgress" ng-show="calling"></md-progress-linear>
         </center>
+
+
+
         <center>
-            <h1>Login</h1>
+            <h4>Admin Login</h4>
         </center>
+        <form>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>E-mail</label>
+                <input ng-model="email" required id="email" name="email" type="email">
+            </md-input-container>
 
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>E-mail</label>
-            <input ng-model="email" required id="email" name="email" type="email">
-        </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Password</label>
+                <input ng-model="password" required id="password" name="password" type="password">
+            </md-input-container>
 
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Password</label>
-            <input ng-model="password" required id="password" name="password" type="password">
-        </md-input-container>
-
-        <center><span>{{message}}</span></center>
-        <center>
-            <md-button class="md-raised md-primary" ng-click="authenticate()">Login</md-button>
-        </center>
-
+            <center><span>{{message}}</span></center>
+            <center>
+                <md-button class="md-raised md-primary" ng-click="authenticate()">Login</md-button>
+            </center>
+        </form>
     </div>
 
 </body>
