@@ -70,7 +70,7 @@ p {
     width: 100%;
     position: fixed;
     text-align: left;
-    height: 7%;
+    height: 63px;
     background-color: #fafafa;
 }
 
@@ -231,11 +231,12 @@ ul {
         padding-left: 10px;
         margin-left: 7%;
     }
-    .navbarhome {
+    /* .navbarhome {
         height: 7%;
-    }
+    } */
     .logoTitle {
-        margin-right: -23%;
+        margin-right: -37%;
+        font-size: 13px;
     }
     .noDescription {
         width: 72%;
@@ -264,9 +265,9 @@ ul {
         padding-left: 10px;
         margin-left: 8%;
     }
-    .navbarhome {
+    /* .navbarhome {
         height: 8%;
-    }
+    } */
     .logoTitle {
         margin-right: -18%;
     }
@@ -292,9 +293,9 @@ ul {
         border-radius: 3px;
         margin-right: 0%;
     }
-    .navbarhome {
+    /* .navbarhome {
         height: 7%;
-    }
+    } */
     .cardMaterial {
         margin-left: 0;
         width: 65%;
@@ -317,9 +318,9 @@ ul {
         border-radius: 3px;
         margin-right: 2%;
     }
-    .navbarhome {
+    /* .navbarhome {
         height: 7%;
-    }
+    } */
     .cardMaterial {
         margin-left: 0;
         width: 65%;
