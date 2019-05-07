@@ -48,6 +48,10 @@ p {
     border-radius: 0;
 }
 
+.md-block {
+    border-color: #3b96f8;
+}
+
 .navBardemoBasicUsage md-content .ext-content {
     padding: 50px;
     margin: 20px;
@@ -202,6 +206,10 @@ md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
     padding-left: 10px;
 }
 
+.inputlabel {
+    color: #3b96f8
+}
+
 ul {
     font-size: 12px;
     padding-left: 0px;
@@ -215,8 +223,8 @@ ul {
 }
 
 .noDescription {
-    width: 22%;
-    margin-left: 23%;
+    width: 71px;
+    margin-left: 94px;
     margin-top: 4.5%;
 }
 
@@ -243,11 +251,6 @@ ul {
     }
     .logoTitle {
         margin-right: -23%;
-    }
-    .noDescription {
-        width: 72%;
-        margin-left: 23%;
-        margin-top: 4.5%;
     }
     .cardMaterial {
         margin-left: 0;
@@ -282,11 +285,6 @@ ul {
         text-align: left;
         width: 100%;
     }
-    .noDescription {
-        width: 57%;
-        margin-left: 23%;
-        margin-top: 4.5%;
-    }
 }
 
 @media screen and (min-width: 801px) and (max-width:1100px) {
@@ -307,11 +305,6 @@ ul {
         width: 65%;
         text-align: left;
     }
-    .noDescription {
-        width: 35%;
-        margin-left: 23%;
-        margin-top: 2%;
-    }
 }
 
 @media screen and (min-width:1101px) and (max-width:1400px) {
@@ -331,11 +324,6 @@ ul {
         margin-left: 0;
         width: 65%;
         text-align: left;
-    }
-    .noDescription {
-        width: 35%;
-        margin-left: 23%;
-        margin-top: 2%;
     }
     .logoTitle {
         margin-right: 30%;
@@ -392,8 +380,21 @@ ul {
 }
 
 .detailsHome {
-    width: 80%;
+    width: 82%;
     background-color: #3b96f8;
-    margin-left: 20%;
-    height: 100%;
+    margin-left: 16%;
+    height: 100vh;
+}
+
+.adminpanelsidebar {
+    width: 14%;
+    height: 100vh;
+    background-color: #3b96f8;
+    border-radius: 3px;
+    float: left;
+}
+
+.md-button.md-default-theme.md-primary,
+.md-button.md-primary {
+    color: white;
 }
