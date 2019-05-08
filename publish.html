@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107044558-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-107044558-6');
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+    <!--   <script src="http://rawgit.com/kensnyder/quill-image-resize-module/master/image-resize.min.js"></script> -->
+
+
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.2.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
+</head>
+
+<body>
+    <md-input-container class="titleInput">
+        <label>Title of the story</label>
+        <input ng-model="title" required>
+    </md-input-container>
+    <center>
+        <div class="container" ng-controller="publishController">
+            <quill-editor quill-data="publishController.quillData" quill-config="publishController.quillConfig">
+            </quill-editor>
+
+            <br/>
+
+            <center>
+                <md-radio-group ng-model="postCategory" layout="row" class="radioGroup">
+                    <md-radio-button value="Post" class="md-primary">Post</md-radio-button>
+                    <md-radio-button value="Place" class="md-primary"> Place </md-radio-button>
+                    <md-radio-button value="Alien" class="md-primary">Alien</md-radio-button>
+                    <md-radio-button value="Movie" class="md-primary">Movie</md-radio-button>
+                </md-radio-group>
+            </center>
+            <br>
+            <md-button ng-click="postStory()" class="md-raised md-primary">Submit Your Story</md-button>
+            <br/>
+            <div ng-bind-html="quillDataHTML">
+            </div>
+            <script src="https://cdn.quilljs.com/1.2.6/quill.js"></script>
+            <script>
+            </script>
+        </div>
+    </center>
+
+</body>
+
+</html>

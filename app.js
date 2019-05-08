@@ -6,12 +6,33 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/Login");
 
     $stateProvider
-        .state('Home.Posts', {
-            name: 'Posts',
-            url: '/Posts',
-            templateUrl: 'posts.html',
-            controller: 'postbody'
+        .state('Home.Dashboard', {
+            name: 'Dashboard',
+            url: '/Dashboard',
+            templateUrl: 'dashboard.html',
+            controller: 'dashboardController'
         })
+
+    .state('Home.Users', {
+        name: 'Users',
+        url: '/Users',
+        templateUrl: 'users.html',
+        controller: 'userController'
+    })
+
+    .state('Home.Approvlas', {
+        name: 'Approvals',
+        url: '/Approvals',
+        templateUrl: 'approvals.html',
+        controller: 'approvalsController'
+    })
+
+    .state('Home.Publish', {
+        name: 'Publish',
+        url: '/Publish',
+        templateUrl: 'publish.html',
+        controller: 'publishController'
+    })
 
     .state('Home.Places', {
         name: 'Places',
@@ -127,7 +148,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location, $md
                         $cookies.put('user_id', msg.data.user_id);
                         $cookies.put('email', msg.data.email);
                         $scope.message = msg.data.message;
-                        $location.path('/Posts');
+                        $location.path('/Dashboard');
                     } else {
                         $scope.calling = false;
                         $scope.message = msg.message;
@@ -907,6 +928,26 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
         $location.path("/Notifications");
     }
 
+    $scope.goToUsers = function() {
+        $location.path('/Users');
+    }
+
+    $scope.goToPublish = function() {
+        $location.path('/Publish');
+    }
+
+    $scope.goToApprovals = function() {
+        $location.path('/Approvals');
+    }
+
+    $scope.goToHome = function() {
+        $location.path('/Dashboard');
+    }
+
+    $scope.goToLogout = function() {
+        $location.path('/Login')
+    }
+
     $scope.logout = function() {
         $cookies.remove('user_id');
         $cookies.remove('token');
@@ -1299,6 +1340,120 @@ helloModule.controller('notificationsController', function($scope, $cookies, $ht
         console.log('readFeedbackRes', data);
     })
 })
+
+
+helloModule.controller('dashboardController', function($scope) {
+
+})
+
+
+helloModule.controller('userController', function($scope) {
+
+})
+
+helloModule.controller('approvalsController', function($scope) {
+
+})
+
+helloModule.controller('publishController', function($scope) {
+
+    })
+    // .directive('quillEditor', function($compile, $http) {
+    //     return {
+    //         restrict: 'E',
+    //         link: function($scope, $element) {
+    //             var template = '<div id="editor">' +
+    //                 '<p>Start your story here</p>' +
+    //                 '<p><br></p>'
+    //             '</div>';
+    //             var linkFunc = $compile(template);
+    //             var content = linkFunc($scope);
+    //             $element.append(content);
+
+//             // setup quill config after adding to DOM
+//             var quill = new Quill('#editor', {
+//                 modules: {
+//                 ImageResize: {},
+//                 toolbar: [
+//                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+//                     // [{ 'header': 1 }, { 'header': 2 }],
+//                     [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+//                     ['bold', 'italic', 'underline', 'strike', 'link'],
+//                     [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+//                     [{ 'font': [] }],
+//                     [{ 'align': [] }],
+//                     ['clean'], // remove formatting button
+//                     ['blockquote', 'code-block'],
+//                     ['video', 'image'],
+//                     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+//                     [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+//                     [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+//                 ]
+//                 },
+//                 placeholder: 'Compose an epic...',
+//                 theme: 'snow' // or 'bubble'
+//             });
+
+
+//             quill.getModule('toolbar').addHandler('image', () => {
+//                 selectLocalImage();
+//             });
+
+
+//             selectLocalImage = function() {
+//                 console.log('Clicked on select localImage');
+//                 const input = document.createElement('input');
+//                 input.setAttribute('type', 'file');
+//                 input.click();
+
+//                 input.onchange = () => {
+//                     const file = input.files[0];
+//                     if (/^image\//.test(file.type)) {
+//                         saveToServer(file);
+//                     } else {
+//                         console.warn('You could only upload images.');
+//                     }
+//                 }
+//             }
+
+//             saveToServer = function(file) {
+//                 console.log('on save to server');
+//                 var fd = new FormData();
+//                 fd.append('upload', file);
+
+//                 $http.post('https://admin.naaradh.in/upload', fd, {
+//                     withCredentials: false,
+//                     headers: { 'Content-Type': undefined },
+//                     transformRequest: angular.identity
+//                 }).then(function(data) {
+//                     insertInEditor(data.data);
+//                 })
+//             }
+
+//             insertInEditor = function(data) {
+//                 const range = quill.getSelection();
+//                 console.log('')
+//                 quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
+//             }
+
+
+//             quill.on('text-change', function() {
+//                 var delta = quill.getContents();
+//                 var text = quill.getText();
+//                 var justHtml = quill.root.innerHTML;
+
+//                 console.log(justHtml);
+
+//                 $scope.$apply(function() {
+//                     $scope.quillDataJSON = JSON.stringify(delta);
+//                     $scope.quillDataText = text;
+//                     $scope.quillDataHTML = justHtml;
+//                     $scope.story = justHtml;
+//                 });
+//             });
+//         },
+//     };
+// });
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function() {

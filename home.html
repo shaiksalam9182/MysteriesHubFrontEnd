@@ -47,15 +47,15 @@
                 <img class="noDescription" src="img/nn_logo.png" alt="logo">
             </div>
             <md-divider></md-divider>
-            <md-button class="md-primary">Home</md-button>
+            <md-button class="md-primary" ng-click='goToHome()'>Home</md-button>
             <md-divider></md-divider>
-            <md-button class="md-primary">Registered Users</md-button>
+            <md-button class="md-primary" ng-click='goToUsers()'>Registered Users</md-button>
             <md-divider></md-divider>
-            <md-button class="md-primary">Publish Post</md-button>
+            <md-button class="md-primary" ng-click='goToPublish()'>Publish Post</md-button>
             <md-divider></md-divider>
-            <md-button class="md-primary">Need Approvals</md-button>
+            <md-button class="md-primary" ng-click='goToApprovals()'>Need Approvals</md-button>
             <md-divider></md-divider>
-            <md-button class="md-primary">Logout</md-button>
+            <md-button class="md-primary" ng-click="goToLogout()">Logout</md-button>
             <md-divider></md-divider>
         </div>
         <div class="detailsHome" ui-view>
