@@ -997,12 +997,6 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
             $scope.quillDataHTML = "Preview will be displayed here";
         }
 
-
-
-        // $scope.quillDataJSON = "Preview will be displayed here";
-        // $scope.quillDataText = "Preview will be displayed here";
-        // $scope.quillDataHTML = "Preview will be displayed here";
-
         $scope.quillData = "hahaha";
         $scope.quillConfig = "hahaConfig";
 
@@ -1342,13 +1336,167 @@ helloModule.controller('notificationsController', function($scope, $cookies, $ht
 })
 
 
-helloModule.controller('dashboardController', function($scope) {
+helloModule.controller('dashboardController', function($scope, $cookies, $http, $mdToast) {
+    var user_id, token;
+    user_id = $cookies.get('user_id');
+    token = $cookies.get('token');
+
+    var data = {
+        user_id: user_id,
+        token: token
+    }
+
+    $http.post('https://admin.naaradh.in/dashboard', data).then(function(data) {
+        console.log(data.data.data);
+        if (data.data.status == 'success') {
+            $scope.uc = data.data.data.uc;
+            $scope.pc = data.data.data.pc;
+            $scope.plc = data.data.data.plc;
+            $scope.ac = data.data.data.ac;
+            $scope.mc = data.data.data.mc;
+
+        } else if (data.data.status == 'Failed') {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(data.data.message)
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        }
+    })
+
 
 })
 
 
-helloModule.controller('userController', function($scope) {
+helloModule.controller('userController', function($scope, $cookies, $http, $mdToast) {
+    var user_id, token;
+    user_id = $cookies.get('user_id');
+    token = $cookies.get('token');
+    var data = {
+        user_id: user_id,
+        token: token
+    }
 
+    $http.post('https://admin.naaradh.in/list_users', data).then(function(incomingData) {
+        console.log('incomingData', incomingData);
+        if (incomingData.data.status == 'success') {
+            $scope.dataArray = incomingData.data.data;
+
+        } else if (incomingData.data.status == 'Failed') {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(data.data.message)
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        }
+
+        $scope.blockUser = function(user_id) {
+            localUserId = $cookies.get('user_id');
+            token = $cookies.get('token');
+
+            var data = {
+                user_id: localUserId,
+                token: token,
+                opertaion_value: 'bu',
+                vuid: user_id
+            }
+
+
+            $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
+                console.log(incomingData);
+                if (incomingData.data.status == 'success') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('successfully blocked the user')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else if (incomingData.data.status == 'Failed') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(incomingData.data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+        }
+
+        $scope.deleteUser = function(user_id) {
+            localUserId = $cookies.get('user_id');
+            token = $cookies.get('token');
+
+            var data = {
+                user_id: localUserId,
+                token: token,
+                opertaion_value: 'du',
+                vuid: user_id
+            }
+
+            $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
+                if (incomingData.data.status == 'success') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('successfully deleted the user')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+
+
+                    var sendingData = {
+                        user_id: localUserId,
+                        token: token
+                    }
+
+                    $http.post('https://admin.naaradh.in/list_users', sendingData).then(function(someData) {
+                        if (someData.data.status == 'success') {
+                            $scope.dataArray = someData.data.data;
+                        } else if (someData.data.status == 'Failed') {
+                            console.log(someData);
+                        }
+                    })
+
+                } else if (incomingData.data.status == 'Failed') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(incomingData.data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+
+        }
+
+
+
+    })
 })
 
 helloModule.controller('approvalsController', function($scope) {

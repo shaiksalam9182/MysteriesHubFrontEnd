@@ -1,16 +1,19 @@
 <html>
-<md-content>
-    <md-list>
-        <md-list-item class="md-3-line">
-            <div class="md-list-item-text">
-                <h4>Name</h4>
-                <p>E-mail</p>
-            </div>
-            <md-button class="md-secondary">Block User</md-button>
-            <md-button class="md-secondary">Delete User</md-button>
-            <md-divider></md-divider>
-        </md-list-item>
-    </md-list>
-</md-content>
+
+<body ng-controller="userController">
+    <md-content>
+        <md-list ng-repeat="user in dataArray">
+            <md-list-item class="md-3-line">
+                <div class="md-list-item-text">
+                    <h4>{{user.fullname}}</h4>
+                    <p>{{user.email}}</p>
+                </div>
+                <md-button class="md-secondary" ng-click="blockUser(user.user_id)">Block User</md-button>
+                <md-button class="md-secondary" ng-click="deleteUser(user.user_id)">Delete User</md-button>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</body>
 
 </html>
