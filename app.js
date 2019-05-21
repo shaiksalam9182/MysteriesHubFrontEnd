@@ -1103,102 +1103,102 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
         }
 
     })
-    .directive('quillEditor', function($compile, $http) {
-        return {
-            restrict: 'E',
-            link: function($scope, $element) {
-                var template = '<div id="editor">' +
-                    '<p>Start your story here</p>' +
-                    '<p><br></p>'
-                '</div>';
-                var linkFunc = $compile(template);
-                var content = linkFunc($scope);
-                $element.append(content);
+    // .directive('quillEditor', function($compile, $http) {
+    //     return {
+    //         restrict: 'E',
+    //         link: function($scope, $element) {
+    //             var template = '<div id="editor">' +
+    //                 '<p>Start your story here</p>' +
+    //                 '<p><br></p>'
+    //             '</div>';
+    //             var linkFunc = $compile(template);
+    //             var content = linkFunc($scope);
+    //             $element.append(content);
 
-                // setup quill config after adding to DOM
-                var quill = new Quill('#editor', {
-                    modules: {
-                        // ImageResize: {},
-                        toolbar: [
-                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                            // [{ 'header': 1 }, { 'header': 2 }],
-                            [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
-                            ['bold', 'italic', 'underline', 'strike', 'link'],
-                            [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
-                            [{ 'font': [] }],
-                            [{ 'align': [] }],
-                            ['clean'], // remove formatting button
-                            ['blockquote', 'code-block'],
-                            ['video', 'image'],
-                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                            [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
-                            [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
-                        ]
-                    },
-                    placeholder: 'Compose an epic...',
-                    theme: 'snow' // or 'bubble'
-                });
-
-
-                quill.getModule('toolbar').addHandler('image', () => {
-                    selectLocalImage();
-                });
+//             // setup quill config after adding to DOM
+//             var quill = new Quill('#editor', {
+//                 modules: {
+//                     // ImageResize: {},
+//                     toolbar: [
+//                         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+//                         // [{ 'header': 1 }, { 'header': 2 }],
+//                         [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+//                         ['bold', 'italic', 'underline', 'strike', 'link'],
+//                         [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+//                         [{ 'font': [] }],
+//                         [{ 'align': [] }],
+//                         ['clean'], // remove formatting button
+//                         ['blockquote', 'code-block'],
+//                         ['video', 'image'],
+//                         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+//                         [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+//                         [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+//                     ]
+//                 },
+//                 placeholder: 'Compose an epic...',
+//                 theme: 'snow' // or 'bubble'
+//             });
 
 
-                selectLocalImage = function() {
-                    console.log('Clicked on select localImage');
-                    const input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.click();
-
-                    input.onchange = () => {
-                        const file = input.files[0];
-                        if (/^image\//.test(file.type)) {
-                            saveToServer(file);
-                        } else {
-                            console.warn('You could only upload images.');
-                        }
-                    }
-                }
-
-                saveToServer = function(file) {
-                    console.log('on save to server');
-                    var fd = new FormData();
-                    fd.append('upload', file);
-
-                    $http.post('https://admin.naaradh.in/upload', fd, {
-                        withCredentials: false,
-                        headers: { 'Content-Type': undefined },
-                        transformRequest: angular.identity
-                    }).then(function(data) {
-                        insertInEditor(data.data);
-                    })
-                }
-
-                insertInEditor = function(data) {
-                    const range = quill.getSelection();
-                    console.log('')
-                    quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
-                }
+//             quill.getModule('toolbar').addHandler('image', () => {
+//                 selectLocalImage();
+//             });
 
 
-                quill.on('text-change', function() {
-                    var delta = quill.getContents();
-                    var text = quill.getText();
-                    var justHtml = quill.root.innerHTML;
+//             selectLocalImage = function() {
+//                 console.log('Clicked on select localImage');
+//                 const input = document.createElement('input');
+//                 input.setAttribute('type', 'file');
+//                 input.click();
 
-                    console.log(justHtml);
+//                 input.onchange = () => {
+//                     const file = input.files[0];
+//                     if (/^image\//.test(file.type)) {
+//                         saveToServer(file);
+//                     } else {
+//                         console.warn('You could only upload images.');
+//                     }
+//                 }
+//             }
 
-                    $scope.$apply(function() {
-                        $scope.quillDataJSON = JSON.stringify(delta);
-                        $scope.quillDataText = text;
-                        $scope.quillDataHTML = justHtml;
-                        $scope.story = justHtml;
-                    });
-                });
-            },
-        };
-    })
+//             saveToServer = function(file) {
+//                 console.log('on save to server');
+//                 var fd = new FormData();
+//                 fd.append('upload', file);
+
+//                 $http.post('https://admin.naaradh.in/upload', fd, {
+//                     withCredentials: false,
+//                     headers: { 'Content-Type': undefined },
+//                     transformRequest: angular.identity
+//                 }).then(function(data) {
+//                     insertInEditor(data.data);
+//                 })
+//             }
+
+//             insertInEditor = function(data) {
+//                 const range = quill.getSelection();
+//                 console.log('')
+//                 quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
+//             }
+
+
+//             quill.on('text-change', function() {
+//                 var delta = quill.getContents();
+//                 var text = quill.getText();
+//                 var justHtml = quill.root.innerHTML;
+
+//                 console.log(justHtml);
+
+//                 $scope.$apply(function() {
+//                     $scope.quillDataJSON = JSON.stringify(delta);
+//                     $scope.quillDataText = text;
+//                     $scope.quillDataHTML = justHtml;
+//                     $scope.story = justHtml;
+//                 });
+//             });
+//         },
+//     };
+// })
 
 
 helloModule.controller('registerController', function($scope, $http, $location, $mdToast) {
@@ -1499,109 +1499,286 @@ helloModule.controller('userController', function($scope, $cookies, $http, $mdTo
     })
 })
 
-helloModule.controller('approvalsController', function($scope) {
+helloModule.controller('approvalsController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog) {
+    $scope.user_id = $cookies.get('user_id');
+    $scope.token = $cookies.get('token');
+    $scope.email = $cookies.get('email');
+
+    var postsData, placesData, aliensData, moviesData;
+    $scope.finalData = "";
+
+    $scope.formatText = function(data) {
+        var forData = data.replace(/<[^>]+>/gm, '')
+        return forData.replace('from internet', '');
+    }
+
+    var data = {
+        user_id: $scope.user_id,
+        token: $scope.token,
+        email: $scope.email,
+        type: 'posts'
+    }
+    $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
+        console.log(data.data);
+        postsData = data.data.data;
+        var data_pl = {
+            user_id: $scope.user_id,
+            token: $scope.token,
+            email: $scope.email,
+            type: 'places'
+        }
+        $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+            console.log(data.data);
+            placesData = data.data.data;
+            placesData = postsData.concat(placesData);
+            var data_al = {
+                user_id: $scope.user_id,
+                token: $scope.token,
+                email: $scope.email,
+                type: 'aliens'
+            }
+            $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+                console.log(data.data);
+                aliensData = data.data.data;
+                aliensData = placesData.concat(aliensData);
+                var data_mo = {
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    email: $scope.email,
+                    type: 'movies'
+                }
+                $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                    console.log(data.data);
+                    moviesData = data.data.data;
+                    $scope.finalData = aliensData.concat(moviesData);
+                    console.log('finaldata', $scope.finalData);
+                })
+            })
+        })
+
+    })
+
+
+
+
+
+
+
+
+
 
 })
 
-helloModule.controller('publishController', function($scope) {
+helloModule.controller('publishController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog) {
+
+        $scope.user_id = $cookies.get("user_id");
+        $scope.token = $cookies.get("token");
+        $scope.email = $cookies.get('email');
+        $scope.quillData = "hahaha";
+        $scope.quillConfig = "hahaConfig";
+
+        $scope.changeData = function() {
+            $scope.quillData = "config";
+        };
+
+        $scope.clickMe = function() {
+            alert("thanks!");
+        };
+
+        $scope.StoryType = $scope.postCategory;
+
+
+        $scope.postStory = function() {
+            if ($scope.postCategory == undefined || $scope.postCategory == "") {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Please Select category')
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            } else if ($scope.story == undefined || $scope.story == "" || $scope.story == "<p><br></p>") {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Story is empty')
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+
+            } else if ($scope.title == undefined || $scope.title == "") {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Story title is empty')
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            } else {
+                var data = {
+                        user_id: $cookies.get('user_id'),
+                        email: $cookies.get('email'),
+                        token: $cookies.get('token'),
+                        title: $scope.title,
+                        description: $scope.story,
+                    }
+                    // console.log($scope.postCategory)
+                if ($scope.postCategory == "Post") {
+                    var url = "https://admin.naaradh.in/send_post";
+                } else if ($scope.postCategory == "Place") {
+                    var url = "https://admin.naaradh.in/send_place";
+                } else if ($scope.postCategory == "Alien") {
+                    var url = "https://admin.naaradh.in/send_alien";
+                } else if ($scope.postCategory == "Movie") {
+                    var url = "https://admin.naaradh.in/send_movie";
+                }
+
+
+                $http.post(url, data).then(function(data) {
+                    if (data.data.status == "success") {
+                        $mdDialog.show(
+                            $mdDialog.alert()
+                            .clickOutsideToClose(true)
+                            .title('Under Review')
+                            .textContent('You post is successfully posted. We will notify you once it is published.\nThanks for your contribution')
+                            .ariaLabel('Under Review')
+                            .ok('Got it!')
+                        );
+                    } else if (data.data.status == "Failed") {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Error occurred. Sorry for the inconvenience')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+                })
+
+            }
+        }
+
 
     })
-    // .directive('quillEditor', function($compile, $http) {
-    //     return {
-    //         restrict: 'E',
-    //         link: function($scope, $element) {
-    //             var template = '<div id="editor">' +
-    //                 '<p>Start your story here</p>' +
-    //                 '<p><br></p>'
-    //             '</div>';
-    //             var linkFunc = $compile(template);
-    //             var content = linkFunc($scope);
-    //             $element.append(content);
+    .directive('quillEditor', function($compile, $http) {
+        return {
+            restrict: 'E',
+            link: function($scope, $element) {
+                var template = '<div id="editor">' +
+                    '<p>Start your story here</p>' +
+                    '<p><br></p>'
+                '</div>';
+                var linkFunc = $compile(template);
+                var content = linkFunc($scope);
+                $element.append(content);
 
-//             // setup quill config after adding to DOM
-//             var quill = new Quill('#editor', {
-//                 modules: {
-//                 ImageResize: {},
-//                 toolbar: [
-//                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-//                     // [{ 'header': 1 }, { 'header': 2 }],
-//                     [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
-//                     ['bold', 'italic', 'underline', 'strike', 'link'],
-//                     [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
-//                     [{ 'font': [] }],
-//                     [{ 'align': [] }],
-//                     ['clean'], // remove formatting button
-//                     ['blockquote', 'code-block'],
-//                     ['video', 'image'],
-//                     [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-//                     [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
-//                     [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
-//                 ]
-//                 },
-//                 placeholder: 'Compose an epic...',
-//                 theme: 'snow' // or 'bubble'
-//             });
-
-
-//             quill.getModule('toolbar').addHandler('image', () => {
-//                 selectLocalImage();
-//             });
+                // setup quill config after adding to DOM
+                var quill = new Quill('#editor', {
+                    modules: {
+                        // ImageResize: {},
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            // [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+                            ['bold', 'italic', 'underline', 'strike', 'link'],
+                            [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+                            [{ 'font': [] }],
+                            [{ 'align': [] }],
+                            ['clean'], // remove formatting button
+                            ['blockquote', 'code-block'],
+                            ['video', 'image'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+                            [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+                        ]
+                    },
+                    placeholder: 'Compose an epic...',
+                    theme: 'snow' // or 'bubble'
+                });
 
 
-//             selectLocalImage = function() {
-//                 console.log('Clicked on select localImage');
-//                 const input = document.createElement('input');
-//                 input.setAttribute('type', 'file');
-//                 input.click();
-
-//                 input.onchange = () => {
-//                     const file = input.files[0];
-//                     if (/^image\//.test(file.type)) {
-//                         saveToServer(file);
-//                     } else {
-//                         console.warn('You could only upload images.');
-//                     }
-//                 }
-//             }
-
-//             saveToServer = function(file) {
-//                 console.log('on save to server');
-//                 var fd = new FormData();
-//                 fd.append('upload', file);
-
-//                 $http.post('https://admin.naaradh.in/upload', fd, {
-//                     withCredentials: false,
-//                     headers: { 'Content-Type': undefined },
-//                     transformRequest: angular.identity
-//                 }).then(function(data) {
-//                     insertInEditor(data.data);
-//                 })
-//             }
-
-//             insertInEditor = function(data) {
-//                 const range = quill.getSelection();
-//                 console.log('')
-//                 quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
-//             }
+                quill.getModule('toolbar').addHandler('image', () => {
+                    selectLocalImage();
+                });
 
 
-//             quill.on('text-change', function() {
-//                 var delta = quill.getContents();
-//                 var text = quill.getText();
-//                 var justHtml = quill.root.innerHTML;
+                selectLocalImage = function() {
+                    console.log('Clicked on select localImage');
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.click();
 
-//                 console.log(justHtml);
+                    input.onchange = () => {
+                        const file = input.files[0];
+                        if (/^image\//.test(file.type)) {
+                            saveToServer(file);
+                        } else {
+                            console.warn('You could only upload images.');
+                        }
+                    }
+                }
 
-//                 $scope.$apply(function() {
-//                     $scope.quillDataJSON = JSON.stringify(delta);
-//                     $scope.quillDataText = text;
-//                     $scope.quillDataHTML = justHtml;
-//                     $scope.story = justHtml;
-//                 });
-//             });
-//         },
-//     };
-// });
+                saveToServer = function(file) {
+                    console.log('on save to server');
+                    var fd = new FormData();
+                    fd.append('upload', file);
+
+                    $http.post('https://admin.naaradh.in/upload', fd, {
+                        withCredentials: false,
+                        headers: { 'Content-Type': undefined },
+                        transformRequest: angular.identity
+                    }).then(function(data) {
+                        insertInEditor(data.data);
+                    })
+                }
+
+                insertInEditor = function(data) {
+                    const range = quill.getSelection();
+                    console.log('')
+                    quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
+                }
+
+
+                quill.on('text-change', function() {
+                    var delta = quill.getContents();
+                    var text = quill.getText();
+                    var justHtml = quill.root.innerHTML;
+
+                    console.log(justHtml);
+
+                    $scope.$apply(function() {
+                        $scope.quillDataJSON = JSON.stringify(delta);
+                        $scope.quillDataText = text;
+                        $scope.quillDataHTML = justHtml;
+                        $scope.story = justHtml;
+                    });
+                });
+            },
+        };
+    });
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function() {
