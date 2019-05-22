@@ -2163,6 +2163,44 @@ function DialogController($scope, $mdDialog) {
     };
 }
 
-helloModule.controller('createUserController', function($scope) {
+helloModule.controller('createUserController', function($scope, $cookies, $http, $mdToast, $log) {
+
+    $scope.createUser = function() {
+        var data = {
+            user_id: $cookies.get('user_id'),
+            token: $cookies.get('token'),
+            email: $cookies.get('email'),
+            fullname: $scope.fullname,
+            email: $scope.email,
+            password: $scope.password,
+            admin_role: $scope.admin_role
+        }
+
+        $http.post('http://localhost:6110/adda', data).then(function(data) {
+            if (data.data.status == 'success') {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('successfully created user')
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            } else if (data.data.status == 'Failed') {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            }
+        })
+    }
 
 })
