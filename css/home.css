@@ -94,6 +94,15 @@ p {
     line-height: 1.8em;
 }
 
+.approvalDesc {
+    color: #000000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
 p {
     font-size: 20px;
 }

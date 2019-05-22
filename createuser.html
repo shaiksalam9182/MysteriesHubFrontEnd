@@ -1,0 +1,39 @@
+<html>
+
+<body>
+    <br><br>
+    <md-input-container class="titleInput">
+        <label>Fullname</label>
+        <input ng-model="title" required>
+    </md-input-container>
+    <br>
+
+
+    <br><br>
+    <md-input-container class="titleInput">
+        <label>Email</label>
+        <input ng-model="email" type="email" required>
+    </md-input-container>
+    <br>
+
+    <br><br>
+    <md-input-container class="titleInput">
+        <label>Password</label>
+        <input ng-model="password" type="password" required>
+    </md-input-container>
+    <br>
+
+
+    <br><br>
+    <md-input-container class="titleInput">
+        <label>Admin role</label>
+        <input ng-model="admin_role" type="password" required>
+    </md-input-container>
+    <br>
+
+    <center>
+        <md-button class="md-raised md-primary" ng-click="createUser()">Submit</md-button>
+    </center>
+</body>
+
+</html>

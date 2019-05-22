@@ -1,13 +1,14 @@
 <html>
+<link rel="stylesheet" type="text/css" href="./css/home.css">
 <md-content>
     <md-list>
         <md-list-item class="md-3-line" ng-repeat="data in finalData">
-            <div class="md-list-item-text">
+            <div class="md-list-item-text" ng-click="showDailog($event,data)">
                 <h4>{{data.title}}</h4>
-                <p>{{formatText(data.description)}}</p>
+                <p class="approvalDesc">{{formatText(data.description)}}</p>
             </div>
-            <md-button class="md-secondary">Approve</md-button>
-            <md-button class="md-secondary">Reject</md-button>
+            <md-button class="md-secondary" ng-click="approvePost(data)">Approve</md-button>
+            <md-button class="md-secondary" ng-click="rejectPost(data)">Reject</md-button>
             <md-divider></md-divider>
         </md-list-item>
     </md-list>
