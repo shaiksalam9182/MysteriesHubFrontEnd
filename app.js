@@ -96,7 +96,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location, $md
             $scope.message = 'password is empty'
             console.log('password is empty');
         } else {
-            var url = "http://localhost:6110/alogin"
+            var url = "https://admin.naaradh.in/alogin"
             var data = {
                 email: $scope.email,
                 password: $scope.password,
@@ -2178,7 +2178,7 @@ helloModule.controller('createUserController', function($scope, $cookies, $http,
                 sadmin_role: $cookies.get('arole')
             }
 
-            $http.post('http://localhost:6110/adda', data).then(function(data) {
+            $http.post('https://admin.naaradh.in/adda', data).then(function(data) {
                 if (data.data.status == 'success') {
                     $mdToast.show(
                             $mdToast.simple()
