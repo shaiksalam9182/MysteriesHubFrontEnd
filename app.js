@@ -4,13 +4,16 @@ var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router
 
 helloModule.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/Login");
+    $urlRouterProvider.otherwise('/Login');
+
+
 
     $stateProvider
         .state('Home.Dashboard', {
             name: 'Dashboard',
             url: '/Dashboard',
             templateUrl: 'dashboard.html',
-            controller: 'dashboardController'
+            controller: 'dashboardController',
         })
 
     .state('Home.Users', {
@@ -48,27 +51,6 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'publishController'
     })
 
-    .state('Home.Places', {
-        name: 'Places',
-        url: '/Places',
-        templateUrl: 'places.html',
-        controller: 'placebody'
-    })
-
-    .state('Home.Aliens', {
-        name: 'Aliens',
-        url: '/Aliens',
-        templateUrl: 'aliens.html',
-        controller: 'alienbody'
-    })
-
-    .state('Home.Movies', {
-        name: 'Movies',
-        url: '/Movies',
-        templateUrl: 'movies.html',
-        controller: 'moviebody'
-    })
-
     .state('Home', {
         name: 'Home',
         url: '',
@@ -81,34 +63,6 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         url: '/Login',
         templateUrl: 'login.html',
         controller: 'hello'
-    })
-
-    .state('Home.Write', {
-        name: 'WriteStory',
-        url: '/WriteStory',
-        templateUrl: 'Write.html',
-        controller: 'writerController'
-    })
-
-    .state('Home.Register', {
-        name: "Register",
-        url: '/Register',
-        templateUrl: 'register.html',
-        controller: 'registerController',
-    })
-
-    .state('Home.Feedback', {
-        name: 'Feedback',
-        url: '/Feedback',
-        templateUrl: 'feedback.html',
-        controller: 'feedbackController'
-    })
-
-    .state('Home.Notifications', {
-        name: 'Notifications',
-        url: '/Notifications',
-        templateUrl: 'notifications.html',
-        controller: 'notificationsController'
     })
 
     .state('Home.Details', {
@@ -142,14 +96,10 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location, $md
             $scope.message = 'password is empty'
             console.log('password is empty');
         } else {
-            var url = "https://admin.naaradh.in/login"
+            var url = "http://localhost:6110/alogin"
             var data = {
                 email: $scope.email,
                 password: $scope.password,
-                device_type: "Web",
-                android_id: "123456789",
-                login_by: "manual",
-                fcm_token: ""
             }
             $scope.calling = true;
             $http.post(url, data).then(function(msg) {
@@ -161,6 +111,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location, $md
                         $cookies.put('token', msg.data.token);
                         $cookies.put('user_id', msg.data.user_id);
                         $cookies.put('email', msg.data.email);
+                        $cookies.put('arole', msg.data.admin_role);
                         $scope.message = msg.data.message;
                         $location.path('/Dashboard');
                     } else {
@@ -916,7 +867,16 @@ helloModule.controller('authenticate', function($scope) {
     console.log('submit clicked');
 })
 
-helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log) {
+helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log, $window) {
+
+    $window.onbeforeunload = function(evt) {
+        $cookies.remove('user_id');
+        $cookies.remove('token');
+        $cookies.remove('email');
+        $cookies.remove('arole');
+
+    }
+
     $scope.navItem = "Posts";
     $scope.openMenu = function($mdMenu, ev) {
         $scope.user_id = $cookies.get("user_id");
@@ -981,6 +941,10 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
     }
 
     $scope.goToLogout = function() {
+        $cookies.remove('user_id');
+        $cookies.remove('token');
+        $cookies.remove('email');
+        $cookies.remove('arole');
         $location.path('/Login')
     }
 
@@ -1376,544 +1340,322 @@ helloModule.controller('notificationsController', function($scope, $cookies, $ht
 })
 
 
-helloModule.controller('dashboardController', function($scope, $cookies, $http, $mdToast) {
-    var user_id, token;
-    user_id = $cookies.get('user_id');
-    token = $cookies.get('token');
+helloModule.controller('dashboardController', function($scope, $cookies, $http, $mdToast, $location) {
 
-    var data = {
-        user_id: user_id,
-        token: token
+    if ($cookies.get('token') == '' || $cookies.get('token') == undefined) {
+        $location.path('/Login');
+    } else {
+        var user_id, token;
+        user_id = $cookies.get('user_id');
+        token = $cookies.get('token');
+
+        var data = {
+            user_id: user_id,
+            token: token
+        }
+
+        $http.post('https://admin.naaradh.in/dashboard', data).then(function(data) {
+            console.log(data.data.data);
+            if (data.data.status == 'success') {
+                $scope.uc = data.data.data.uc;
+                $scope.pc = data.data.data.pc;
+                $scope.plc = data.data.data.plc;
+                $scope.ac = data.data.data.ac;
+                $scope.mc = data.data.data.mc;
+
+            } else if (data.data.status == 'Failed') {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
+            }
+        })
+
     }
 
-    $http.post('https://admin.naaradh.in/dashboard', data).then(function(data) {
-        console.log(data.data.data);
-        if (data.data.status == 'success') {
-            $scope.uc = data.data.data.uc;
-            $scope.pc = data.data.data.pc;
-            $scope.plc = data.data.data.plc;
-            $scope.ac = data.data.data.ac;
-            $scope.mc = data.data.data.mc;
-
-        } else if (data.data.status == 'Failed') {
-            $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(data.data.message)
-                    .position('top right')
-                    .hideDelay(3000))
-                .then(function() {
-                    $log.log('Toast dismissed.');
-                }).catch(function() {
-                    $log.log('Toast failed or was forced to close early by another toast.');
-                });
-        }
-    })
 
 
 })
 
 
-helloModule.controller('userController', function($scope, $cookies, $http, $mdToast) {
-    var user_id, token;
-    user_id = $cookies.get('user_id');
-    token = $cookies.get('token');
-    var data = {
-        user_id: user_id,
-        token: token
-    }
+helloModule.controller('userController', function($scope, $cookies, $http, $mdToast, $location) {
 
-    $http.post('https://admin.naaradh.in/list_users', data).then(function(incomingData) {
-        console.log('incomingData', incomingData);
-        if (incomingData.data.status == 'success') {
-            $scope.dataArray = incomingData.data.data;
 
-        } else if (incomingData.data.status == 'Failed') {
-            $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(data.data.message)
-                    .position('top right')
-                    .hideDelay(3000))
-                .then(function() {
-                    $log.log('Toast dismissed.');
-                }).catch(function() {
-                    $log.log('Toast failed or was forced to close early by another toast.');
-                });
+    if ($cookies.get('token') == '' || $cookies.get('token') == undefined) {
+        $location.path('/Login');
+    } else {
+        var user_id, token;
+        user_id = $cookies.get('user_id');
+        token = $cookies.get('token');
+        var data = {
+            user_id: user_id,
+            token: token
         }
 
-        $scope.blockUser = function(user_id) {
-            localUserId = $cookies.get('user_id');
-            token = $cookies.get('token');
+        $http.post('https://admin.naaradh.in/list_users', data).then(function(incomingData) {
+            console.log('incomingData', incomingData);
+            if (incomingData.data.status == 'success') {
+                $scope.dataArray = incomingData.data.data;
 
-            var data = {
-                user_id: localUserId,
-                token: token,
-                opertaion_value: 'bu',
-                vuid: user_id
+            } else if (incomingData.data.status == 'Failed') {
+                $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000))
+                    .then(function() {
+                        $log.log('Toast dismissed.');
+                    }).catch(function() {
+                        $log.log('Toast failed or was forced to close early by another toast.');
+                    });
             }
 
+            $scope.blockUser = function(user_id) {
+                localUserId = $cookies.get('user_id');
+                token = $cookies.get('token');
 
-            $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
-                console.log(incomingData);
-                if (incomingData.data.status == 'success') {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('successfully blocked the user')
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
-                } else if (incomingData.data.status == 'Failed') {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(incomingData.data.message)
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
+                var data = {
+                    user_id: localUserId,
+                    token: token,
+                    opertaion_value: 'bu',
+                    vuid: user_id
                 }
-            })
-        }
-
-        $scope.deleteUser = function(user_id) {
-            localUserId = $cookies.get('user_id');
-            token = $cookies.get('token');
-
-            var data = {
-                user_id: localUserId,
-                token: token,
-                opertaion_value: 'du',
-                vuid: user_id
-            }
-
-            $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
-                if (incomingData.data.status == 'success') {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('successfully deleted the user')
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
 
 
-                    var sendingData = {
-                        user_id: localUserId,
-                        token: token
+                $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
+                    console.log(incomingData);
+                    if (incomingData.data.status == 'success') {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('successfully blocked the user')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else if (incomingData.data.status == 'Failed') {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(incomingData.data.message)
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
                     }
+                })
+            }
 
-                    $http.post('https://admin.naaradh.in/list_users', sendingData).then(function(someData) {
-                        if (someData.data.status == 'success') {
-                            $scope.dataArray = someData.data.data;
-                        } else if (someData.data.status == 'Failed') {
-                            console.log(someData);
-                        }
-                    })
+            $scope.deleteUser = function(user_id) {
+                localUserId = $cookies.get('user_id');
+                token = $cookies.get('token');
 
-                } else if (incomingData.data.status == 'Failed') {
-                    $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(incomingData.data.message)
-                            .position('top right')
-                            .hideDelay(3000))
-                        .then(function() {
-                            $log.log('Toast dismissed.');
-                        }).catch(function() {
-                            $log.log('Toast failed or was forced to close early by another toast.');
-                        });
+                var data = {
+                    user_id: localUserId,
+                    token: token,
+                    opertaion_value: 'du',
+                    vuid: user_id
                 }
-            })
 
-        }
+                $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
+                    if (incomingData.data.status == 'success') {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('successfully deleted the user')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+
+
+                        var sendingData = {
+                            user_id: localUserId,
+                            token: token
+                        }
+
+                        $http.post('https://admin.naaradh.in/list_users', sendingData).then(function(someData) {
+                            if (someData.data.status == 'success') {
+                                $scope.dataArray = someData.data.data;
+                            } else if (someData.data.status == 'Failed') {
+                                console.log(someData);
+                            }
+                        })
+
+                    } else if (incomingData.data.status == 'Failed') {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(incomingData.data.message)
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    }
+                })
+
+            }
 
 
 
-    })
+        })
+
+    }
+
+
 })
 
-helloModule.controller('approvalsController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog) {
-    $scope.user_id = $cookies.get('user_id');
-    $scope.token = $cookies.get('token');
-    $scope.email = $cookies.get('email');
+helloModule.controller('approvalsController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog, $location) {
 
-    var postsData, placesData, aliensData, moviesData;
-    $scope.finalData = "";
 
-    $scope.formatText = function(data) {
-        var forData = data.replace(/<[^>]+>/gm, '')
-        return forData.replace('from internet', '');
-    }
+    if ($cookies.get('token') == '' || $cookies.get('token') == undefined) {
+        $location.path('/Login');
+    } else {
+        $scope.user_id = $cookies.get('user_id');
+        $scope.token = $cookies.get('token');
+        $scope.email = $cookies.get('email');
 
-    var data = {
-        user_id: $scope.user_id,
-        token: $scope.token,
-        email: $scope.email,
-        type: 'posts'
-    }
-    $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
-        console.log(data.data);
-        postsData = data.data.data;
-        var data_pl = {
+        var postsData, placesData, aliensData, moviesData;
+        $scope.finalData = "";
+
+        $scope.formatText = function(data) {
+            var forData = data.replace(/<[^>]+>/gm, '')
+            return forData.replace('from internet', '');
+        }
+
+        var data = {
             user_id: $scope.user_id,
             token: $scope.token,
             email: $scope.email,
-            type: 'places'
+            type: 'posts'
         }
-        $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+        $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
             console.log(data.data);
-            placesData = data.data.data;
-            placesData = postsData.concat(placesData);
-            var data_al = {
+            postsData = data.data.data;
+            var data_pl = {
                 user_id: $scope.user_id,
                 token: $scope.token,
                 email: $scope.email,
-                type: 'aliens'
+                type: 'places'
             }
-            $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+            $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
                 console.log(data.data);
-                aliensData = data.data.data;
-                aliensData = placesData.concat(aliensData);
-                var data_mo = {
+                placesData = data.data.data;
+                placesData = postsData.concat(placesData);
+                var data_al = {
                     user_id: $scope.user_id,
                     token: $scope.token,
                     email: $scope.email,
-                    type: 'movies'
+                    type: 'aliens'
                 }
-                $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
                     console.log(data.data);
-                    moviesData = data.data.data;
-                    $scope.finalData = aliensData.concat(moviesData);
-                    console.log('finaldata', $scope.finalData);
-                })
-            })
-        })
-
-    })
-
-
-
-    $scope.showDailog = function(ev, data) {
-        $mdDialog.show({
-                locals: { dataToPass: data },
-                controller: 'descriptionController',
-                templateUrl: 'description.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            })
-            .then(function(answer) {
-                $scope.status = 'You said the information was "' + answer + '".';
-            }, function() {
-                $scope.status = 'You cancelled the dialog.';
-            });
-    }
-
-
-    $scope.approvePost = function(data) {
-
-        var dataToSend = "";
-
-        if (data.hasOwnProperty('post_id')) {
-            $scope.contentType = "edit_post";
-            $scope.contentId = data.post_id;
-
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                post_id: data.post_id
-            };
-        } else if (data.hasOwnProperty('place_id')) {
-            $scope.contentType = "edit_place";
-            $scope.contentId = data.place_id;
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                place_id: data.place_id
-            };
-        } else if (data.hasOwnProperty('alienPost_id')) {
-            $scope.contentType = "edit_alien";
-            $scope.contentId = data.alienPost_id;
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                alienPost_id: data.alienPost_id
-            };
-        } else if (data.hasOwnProperty('movie_id')) {
-            $scope.contentType = "edit_movie";
-            $scope.contentId = data.movie_id;
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                movie_id: data.movie_id
-            };
-        }
-
-
-        $http.post('https://admin.naaradh.in/approval', dataToSend).then(function(data) {
-            if (data.data.status == "success") {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent("Post is approved successfully")
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-
-                var data = {
-                    user_id: $scope.user_id,
-                    token: $scope.token,
-                    email: $scope.email,
-                    type: 'posts'
-                }
-                $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
-                    console.log(data.data);
-                    postsData = data.data.data;
-                    var data_pl = {
+                    aliensData = data.data.data;
+                    aliensData = placesData.concat(aliensData);
+                    var data_mo = {
                         user_id: $scope.user_id,
                         token: $scope.token,
                         email: $scope.email,
-                        type: 'places'
+                        type: 'movies'
                     }
-                    $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+                    $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
                         console.log(data.data);
-                        placesData = data.data.data;
-                        placesData = postsData.concat(placesData);
-                        var data_al = {
-                            user_id: $scope.user_id,
-                            token: $scope.token,
-                            email: $scope.email,
-                            type: 'aliens'
-                        }
-                        $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
-                            console.log(data.data);
-                            aliensData = data.data.data;
-                            aliensData = placesData.concat(aliensData);
-                            var data_mo = {
-                                user_id: $scope.user_id,
-                                token: $scope.token,
-                                email: $scope.email,
-                                type: 'movies'
-                            }
-                            $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
-                                console.log(data.data);
-                                moviesData = data.data.data;
-                                $scope.finalData = aliensData.concat(moviesData);
-                                console.log('finaldata', $scope.finalData);
-                            })
-                        })
+                        moviesData = data.data.data;
+                        $scope.finalData = aliensData.concat(moviesData);
+                        console.log('finaldata', $scope.finalData);
                     })
-
                 })
+            })
 
-            } else if (data.data.status == 'Failed') {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            }
         })
-    }
 
-    $scope.rejectPost = function(data) {
-        var dataToSend = "";
 
-        if (data.hasOwnProperty('post_id')) {
-            $scope.contentType = "rm_post";
-            $scope.contentId = data.post_id;
 
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                post_id: data.post_id
-            };
-        } else if (data.hasOwnProperty('place_id')) {
-            $scope.contentType = "rm_place";
-            $scope.contentId = data.place_id;
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                place_id: data.place_id
-            };
-        } else if (data.hasOwnProperty('alienPost_id')) {
-            $scope.contentType = "rm_alien";
-            $scope.contentId = data.alienPost_id;
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                alienPost_id: data.alienPost_id
-            };
-        } else if (data.hasOwnProperty('movie_id')) {
-            $scope.contentType = "rm_movie";
-            $scope.contentId = data.movie_id;
-            var dataToSend = {
-                email: $scope.email,
-                user_id: $scope.user_id,
-                token: $scope.token,
-                type: $scope.contentType,
-                movie_id: data.movie_id
-            };
+        $scope.showDailog = function(ev, data) {
+            $mdDialog.show({
+                    locals: { dataToPass: data },
+                    controller: 'descriptionController',
+                    templateUrl: 'description.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                })
+                .then(function(answer) {
+                    $scope.status = 'You said the information was "' + answer + '".';
+                }, function() {
+                    $scope.status = 'You cancelled the dialog.';
+                });
         }
 
 
-        $http.post('https://admin.naaradh.in/approval', dataToSend).then(function(data) {
-            if (data.data.status == "success") {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent("Post is rejected successfully")
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
+        $scope.approvePost = function(data) {
 
-                var data = {
+            var dataToSend = "";
+
+            if (data.hasOwnProperty('post_id')) {
+                $scope.contentType = "edit_post";
+                $scope.contentId = data.post_id;
+
+                var dataToSend = {
+                    email: $scope.email,
                     user_id: $scope.user_id,
                     token: $scope.token,
+                    type: $scope.contentType,
+                    post_id: data.post_id
+                };
+            } else if (data.hasOwnProperty('place_id')) {
+                $scope.contentType = "edit_place";
+                $scope.contentId = data.place_id;
+                var dataToSend = {
                     email: $scope.email,
-                    type: 'posts'
-                }
-                $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
-                    console.log(data.data);
-                    postsData = data.data.data;
-                    var data_pl = {
-                        user_id: $scope.user_id,
-                        token: $scope.token,
-                        email: $scope.email,
-                        type: 'places'
-                    }
-                    $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
-                        console.log(data.data);
-                        placesData = data.data.data;
-                        placesData = postsData.concat(placesData);
-                        var data_al = {
-                            user_id: $scope.user_id,
-                            token: $scope.token,
-                            email: $scope.email,
-                            type: 'aliens'
-                        }
-                        $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
-                            console.log(data.data);
-                            aliensData = data.data.data;
-                            aliensData = placesData.concat(aliensData);
-                            var data_mo = {
-                                user_id: $scope.user_id,
-                                token: $scope.token,
-                                email: $scope.email,
-                                type: 'movies'
-                            }
-                            $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
-                                console.log(data.data);
-                                moviesData = data.data.data;
-                                $scope.finalData = aliensData.concat(moviesData);
-                                console.log('finaldata', $scope.finalData);
-                            })
-                        })
-                    })
-
-                })
-
-            } else if (data.data.status == 'Failed') {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            }
-        })
-
-    }
-
-
-
-
-
-
-})
-
-helloModule.controller('sendNotController', function($scope, $mdToast, $log, $cookies, $http) {
-
-    $scope.user_id = $cookies.get('user_id');
-    $scope.email = $cookies.get('email');
-    $scope.token = $cookies.get('token');
-
-
-    $scope.sendNot = function() {
-        console.log($scope.rtitle, $scope.rdescription);
-        if ($scope.title == "" || $scope.title == undefined) {
-            $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Please Enter Title')
-                    .position('top right')
-                    .hideDelay(3000))
-                .then(function() {
-                    $log.log('Toast dismissed.');
-                }).catch(function() {
-                    $log.log('Toast failed or was forced to close early by another toast.');
-                });
-        } else if ($scope.description == "" || $scope.description == undefined) {
-            $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Please Enter Description')
-                    .position('top right')
-                    .hideDelay(3000))
-                .then(function() {
-                    $log.log('Toast dismissed.');
-                }).catch(function() {
-                    $log.log('Toast failed or was forced to close early by another toast.');
-                });
-        } else {
-            var data = {
-                user_id: $scope.user_id,
-                token: $scope.token,
-                email: $scope.email,
-                title: $scope.title,
-                description: $scope.description
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    place_id: data.place_id
+                };
+            } else if (data.hasOwnProperty('alienPost_id')) {
+                $scope.contentType = "edit_alien";
+                $scope.contentId = data.alienPost_id;
+                var dataToSend = {
+                    email: $scope.email,
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    alienPost_id: data.alienPost_id
+                };
+            } else if (data.hasOwnProperty('movie_id')) {
+                $scope.contentType = "edit_movie";
+                $scope.contentId = data.movie_id;
+                var dataToSend = {
+                    email: $scope.email,
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    movie_id: data.movie_id
+                };
             }
 
-            $http.post('https://admin.naaradh.in/send_notification', data).then(function(data) {
-                if (data.data.status == 'success') {
+
+            $http.post('https://admin.naaradh.in/approval', dataToSend).then(function(data) {
+                if (data.data.status == "success") {
                     $mdToast.show(
                             $mdToast.simple()
-                            .textContent('Successfully posted your notification')
+                            .textContent("Post is approved successfully")
                             .position('top right')
                             .hideDelay(3000))
                         .then(function() {
@@ -1921,6 +1663,53 @@ helloModule.controller('sendNotController', function($scope, $mdToast, $log, $co
                         }).catch(function() {
                             $log.log('Toast failed or was forced to close early by another toast.');
                         });
+
+                    var data = {
+                        user_id: $scope.user_id,
+                        token: $scope.token,
+                        email: $scope.email,
+                        type: 'posts'
+                    }
+                    $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
+                        console.log(data.data);
+                        postsData = data.data.data;
+                        var data_pl = {
+                            user_id: $scope.user_id,
+                            token: $scope.token,
+                            email: $scope.email,
+                            type: 'places'
+                        }
+                        $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+                            console.log(data.data);
+                            placesData = data.data.data;
+                            placesData = postsData.concat(placesData);
+                            var data_al = {
+                                user_id: $scope.user_id,
+                                token: $scope.token,
+                                email: $scope.email,
+                                type: 'aliens'
+                            }
+                            $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+                                console.log(data.data);
+                                aliensData = data.data.data;
+                                aliensData = placesData.concat(aliensData);
+                                var data_mo = {
+                                    user_id: $scope.user_id,
+                                    token: $scope.token,
+                                    email: $scope.email,
+                                    type: 'movies'
+                                }
+                                $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                                    console.log(data.data);
+                                    moviesData = data.data.data;
+                                    $scope.finalData = aliensData.concat(moviesData);
+                                    console.log('finaldata', $scope.finalData);
+                                })
+                            })
+                        })
+
+                    })
+
                 } else if (data.data.status == 'Failed') {
                     $mdToast.show(
                             $mdToast.simple()
@@ -1935,33 +1724,154 @@ helloModule.controller('sendNotController', function($scope, $mdToast, $log, $co
                 }
             })
         }
+
+        $scope.rejectPost = function(data) {
+            var dataToSend = "";
+
+            if (data.hasOwnProperty('post_id')) {
+                $scope.contentType = "rm_post";
+                $scope.contentId = data.post_id;
+
+                var dataToSend = {
+                    email: $scope.email,
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    post_id: data.post_id
+                };
+            } else if (data.hasOwnProperty('place_id')) {
+                $scope.contentType = "rm_place";
+                $scope.contentId = data.place_id;
+                var dataToSend = {
+                    email: $scope.email,
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    place_id: data.place_id
+                };
+            } else if (data.hasOwnProperty('alienPost_id')) {
+                $scope.contentType = "rm_alien";
+                $scope.contentId = data.alienPost_id;
+                var dataToSend = {
+                    email: $scope.email,
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    alienPost_id: data.alienPost_id
+                };
+            } else if (data.hasOwnProperty('movie_id')) {
+                $scope.contentType = "rm_movie";
+                $scope.contentId = data.movie_id;
+                var dataToSend = {
+                    email: $scope.email,
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    type: $scope.contentType,
+                    movie_id: data.movie_id
+                };
+            }
+
+
+            $http.post('https://admin.naaradh.in/approval', dataToSend).then(function(data) {
+                if (data.data.status == "success") {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent("Post is rejected successfully")
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+
+                    var data = {
+                        user_id: $scope.user_id,
+                        token: $scope.token,
+                        email: $scope.email,
+                        type: 'posts'
+                    }
+                    $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
+                        console.log(data.data);
+                        postsData = data.data.data;
+                        var data_pl = {
+                            user_id: $scope.user_id,
+                            token: $scope.token,
+                            email: $scope.email,
+                            type: 'places'
+                        }
+                        $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+                            console.log(data.data);
+                            placesData = data.data.data;
+                            placesData = postsData.concat(placesData);
+                            var data_al = {
+                                user_id: $scope.user_id,
+                                token: $scope.token,
+                                email: $scope.email,
+                                type: 'aliens'
+                            }
+                            $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+                                console.log(data.data);
+                                aliensData = data.data.data;
+                                aliensData = placesData.concat(aliensData);
+                                var data_mo = {
+                                    user_id: $scope.user_id,
+                                    token: $scope.token,
+                                    email: $scope.email,
+                                    type: 'movies'
+                                }
+                                $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                                    console.log(data.data);
+                                    moviesData = data.data.data;
+                                    $scope.finalData = aliensData.concat(moviesData);
+                                    console.log('finaldata', $scope.finalData);
+                                })
+                            })
+                        })
+
+                    })
+
+                } else if (data.data.status == 'Failed') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+
+        }
+
+
+
+
     }
+
+
+
 })
 
-helloModule.controller('publishController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog) {
+helloModule.controller('sendNotController', function($scope, $mdToast, $log, $cookies, $http, $location) {
 
-        $scope.user_id = $cookies.get("user_id");
-        $scope.token = $cookies.get("token");
+    if ($cookies.get('token') == '' || $cookies.get('token') == undefined) {
+        $location.path('/Login');
+    } else {
+        $scope.user_id = $cookies.get('user_id');
         $scope.email = $cookies.get('email');
-        $scope.quillData = "hahaha";
-        $scope.quillConfig = "hahaConfig";
-
-        $scope.changeData = function() {
-            $scope.quillData = "config";
-        };
-
-        $scope.clickMe = function() {
-            alert("thanks!");
-        };
-
-        $scope.StoryType = $scope.postCategory;
+        $scope.token = $cookies.get('token');
 
 
-        $scope.postStory = function() {
-            if ($scope.postCategory == undefined || $scope.postCategory == "") {
+        $scope.sendNot = function() {
+            console.log($scope.rtitle, $scope.rdescription);
+            if ($scope.title == "" || $scope.title == undefined) {
                 $mdToast.show(
                         $mdToast.simple()
-                        .textContent('Please Select category')
+                        .textContent('Please Enter Title')
                         .position('top right')
                         .hideDelay(3000))
                     .then(function() {
@@ -1969,22 +1879,10 @@ helloModule.controller('publishController', function($scope, $cookies, $mdToast,
                     }).catch(function() {
                         $log.log('Toast failed or was forced to close early by another toast.');
                     });
-            } else if ($scope.story == undefined || $scope.story == "" || $scope.story == "<p><br></p>") {
+            } else if ($scope.description == "" || $scope.description == undefined) {
                 $mdToast.show(
                         $mdToast.simple()
-                        .textContent('Story is empty')
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-
-            } else if ($scope.title == undefined || $scope.title == "") {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Story title is empty')
+                        .textContent('Please Enter Description')
                         .position('top right')
                         .hideDelay(3000))
                     .then(function() {
@@ -1994,35 +1892,26 @@ helloModule.controller('publishController', function($scope, $cookies, $mdToast,
                     });
             } else {
                 var data = {
-                        user_id: $cookies.get('user_id'),
-                        email: $cookies.get('email'),
-                        token: $cookies.get('token'),
-                        title: $scope.title,
-                        description: $scope.story,
-                    }
-                    // console.log($scope.postCategory)
-                if ($scope.postCategory == "Post") {
-                    var url = "https://admin.naaradh.in/send_post";
-                } else if ($scope.postCategory == "Place") {
-                    var url = "https://admin.naaradh.in/send_place";
-                } else if ($scope.postCategory == "Alien") {
-                    var url = "https://admin.naaradh.in/send_alien";
-                } else if ($scope.postCategory == "Movie") {
-                    var url = "https://admin.naaradh.in/send_movie";
+                    user_id: $scope.user_id,
+                    token: $scope.token,
+                    email: $scope.email,
+                    title: $scope.title,
+                    description: $scope.description
                 }
 
-
-                $http.post(url, data).then(function(data) {
-                    if (data.data.status == "success") {
-                        $mdDialog.show(
-                            $mdDialog.alert()
-                            .clickOutsideToClose(true)
-                            .title('Under Review')
-                            .textContent('You post is successfully posted. We will notify you once it is published.\nThanks for your contribution')
-                            .ariaLabel('Under Review')
-                            .ok('Got it!')
-                        );
-                    } else if (data.data.status == "Failed") {
+                $http.post('https://admin.naaradh.in/send_notification', data).then(function(data) {
+                    if (data.data.status == 'success') {
+                        $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('Successfully posted your notification')
+                                .position('top right')
+                                .hideDelay(3000))
+                            .then(function() {
+                                $log.log('Toast dismissed.');
+                            }).catch(function() {
+                                $log.log('Toast failed or was forced to close early by another toast.');
+                            });
+                    } else if (data.data.status == 'Failed') {
                         $mdToast.show(
                                 $mdToast.simple()
                                 .textContent(data.data.message)
@@ -2033,21 +1922,131 @@ helloModule.controller('publishController', function($scope, $cookies, $mdToast,
                             }).catch(function() {
                                 $log.log('Toast failed or was forced to close early by another toast.');
                             });
-                    } else {
-                        $mdToast.show(
-                                $mdToast.simple()
-                                .textContent('Error occurred. Sorry for the inconvenience')
-                                .position('top right')
-                                .hideDelay(3000))
-                            .then(function() {
-                                $log.log('Toast dismissed.');
-                            }).catch(function() {
-                                $log.log('Toast failed or was forced to close early by another toast.');
-                            });
                     }
                 })
-
             }
+        }
+    }
+
+
+})
+
+helloModule.controller('publishController', function($scope, $cookies, $mdToast, $log, $http, $mdDialog, $location) {
+
+        if ($cookies.get('token') == '' || $cookies.get('token') == undefined) {
+            $location.path('/Login');
+        } else {
+            $scope.user_id = $cookies.get("user_id");
+            $scope.token = $cookies.get("token");
+            $scope.email = $cookies.get('email');
+            $scope.quillData = "hahaha";
+            $scope.quillConfig = "hahaConfig";
+
+            $scope.changeData = function() {
+                $scope.quillData = "config";
+            };
+
+            $scope.clickMe = function() {
+                alert("thanks!");
+            };
+
+            $scope.StoryType = $scope.postCategory;
+
+
+            $scope.postStory = function() {
+                if ($scope.postCategory == undefined || $scope.postCategory == "") {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Please Select category')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else if ($scope.story == undefined || $scope.story == "" || $scope.story == "<p><br></p>") {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Story is empty')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+
+                } else if ($scope.title == undefined || $scope.title == "") {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Story title is empty')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else {
+                    var data = {
+                            user_id: $cookies.get('user_id'),
+                            email: $cookies.get('email'),
+                            token: $cookies.get('token'),
+                            title: $scope.title,
+                            description: $scope.story,
+                        }
+                        // console.log($scope.postCategory)
+                    if ($scope.postCategory == "Post") {
+                        var url = "https://admin.naaradh.in/send_post";
+                    } else if ($scope.postCategory == "Place") {
+                        var url = "https://admin.naaradh.in/send_place";
+                    } else if ($scope.postCategory == "Alien") {
+                        var url = "https://admin.naaradh.in/send_alien";
+                    } else if ($scope.postCategory == "Movie") {
+                        var url = "https://admin.naaradh.in/send_movie";
+                    }
+
+
+                    $http.post(url, data).then(function(data) {
+                        if (data.data.status == "success") {
+                            $mdDialog.show(
+                                $mdDialog.alert()
+                                .clickOutsideToClose(true)
+                                .title('Under Review')
+                                .textContent('You post is successfully posted. We will notify you once it is published.\nThanks for your contribution')
+                                .ariaLabel('Under Review')
+                                .ok('Got it!')
+                            );
+                        } else if (data.data.status == "Failed") {
+                            $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000))
+                                .then(function() {
+                                    $log.log('Toast dismissed.');
+                                }).catch(function() {
+                                    $log.log('Toast failed or was forced to close early by another toast.');
+                                });
+                        } else {
+                            $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent('Error occurred. Sorry for the inconvenience')
+                                    .position('top right')
+                                    .hideDelay(3000))
+                                .then(function() {
+                                    $log.log('Toast dismissed.');
+                                }).catch(function() {
+                                    $log.log('Toast failed or was forced to close early by another toast.');
+                                });
+                        }
+                    })
+
+                }
+            }
+
+
         }
 
 
@@ -2163,44 +2162,50 @@ function DialogController($scope, $mdDialog) {
     };
 }
 
-helloModule.controller('createUserController', function($scope, $cookies, $http, $mdToast, $log) {
-
-    $scope.createUser = function() {
-        var data = {
-            user_id: $cookies.get('user_id'),
-            token: $cookies.get('token'),
-            email: $cookies.get('email'),
-            fullname: $scope.fullname,
-            email: $scope.email,
-            password: $scope.password,
-            admin_role: $scope.admin_role
-        }
-
-        $http.post('http://localhost:6110/adda', data).then(function(data) {
-            if (data.data.status == 'success') {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('successfully created user')
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
-            } else if (data.data.status == 'Failed') {
-                $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000))
-                    .then(function() {
-                        $log.log('Toast dismissed.');
-                    }).catch(function() {
-                        $log.log('Toast failed or was forced to close early by another toast.');
-                    });
+helloModule.controller('createUserController', function($scope, $cookies, $http, $mdToast, $log, $location) {
+    if ($cookies.get('token') == '' || $cookies.get('token') == undefined) {
+        $location.path('/Login');
+    } else {
+        $scope.createUser = function() {
+            var data = {
+                user_id: $cookies.get('user_id'),
+                token: $cookies.get('token'),
+                email: $cookies.get('email'),
+                fullname: $scope.fullname,
+                email: $scope.email,
+                password: $scope.password,
+                vadmin_role: $scope.admin_role,
+                sadmin_role: $cookies.get('arole')
             }
-        })
+
+            $http.post('http://localhost:6110/adda', data).then(function(data) {
+                if (data.data.status == 'success') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('successfully created user')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else if (data.data.status == 'Failed') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+        }
     }
+
+
 
 })
