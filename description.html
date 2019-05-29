@@ -28,9 +28,10 @@
 
 <body ng-controller="descriptionController">
     <center>
+        <br>
+        <h3 style="font-weight: bold" class="card-title" ng-model="cardtitle">{{cardtitle}}</h3>
         <div class="card cardContentdescription">
             <div class="card-body">
-                <h4 class="card-title" ng-model="cardtitle">{{cardtitle}}</h4>
                 <p class="card-text" ng-bind-html="carddescription"></p>
             </div>
         </div>

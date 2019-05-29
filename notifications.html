@@ -1,19 +1,44 @@
 <html>
 
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107044558-6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-107044558-6');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/@uirouter/angularjs@1.0.5/release/angular-ui-router.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
 </head>
 
 <body>
     <center>
         <h3>Notifications</h3>
     </center>
-    <md-content class="notificationContent">
+    <md-content class="notificationContent" ng-repeat="data in dataArray">
         <md-list>
             <md-list-item class="md-3-line">
                 <div class="md-list-item-text">
-                    <h3>Title</h3>
-                    <h6>Sent by</h6>
-                    <p>Description of the notification</p>
+                    <b><h3 style="color: black;font-weight: bold;color:#3b96f8 " ng-click="showNotification(data,$event)">{{data.title}}</h3></b>
+                    <p style="color: black;text-overflow: ellipsis;
+                    word-wrap: break-word;
+                    overflow: hidden;
+                    max-height: 3.6em;
+                    line-height: 1.8em;">{{data.description}}</p>
                 </div>
                 <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
