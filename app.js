@@ -2,8 +2,9 @@ var $stateprovideRef = null;
 var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngclipboard', 'ngMessages']);
 
 
-helloModule.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.when("", "/Posts");
+helloModule.config(function($stateProvider, $urlRouterProvider,$locationProvider) {
+    $locationProvider.html5Mode(true);
+    $urlRouterProvider.when("/", "/Posts");
 
     $stateProvider
         .state('Home.Posts', {
