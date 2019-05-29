@@ -90,6 +90,15 @@ p {
     line-height: 1.8em;
 }
 
+.notdesc {
+    color: #000000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
 p {
     font-size: 20px;
 }
@@ -115,6 +124,12 @@ p {
 .md-block {
     left: 33%;
     width: 35%;
+}
+
+.md-blockinside {
+    height: 135px;
+    width: 500px;
+    left: 38%
 }
 
 .md-headline {

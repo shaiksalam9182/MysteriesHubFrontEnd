@@ -143,7 +143,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
 })
 
-helloModule.controller('postbody', function($scope, $http, $cookies, $state, $mdToast, $log, $location) {
+helloModule.controller('postbody', function($scope, $http, $cookies, $state, $mdToast, $log, $location, $mdDialog) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -290,14 +290,28 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
     }
 
     $scope.goToDescription = function(id) {
-        $location.path('/Details').search({ id: id, type: "posts" });
+        // $location.path('/Details').search({ id: id, type: "posts" });
+        $mdDialog.show({
+                locals: { dataToPass: { id: id, type: 'posts' } },
+                controller: 'descriptionController',
+                templateUrl: 'description.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
     }
 
 
 })
 
 
-helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, $location) {
+helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, $location, $mdDialog) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -461,12 +475,26 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, 
     }
 
     $scope.goToDescription = function(id) {
-        $location.path('/Details').search({ id: id, type: "places" });
+        // $location.path('/Details').search({ id: id, type: "places" });
+        $mdDialog.show({
+                locals: { dataToPass: { id: id, type: 'places' } },
+                controller: 'descriptionController',
+                templateUrl: 'description.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
     }
 })
 
 
-helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, $log, $location) {
+helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, $log, $location, $mdDialog) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -631,11 +659,25 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
     }
 
     $scope.goToDescription = function(id) {
-        $location.path('/Details').search({ id: id, type: 'aliens' });
+        // $location.path('/Details').search({ id: id, type: 'aliens' });
+        $mdDialog.show({
+                locals: { dataToPass: { id: id, type: 'aliens' } },
+                controller: 'descriptionController',
+                templateUrl: 'description.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
     }
 })
 
-helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, $location) {
+helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, $location, $mdDialog) {
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -802,19 +844,40 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, 
 
 
     $scope.goToDescription = function(id) {
-        $location.path('/Details').search({ id: id, type: 'movies' });
+        // $location.path('/Details').search({ id: id, type: 'movies' });
+        $mdDialog.show({
+                locals: { dataToPass: { id: id, type: 'movies' } },
+                controller: 'descriptionController',
+                templateUrl: 'description.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
     }
 })
 
 
-helloModule.controller('descriptionController', function($scope, $location, $http, $mdToast) {
-    $scope.id = $location.search().id;
-    $scope.type = $location.search().type;
-    var data = {
-        id: $scope.id,
-        type: $scope.type
-    }
-    $http.post("https://admin.naaradh.in/get_data", data).then(function(data) {
+helloModule.controller('descriptionController', function($scope, $location, $http, $mdToast, dataToPass) {
+    $scope.id = dataToPass.id;
+    $scope.type = dataToPass.type;
+
+    console.log($scope.id, $scope.type);
+
+    if (!$scope.id || !$scope.type) {
+        $scope.cardtitle = dataToPass.title;
+        $scope.carddescription = dataToPass.description;
+    } else {
+        var data = {
+            id: $scope.id,
+            type: $scope.type
+        }
+        $http.post("https://admin.naaradh.in/get_data", data).then(function(data) {
             if (data.data.status == "success") {
                 console.log(data.data);
                 $scope.cardtitle = data.data.data.title;
@@ -843,8 +906,10 @@ helloModule.controller('descriptionController', function($scope, $location, $htt
                     });
             }
         })
-        // $scope.cardtitle = $location.search().paramTitle;
-        // $scope.carddescription = $location.search().paramDescription;
+    }
+
+    // $scope.cardtitle = $location.search().paramTitle;
+    // $scope.carddescription = $location.search().paramDescription;
 })
 
 helloModule.controller('authenticate', function($scope) {
@@ -1277,15 +1342,45 @@ helloModule.controller('feedbackController', function($scope, $mdToast, $log, $h
     }
 })
 
-helloModule.controller('notificationsController', function($scope, $cookies, $http) {
+helloModule.controller('notificationsController', function($scope, $cookies, $http, $mdToast, $log, $mdDialog) {
     var data = {
         email: $cookies.get('email'),
         user_id: $cookies.get('user_id'),
         token: $cookies.get('token')
     }
     $http.post('https://admin.naaradh.in/read_notification', data).then(function(data) {
-        console.log('readFeedbackRes', data);
+        if (data.data.status == 'success') {
+            $scope.dataArray = data.data.data;
+        } else if (data.data.status == 'Failed') {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(data.data.message)
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        }
     })
+
+    $scope.showNotification = function(data, event) {
+        $mdDialog.show({
+                locals: { dataToPass: data },
+                controller: 'descriptionController',
+                templateUrl: 'description.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    }
 })
 
 function DialogController($scope, $mdDialog) {

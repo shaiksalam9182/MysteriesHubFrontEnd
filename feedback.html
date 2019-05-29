@@ -21,14 +21,12 @@
         </md-radio-group>
     </center>
     <br><br>
+    <md-input-container class="md-blockinside block">
+        <label>Feedback</label>
+        <textarea ng-model="feedbackInput" md-maxlength="550" rows="5" md-select-on-focus></textarea>
+    </md-input-container>
+    <br><br>
     <center>
-        <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="left left">
-            <md-input-container class="md-blockinside block">
-                <label>Feedback</label>
-                <textarea ng-model="feedbackInput" md-maxlength="250" rows="5" md-select-on-focus></textarea>
-            </md-input-container>
-        </md-whiteframe>
-        <br><br>
         <md-button class="md-raised md-primary" ng-click="submitFeedback()">Submit</md-button>
     </center>
 </body>
