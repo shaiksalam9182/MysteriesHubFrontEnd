@@ -45,7 +45,7 @@
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center" class="movie_buttons">
                 <md-button class="actionButtons" ng-click="likeButton(o.movie_id,$index)" value="{{likesCount}}">Likes: {{o.likes_count}}</md-button>
-                <md-button class="actionButtons" ng-click="shareButton()" ngclipboard data-clipboard-text="https://naaradh.in/#!/Details?id={{o.movie_id}}&type=movies">Share</md-button>
+                <md-button class="actionButtons" ng-click="shareButton()" ngclipboard data-clipboard-text="https://naaradh.in/#!/Show?id={{o.movie_id}}&type=movies">Share</md-button>
             </md-card-actions>
         </md-card>
 

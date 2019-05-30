@@ -2,9 +2,9 @@ var $stateprovideRef = null;
 var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router', 'ngSanitize', 'ngMaterial', 'ngclipboard', 'ngMessages']);
 
 
-helloModule.config(function($stateProvider, $urlRouterProvider,$locationProvider) {
+helloModule.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.when("/", "/Posts");
+    $urlRouterProvider.when("", "/Posts");
 
     $stateProvider
         .state('Home.Posts', {
@@ -19,6 +19,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider,$locationProvider
         url: '/Places',
         templateUrl: 'places.html',
         controller: 'placebody'
+    })
+
+    .state('Home.Show', {
+        name: 'Show',
+        url: '/Show',
+        templateUrl: 'show.html',
+        controller: 'showController'
     })
 
     .state('Home.Aliens', {
@@ -865,15 +872,10 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, 
 
 
 helloModule.controller('descriptionController', function($scope, $location, $http, $mdToast, dataToPass) {
-    $scope.id = dataToPass.id;
-    $scope.type = dataToPass.type;
 
-    console.log($scope.id, $scope.type);
-
-    if (!$scope.id || !$scope.type) {
-        $scope.cardtitle = dataToPass.title;
-        $scope.carddescription = dataToPass.description;
-    } else {
+    if (dataToPass.hasOwnProperty('id')) {
+        $scope.id = dataToPass.id;
+        $scope.type = dataToPass.type;
         var data = {
             id: $scope.id,
             type: $scope.type
@@ -907,10 +909,50 @@ helloModule.controller('descriptionController', function($scope, $location, $htt
                     });
             }
         })
+    } else {
+        $scope.cardtitle = dataToPass.title;
+        $scope.carddescription = dataToPass.description;
     }
 
-    // $scope.cardtitle = $location.search().paramTitle;
-    // $scope.carddescription = $location.search().paramDescription;
+})
+
+helloModule.controller('showController', function($scope, $location, $http, $mdToast) {
+    $scope.id = $location.search().id;
+    $scope.type = $location.search().type;
+
+    var data = {
+        id: $scope.id,
+        type: $scope.type
+    }
+    $http.post("https://admin.naaradh.in/get_data", data).then(function(data) {
+        if (data.data.status == "success") {
+            console.log(data.data);
+            $scope.cardtitle = data.data.data.title;
+            $scope.carddescription = data.data.data.description;
+        } else if (data.data.status == "Failed") {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(data.data.message)
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        } else {
+            $mdToast.show(
+                    $mdToast.simple()
+                    .textContent("Error occurred")
+                    .position('top right')
+                    .hideDelay(3000))
+                .then(function() {
+                    $log.log('Toast dismissed.');
+                }).catch(function() {
+                    $log.log('Toast failed or was forced to close early by another toast.');
+                });
+        }
+    })
 })
 
 helloModule.controller('authenticate', function($scope) {
