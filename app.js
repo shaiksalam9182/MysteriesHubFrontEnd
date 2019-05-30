@@ -4,7 +4,7 @@ var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router
 
 helloModule.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.when("", "/Posts");
+    $urlRouterProvider.when("/", "/Posts");
 
     $stateProvider
         .state('Home.Posts', {
