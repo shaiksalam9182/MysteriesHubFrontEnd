@@ -3,8 +3,9 @@ var helloModule = angular.module('firstApp', ['ngCookies', 'ngRoute', 'ui.router
 
 
 helloModule.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-    $locationProvider.html5Mode(true);
-    $urlRouterProvider.when("/", "/Posts");
+    // $locationProvider.html5Mode(true);
+    // $urlRouterProvider.when("/", "/Posts");
+    $urlRouterProvider.when("", "/Posts");
 
     $stateProvider
         .state('Home.Posts', {
@@ -151,7 +152,8 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location) {
 
 })
 
-helloModule.controller('postbody', function($scope, $http, $cookies, $state, $mdToast, $log, $location, $mdDialog) {
+helloModule.controller('postbody', function($scope, $rootScope, $http, $cookies, $state, $mdToast, $log, $location, $mdDialog) {
+    $rootScope.title = "Findout the interesting posts about mysteries";
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -319,7 +321,8 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
 })
 
 
-helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, $location, $mdDialog) {
+helloModule.controller('placebody', function($scope, $rootScope, $http, $cookies, $mdToast, $location, $mdDialog) {
+    $rootScope.title = "Read about the haunted places across the world";
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -502,7 +505,8 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, 
 })
 
 
-helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, $log, $location, $mdDialog) {
+helloModule.controller('alienbody', function($scope, $rootScope, $cookies, $http, $mdToast, $log, $location, $mdDialog) {
+    $rootScope.title = "Findout the interesting news and articles on aliens";
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -685,7 +689,8 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
     }
 })
 
-helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, $location, $mdDialog) {
+helloModule.controller('moviebody', function($scope, $rootScope, $http, $cookies, $mdToast, $location, $mdDialog) {
+    $rootScope.title = "Checkout the interesting movies info, thriller and horror movies";
     $scope.cardtitle = "Salam"
     $scope.arr = [];
     $scope.arr.length = 0;
@@ -959,7 +964,8 @@ helloModule.controller('authenticate', function($scope) {
     console.log('submit clicked');
 })
 
-helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log) {
+helloModule.controller('homeController', function($scope, $rootScope, $mdDialog, $cookies, $location, $mdToast, $log) {
+    $rootScope.title = "MysteiesHub - Read mysteries, Articles on aliens,haunted places,Interesting movie details";
     $scope.navItem = "Posts";
     $scope.openMenu = function($mdMenu, ev) {
         $scope.user_id = $cookies.get("user_id");
