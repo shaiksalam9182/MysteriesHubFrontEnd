@@ -96,7 +96,7 @@ helloModule.controller('hello', function($scope, $http, $cookies, $location, $md
             $scope.message = 'password is empty'
             console.log('password is empty');
         } else {
-            var url = "https://admin.naaradh.in/alogin"
+            var url = "https://admin.mysterieshub.com/alogin"
             var data = {
                 email: $scope.email,
                 password: $scope.password,
@@ -153,7 +153,7 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
         testin: 'testing'
     }
 
-    $http.post("https://admin.naaradh.in/demo_post_limit", data).then(function(msg) {
+    $http.post("https://admin.mysterieshub.com/demo_post_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -218,7 +218,7 @@ helloModule.controller('postbody', function($scope, $http, $cookies, $state, $md
                     $log.log('Toast failed or was forced to close early by another toast.');
                 });
         } else {
-            $http.post("https://admin.naaradh.in/like_post", data).then(function(data) {
+            $http.post("https://admin.mysterieshub.com/like_post", data).then(function(data) {
                 console.log('like_data', data);
                 if (data.data.status == "success") {
                     if (data.data.delete == 1) {
@@ -356,7 +356,7 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, 
                     $log.log('Toast failed or was forced to close early by another toast.');
                 });
         } else {
-            $http.post("https://admin.naaradh.in/like_place", data).then(function(data) {
+            $http.post("https://admin.mysterieshub.com/like_place", data).then(function(data) {
                 console.log('like_data', data);
                 if (data.data.status == "success") {
                     if (data.data.delete == 1) {
@@ -408,7 +408,7 @@ helloModule.controller('placebody', function($scope, $http, $cookies, $mdToast, 
 
     }
 
-    $http.post("https://admin.naaradh.in/demo_place_limit", data).then(function(msg) {
+    $http.post("https://admin.mysterieshub.com/demo_place_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -476,7 +476,7 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
         testin: 'testing'
     }
 
-    $http.post("https://admin.naaradh.in/demo_alien_limit", data).then(function(msg) {
+    $http.post("https://admin.mysterieshub.com/demo_alien_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -554,7 +554,7 @@ helloModule.controller('alienbody', function($scope, $cookies, $http, $mdToast, 
                     $log.log('Toast failed or was forced to close early by another toast.');
                 });
         } else {
-            $http.post("https://admin.naaradh.in/like_alien", data).then(function(data) {
+            $http.post("https://admin.mysterieshub.com/like_alien", data).then(function(data) {
                 console.log('like_data', data);
                 if (data.data.status == "success") {
                     if (data.data.delete == 1) {
@@ -644,7 +644,7 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, 
         testin: 'testing'
     }
 
-    $http.post("https://admin.naaradh.in/demo_movie_limit", data).then(function(msg) {
+    $http.post("https://admin.mysterieshub.com/demo_movie_limit", data).then(function(msg) {
         console.log(msg);
         if (msg.data.status == "success") {
             $scope.isLoading = false;
@@ -722,7 +722,7 @@ helloModule.controller('moviebody', function($scope, $http, $cookies, $mdToast, 
                     $log.log('Toast failed or was forced to close early by another toast.');
                 });
         } else {
-            $http.post("https://admin.naaradh.in/like_movie", data).then(function(data) {
+            $http.post("https://admin.mysterieshub.com/like_movie", data).then(function(data) {
                 console.log('like_data', data);
                 if (data.data.status == "success") {
                     if (data.data.delete == 1) {
@@ -830,7 +830,7 @@ helloModule.controller('descriptionController', function($scope, $location, $htt
         id: $scope.id,
         type: $scope.type
     }
-    $http.post("https://admin.naaradh.in/get_data", data).then(function(data) {
+    $http.post("https://admin.mysterieshub.com/get_data", data).then(function(data) {
             if (data.data.status == "success") {
                 console.log(data.data);
                 $scope.cardtitle = data.data.data.title;
@@ -1058,13 +1058,13 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
                     }
                     // console.log($scope.postCategory)
                 if ($scope.postCategory == "Post") {
-                    var url = "https://admin.naaradh.in/send_post";
+                    var url = "https://admin.mysterieshub.com/send_post";
                 } else if ($scope.postCategory == "Place") {
-                    var url = "https://admin.naaradh.in/send_place";
+                    var url = "https://admin.mysterieshub.com/send_place";
                 } else if ($scope.postCategory == "Alien") {
-                    var url = "https://admin.naaradh.in/send_alien";
+                    var url = "https://admin.mysterieshub.com/send_alien";
                 } else if ($scope.postCategory == "Movie") {
-                    var url = "https://admin.naaradh.in/send_movie";
+                    var url = "https://admin.mysterieshub.com/send_movie";
                 }
 
 
@@ -1170,7 +1170,7 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
 //                 var fd = new FormData();
 //                 fd.append('upload', file);
 
-//                 $http.post('https://admin.naaradh.in/upload', fd, {
+//                 $http.post('https://admin.mysterieshub.com/upload', fd, {
 //                     withCredentials: false,
 //                     headers: { 'Content-Type': undefined },
 //                     transformRequest: angular.identity
@@ -1182,7 +1182,7 @@ helloModule.controller('writerController', function($scope, $cookies, $mdToast, 
 //             insertInEditor = function(data) {
 //                 const range = quill.getSelection();
 //                 console.log('')
-//                 quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
+//                 quill.insertEmbed(range.index, 'image', 'https://admin.mysterieshub.com/uploads/' + data.image_url);
 //             }
 
 
@@ -1224,7 +1224,7 @@ helloModule.controller('registerController', function($scope, $http, $location, 
                 password: $scope.password,
                 email: $scope.email
             }
-            var url = "https://admin.naaradh.in/register"
+            var url = "https://admin.mysterieshub.com/register"
             $http.post(url, data).then(function(data) {
                 if (data.status == 200) {
                     if (data.data.status == "success") {
@@ -1288,7 +1288,7 @@ helloModule.controller('feedbackController', function($scope, $mdToast, $log, $h
                 message: $scope.feedbackInput
             }
 
-            $http.post('https://admin.naaradh.in/send_feedback', data).then(function(data) {
+            $http.post('https://admin.mysterieshub.com/send_feedback', data).then(function(data) {
                 if (data.data.status == "success") {
                     $mdToast.show(
                             $mdToast.simple()
@@ -1334,7 +1334,7 @@ helloModule.controller('notificationsController', function($scope, $cookies, $ht
         user_id: $cookies.get('user_id'),
         token: $cookies.get('token')
     }
-    $http.post('https://admin.naaradh.in/read_notification', data).then(function(data) {
+    $http.post('https://admin.mysterieshub.com/read_notification', data).then(function(data) {
         console.log('readFeedbackRes', data);
     })
 })
@@ -1354,7 +1354,7 @@ helloModule.controller('dashboardController', function($scope, $cookies, $http, 
             token: token
         }
 
-        $http.post('https://admin.naaradh.in/dashboard', data).then(function(data) {
+        $http.post('https://admin.mysterieshub.com/dashboard', data).then(function(data) {
             console.log(data.data.data);
             if (data.data.status == 'success') {
                 $scope.uc = data.data.data.uc;
@@ -1398,7 +1398,7 @@ helloModule.controller('userController', function($scope, $cookies, $http, $mdTo
             token: token
         }
 
-        $http.post('https://admin.naaradh.in/list_users', data).then(function(incomingData) {
+        $http.post('https://admin.mysterieshub.com/list_users', data).then(function(incomingData) {
             console.log('incomingData', incomingData);
             if (incomingData.data.status == 'success') {
                 $scope.dataArray = incomingData.data.data;
@@ -1428,7 +1428,7 @@ helloModule.controller('userController', function($scope, $cookies, $http, $mdTo
                 }
 
 
-                $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
+                $http.post('https://admin.mysterieshub.com/user_operation', data).then(function(incomingData) {
                     console.log(incomingData);
                     if (incomingData.data.status == 'success') {
                         $mdToast.show(
@@ -1467,7 +1467,7 @@ helloModule.controller('userController', function($scope, $cookies, $http, $mdTo
                     vuid: user_id
                 }
 
-                $http.post('https://admin.naaradh.in/user_operation', data).then(function(incomingData) {
+                $http.post('https://admin.mysterieshub.com/user_operation', data).then(function(incomingData) {
                     if (incomingData.data.status == 'success') {
                         $mdToast.show(
                                 $mdToast.simple()
@@ -1486,7 +1486,7 @@ helloModule.controller('userController', function($scope, $cookies, $http, $mdTo
                             token: token
                         }
 
-                        $http.post('https://admin.naaradh.in/list_users', sendingData).then(function(someData) {
+                        $http.post('https://admin.mysterieshub.com/list_users', sendingData).then(function(someData) {
                             if (someData.data.status == 'success') {
                                 $scope.dataArray = someData.data.data;
                             } else if (someData.data.status == 'Failed') {
@@ -1543,7 +1543,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
             email: $scope.email,
             type: 'posts'
         }
-        $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
+        $http.post('https://admin.mysterieshub.com/approval', data).then(function(data) {
             console.log(data.data);
             postsData = data.data.data;
             var data_pl = {
@@ -1552,7 +1552,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                 email: $scope.email,
                 type: 'places'
             }
-            $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+            $http.post('https://admin.mysterieshub.com/approval', data_pl).then(function(data) {
                 console.log(data.data);
                 placesData = data.data.data;
                 placesData = postsData.concat(placesData);
@@ -1562,7 +1562,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                     email: $scope.email,
                     type: 'aliens'
                 }
-                $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+                $http.post('https://admin.mysterieshub.com/approval', data_al).then(function(data) {
                     console.log(data.data);
                     aliensData = data.data.data;
                     aliensData = placesData.concat(aliensData);
@@ -1572,7 +1572,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                         email: $scope.email,
                         type: 'movies'
                     }
-                    $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                    $http.post('https://admin.mysterieshub.com/approval', data_mo).then(function(data) {
                         console.log(data.data);
                         moviesData = data.data.data;
                         $scope.finalData = aliensData.concat(moviesData);
@@ -1651,7 +1651,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
             }
 
 
-            $http.post('https://admin.naaradh.in/approval', dataToSend).then(function(data) {
+            $http.post('https://admin.mysterieshub.com/approval', dataToSend).then(function(data) {
                 if (data.data.status == "success") {
                     $mdToast.show(
                             $mdToast.simple()
@@ -1670,7 +1670,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                         email: $scope.email,
                         type: 'posts'
                     }
-                    $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
+                    $http.post('https://admin.mysterieshub.com/approval', data).then(function(data) {
                         console.log(data.data);
                         postsData = data.data.data;
                         var data_pl = {
@@ -1679,7 +1679,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                             email: $scope.email,
                             type: 'places'
                         }
-                        $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+                        $http.post('https://admin.mysterieshub.com/approval', data_pl).then(function(data) {
                             console.log(data.data);
                             placesData = data.data.data;
                             placesData = postsData.concat(placesData);
@@ -1689,7 +1689,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                                 email: $scope.email,
                                 type: 'aliens'
                             }
-                            $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+                            $http.post('https://admin.mysterieshub.com/approval', data_al).then(function(data) {
                                 console.log(data.data);
                                 aliensData = data.data.data;
                                 aliensData = placesData.concat(aliensData);
@@ -1699,7 +1699,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                                     email: $scope.email,
                                     type: 'movies'
                                 }
-                                $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                                $http.post('https://admin.mysterieshub.com/approval', data_mo).then(function(data) {
                                     console.log(data.data);
                                     moviesData = data.data.data;
                                     $scope.finalData = aliensData.concat(moviesData);
@@ -1772,7 +1772,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
             }
 
 
-            $http.post('https://admin.naaradh.in/approval', dataToSend).then(function(data) {
+            $http.post('https://admin.mysterieshub.com/approval', dataToSend).then(function(data) {
                 if (data.data.status == "success") {
                     $mdToast.show(
                             $mdToast.simple()
@@ -1791,7 +1791,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                         email: $scope.email,
                         type: 'posts'
                     }
-                    $http.post('https://admin.naaradh.in/approval', data).then(function(data) {
+                    $http.post('https://admin.mysterieshub.com/approval', data).then(function(data) {
                         console.log(data.data);
                         postsData = data.data.data;
                         var data_pl = {
@@ -1800,7 +1800,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                             email: $scope.email,
                             type: 'places'
                         }
-                        $http.post('https://admin.naaradh.in/approval', data_pl).then(function(data) {
+                        $http.post('https://admin.mysterieshub.com/approval', data_pl).then(function(data) {
                             console.log(data.data);
                             placesData = data.data.data;
                             placesData = postsData.concat(placesData);
@@ -1810,7 +1810,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                                 email: $scope.email,
                                 type: 'aliens'
                             }
-                            $http.post('https://admin.naaradh.in/approval', data_al).then(function(data) {
+                            $http.post('https://admin.mysterieshub.com/approval', data_al).then(function(data) {
                                 console.log(data.data);
                                 aliensData = data.data.data;
                                 aliensData = placesData.concat(aliensData);
@@ -1820,7 +1820,7 @@ helloModule.controller('approvalsController', function($scope, $cookies, $mdToas
                                     email: $scope.email,
                                     type: 'movies'
                                 }
-                                $http.post('https://admin.naaradh.in/approval', data_mo).then(function(data) {
+                                $http.post('https://admin.mysterieshub.com/approval', data_mo).then(function(data) {
                                     console.log(data.data);
                                     moviesData = data.data.data;
                                     $scope.finalData = aliensData.concat(moviesData);
@@ -1899,7 +1899,7 @@ helloModule.controller('sendNotController', function($scope, $mdToast, $log, $co
                     description: $scope.description
                 }
 
-                $http.post('https://admin.naaradh.in/send_notification', data).then(function(data) {
+                $http.post('https://admin.mysterieshub.com/send_notification', data).then(function(data) {
                     if (data.data.status == 'success') {
                         $mdToast.show(
                                 $mdToast.simple()
@@ -1998,13 +1998,13 @@ helloModule.controller('publishController', function($scope, $cookies, $mdToast,
                         }
                         // console.log($scope.postCategory)
                     if ($scope.postCategory == "Post") {
-                        var url = "https://admin.naaradh.in/send_post";
+                        var url = "https://admin.mysterieshub.com/send_post";
                     } else if ($scope.postCategory == "Place") {
-                        var url = "https://admin.naaradh.in/send_place";
+                        var url = "https://admin.mysterieshub.com/send_place";
                     } else if ($scope.postCategory == "Alien") {
-                        var url = "https://admin.naaradh.in/send_alien";
+                        var url = "https://admin.mysterieshub.com/send_alien";
                     } else if ($scope.postCategory == "Movie") {
-                        var url = "https://admin.naaradh.in/send_movie";
+                        var url = "https://admin.mysterieshub.com/send_movie";
                     }
 
 
@@ -2114,7 +2114,7 @@ helloModule.controller('publishController', function($scope, $cookies, $mdToast,
                     var fd = new FormData();
                     fd.append('upload', file);
 
-                    $http.post('https://admin.naaradh.in/upload', fd, {
+                    $http.post('https://admin.mysterieshub.com/upload', fd, {
                         withCredentials: false,
                         headers: { 'Content-Type': undefined },
                         transformRequest: angular.identity
@@ -2126,7 +2126,7 @@ helloModule.controller('publishController', function($scope, $cookies, $mdToast,
                 insertInEditor = function(data) {
                     const range = quill.getSelection();
                     console.log('')
-                    quill.insertEmbed(range.index, 'image', 'https://admin.naaradh.in/uploads/' + data.image_url);
+                    quill.insertEmbed(range.index, 'image', 'https://admin.mysterieshub.com/uploads/' + data.image_url);
                 }
 
 
@@ -2178,7 +2178,7 @@ helloModule.controller('createUserController', function($scope, $cookies, $http,
                 sadmin_role: $cookies.get('arole')
             }
 
-            $http.post('https://admin.naaradh.in/adda', data).then(function(data) {
+            $http.post('https://admin.mysterieshub.com/adda', data).then(function(data) {
                 if (data.data.status == 'success') {
                     $mdToast.show(
                             $mdToast.simple()
