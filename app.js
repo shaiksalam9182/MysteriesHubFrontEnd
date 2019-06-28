@@ -2217,7 +2217,7 @@ helloModule.controller('createUserController', function($scope, $cookies, $http,
     }
 })
 
-helloModule.controller('editpostController', function($scope, $http, $cookies) {
+helloModule.controller('editpostController', function($scope, $http, $cookies, $mdToast, $log) {
         $scope.showMode = true;
         $scope.showModee = false;
         $scope.goto = function(data) {
@@ -2255,21 +2255,28 @@ helloModule.controller('editpostController', function($scope, $http, $cookies) {
 
         $scope.editPost = function(type, data) {
             $scope.showModee = true;
-            $scope.quill.setText(data.description);
             $scope.editableData = data;
             if (data.hasOwnProperty('post_id')) {
                 $scope.showMode = false;
                 $scope.type = "post";
+                $scope.editableDataid = data.post_id;
             } else if (data.hasOwnProperty('place_id')) {
                 $scope.showMode = false;
                 $scope.type = "place";
+                $scope.editableDataid = data.place_id;
             } else if (data.hasOwnProperty('alien_id')) {
                 $scope.showMode = false;
                 $scope.type = "alien";
+                $scope.editableDataid = data.alienPost_id;
             } else if (data.hasOwnProperty('movie_id')) {
                 $scope.showMode = false;
                 $scope.type = "movie";
+                $scope.editableDataid = data.movie_id;
             }
+            $scope.quill.setText(data.description);
+
+            console.log("clickedData", type, data);
+
         }
 
         $scope.formatText = function(data) {
@@ -2291,7 +2298,46 @@ helloModule.controller('editpostController', function($scope, $http, $cookies) {
 
 
         $scope.postStory = function() {
-            console.log($scope.type, $scope.editableData.title);
+            var data = {
+                email: $cookies.get('email'),
+                token: $cookies.get('token'),
+                user_id: $cookies.get('user_id'),
+                a_role: $cookies.get('arole'),
+                type: $scope.type,
+                id: $scope.editableDataid,
+                data: $scope.quill.getText()
+            }
+
+            $http.post('https://admin.mysterieshub.com/edit_article', data).then(function(data) {
+                // console.log(data);
+                if (data.data.status == 'success') {
+                    $scope.showMode = true;
+                    $scope.showModee = false;
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('successfully updated the post')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else if (data.data.status == 'Failed') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+
+            // console.log($scope.type, $scope.quill.getText());
         }
 
 
