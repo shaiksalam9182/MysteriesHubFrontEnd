@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <link href="https://cdn.quilljs.com/1.2.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
+</head>
+
+<body ng-controller="editpostController">
+    <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" ng-show="showMode">
+        <md-nav-item md-nav-click="goto('post')" name="post">
+            Posts
+        </md-nav-item>
+        <md-nav-item md-nav-click="goto('place')" name="place">
+            Places
+        </md-nav-item>
+        <md-nav-item md-nav-click="goto('alien')" name="alien">
+            Aliens
+        </md-nav-item>
+        <md-nav-item md-nav-click="goto('movie')" name="movie">
+            Movies
+        </md-nav-item>
+    </md-nav-bar>
+
+    <md-content ng-show="showMode">
+        <md-list ng-repeat="data in dataArray">
+            <md-list-item class="md-3-line">
+                <div class="md-list-item-text">
+                    <h4>{{data.title}}</h4>
+                    <p class="desc">{{formatText(data.description)}}</p>
+                </div>
+                <md-button class="md-secondary" ng-click="editPost('normal',data)">Edit Post</md-button>
+                <md-button class="md-secondary" ng-click="editPost('html',data)">Edit Post As HTML</md-button>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <br><br>
+    <quill-editorr quill-data="editpostController.quillData" quill-config="editpostController.quillConfig" ng-show="showModee">
+    </quill-editorr>
+    <div ng-bind-html="quillDataHTML">
+    </div>
+    <script src="https://cdn.quilljs.com/1.2.6/quill.js"></script>
+
+    <md-button ng-click="postStory()" class="md-raised md-primary" ng-show="showModee">Submit Your Story</md-button>
+
+
+
+</body>
+
+</html>

@@ -44,6 +44,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider) {
         controller: 'approvalsController'
     })
 
+    .state('Home.EditPost', {
+        name: 'EditPost',
+        url: '/EditPost',
+        templateUrl: 'editpost.html',
+        controller: 'editpostController'
+    })
+
     .state('Home.Publish', {
         name: 'Publish',
         url: '/Publish',
@@ -870,10 +877,10 @@ helloModule.controller('authenticate', function($scope) {
 helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $location, $mdToast, $log, $window) {
 
     $window.onbeforeunload = function(evt) {
-        $cookies.remove('user_id');
-        $cookies.remove('token');
-        $cookies.remove('email');
-        $cookies.remove('arole');
+        // $cookies.remove('user_id');
+        // $cookies.remove('token');
+        // $cookies.remove('email');
+        // $cookies.remove('arole');
 
     }
 
@@ -952,6 +959,9 @@ helloModule.controller('homeController', function($scope, $mdDialog, $cookies, $
         $location.path('/CreateUser')
     }
 
+    $scope.goToEditPost = function() {
+        $location.path('/EditPost')
+    }
     $scope.logout = function() {
         $cookies.remove('user_id');
         $cookies.remove('token');
@@ -2205,7 +2215,227 @@ helloModule.controller('createUserController', function($scope, $cookies, $http,
             })
         }
     }
-
-
-
 })
+
+helloModule.controller('editpostController', function($scope, $http, $cookies, $mdToast, $log) {
+        $scope.showMode = true;
+        $scope.showModee = false;
+        $scope.goto = function(data) {
+            $scope.user_id = $cookies.get('user_id');
+            $scope.token = $cookies.get('token');
+            $scope.email = $cookies.get('email');
+            var dataToSend = {
+                email: $scope.email,
+                token: $scope.token,
+                user_id: $scope.user_id
+            }
+            if (data == "post") {
+                $http.post('https://admin.mysterieshub.com/demo_post_limit', dataToSend).then(function(data) {
+                    console.log(data);
+                    $scope.dataArray = data.data.data;
+                })
+            } else if (data == "place") {
+                $http.post('https://admin.mysterieshub.com/demo_place_limit', dataToSend).then(function(data) {
+                    console.log(data);
+                    $scope.dataArray = data.data.data;
+                })
+            } else if (data == "alien") {
+                $http.post('https://admin.mysterieshub.com/demo_alien_limit', dataToSend).then(function(data) {
+                    console.log(data);
+                    $scope.dataArray = data.data.data;
+                })
+            } else if (data == "movie") {
+                $http.post('https://admin.mysterieshub.com/demo_movie_limit', dataToSend).then(function(data) {
+                    console.log(data);
+                    $scope.dataArray = data.data.data;
+                })
+            }
+        }
+
+
+        $scope.editPost = function(type, data) {
+            $scope.showModee = true;
+            $scope.editableData = data;
+            if (data.hasOwnProperty('post_id')) {
+                $scope.showMode = false;
+                $scope.type = "post";
+                $scope.editableDataid = data.post_id;
+            } else if (data.hasOwnProperty('place_id')) {
+                $scope.showMode = false;
+                $scope.type = "place";
+                $scope.editableDataid = data.place_id;
+            } else if (data.hasOwnProperty('alien_id')) {
+                $scope.showMode = false;
+                $scope.type = "alien";
+                $scope.editableDataid = data.alienPost_id;
+            } else if (data.hasOwnProperty('movie_id')) {
+                $scope.showMode = false;
+                $scope.type = "movie";
+                $scope.editableDataid = data.movie_id;
+            }
+            $scope.quill.setText(data.description);
+
+            console.log("clickedData", type, data);
+
+        }
+
+        $scope.formatText = function(data) {
+            var forData = data.replace(/<[^>]+>/gm, '')
+            return forData.replace('from internet', '');
+        }
+
+
+        $scope.quillData = "hahaha";
+        $scope.quillConfig = "hahaConfig";
+
+        $scope.changeData = function() {
+            $scope.quillData = "config";
+        };
+
+        $scope.clickMe = function() {
+            alert("thanks!");
+        };
+
+
+        $scope.postStory = function() {
+            var data = {
+                email: $cookies.get('email'),
+                token: $cookies.get('token'),
+                user_id: $cookies.get('user_id'),
+                a_role: $cookies.get('arole'),
+                type: $scope.type,
+                id: $scope.editableDataid,
+                data: $scope.quill.getText()
+            }
+
+            $http.post('https://admin.mysterieshub.com/edit_article', data).then(function(data) {
+                // console.log(data);
+                if (data.data.status == 'success') {
+                    $scope.showMode = true;
+                    $scope.showModee = false;
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('successfully updated the post')
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                } else if (data.data.status == 'Failed') {
+                    $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000))
+                        .then(function() {
+                            $log.log('Toast dismissed.');
+                        }).catch(function() {
+                            $log.log('Toast failed or was forced to close early by another toast.');
+                        });
+                }
+            })
+
+            // console.log($scope.type, $scope.quill.getText());
+        }
+
+
+    })
+    .directive('quillEditorr', function($compile, $http) {
+        return {
+            restrict: 'E',
+            link: function($scope, $element) {
+                var template = '<div id="editor">' +
+                    '<p>Start your story here</p>' +
+                    '<p><br></p>'
+                '</div>';
+                var linkFunc = $compile(template);
+                var content = linkFunc($scope);
+                $element.append(content);
+
+                // setup quill config after adding to DOM
+                var quill = new Quill('#editor', {
+                    modules: {
+                        // ImageResize: {},
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            // [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+                            ['bold', 'italic', 'underline', 'strike', 'link'],
+                            [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+                            [{ 'font': [] }],
+                            [{ 'align': [] }],
+                            ['clean'], // remove formatting button
+                            ['blockquote', 'code-block'],
+                            ['video', 'image'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+                            [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+                        ]
+                    },
+                    placeholder: 'Compose an epic...',
+                    theme: 'snow' // or 'bubble'
+                });
+
+                $scope.quill = quill;
+
+                quill.getModule('toolbar').addHandler('image', () => {
+                    selectLocalImage();
+                });
+
+
+                selectLocalImage = function() {
+                    console.log('Clicked on select localImage');
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.click();
+
+                    input.onchange = () => {
+                        const file = input.files[0];
+                        if (/^image\//.test(file.type)) {
+                            saveToServer(file);
+                        } else {
+                            console.warn('You could only upload images.');
+                        }
+                    }
+                }
+
+                saveToServer = function(file) {
+                    console.log('on save to server');
+                    var fd = new FormData();
+                    fd.append('upload', file);
+
+                    $http.post('https://admin.mysterieshub.com/upload', fd, {
+                        withCredentials: false,
+                        headers: { 'Content-Type': undefined },
+                        transformRequest: angular.identity
+                    }).then(function(data) {
+                        insertInEditor(data.data);
+                    })
+                }
+
+                insertInEditor = function(data) {
+                    const range = quill.getSelection();
+                    console.log('')
+                    quill.insertEmbed(range.index, 'image', 'https://admin.mysterieshub.com/uploads/' + data.image_url);
+                }
+
+
+                quill.on('text-change', function() {
+                    var delta = quill.getContents();
+                    var text = quill.getText();
+                    var justHtml = quill.root.innerHTML;
+
+                    console.log(justHtml);
+
+                    $scope.$apply(function() {
+                        $scope.quillDataJSON = JSON.stringify(delta);
+                        $scope.quillDataText = text;
+                        $scope.quillDataHTML = justHtml;
+                        $scope.story = justHtml;
+                    });
+                });
+            },
+        };
+    });
