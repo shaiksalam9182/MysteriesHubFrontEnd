@@ -425,3 +425,12 @@ ul {
         box-sizing: border-box;
     }
 }
+
+.desc {
+    color: #000000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
