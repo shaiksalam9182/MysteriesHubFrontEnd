@@ -1,30 +1,436 @@
-.cardView{
-	 width: 100%;
-    height: 100%;
-
+.cardView {
+    width: 100%;
+    height: 40%;
     position: absolute;
-   /* top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;*/
     margin: auto;
-    padding-top: 15%;
-}
-.card{
-	width: 35%;
-	height: 60%;
-	margin: auto;
+    top: 25%;
 }
 
-p{
-	font-size: 20px
+.card {
+    width: 35%;
+    height: 60%;
+    margin: auto;
 }
 
-.navbar{
+p {
+    font-size: 20px
+}
+
+.navbar {
+    width: 100%;
+    height: 5%;
+}
+
+.content {
+    top: 50%;
+}
+
+.cardContent {
+    width: 100%;
+    height: 20%;
+    margin: 3%;
+}
+
+.cardContentdescription {
+    width: 70%;
+    height: auto;
+    overflow: hidden;
+    margin: 3%;
+    text-align: left;
+}
+
+.active {
+    color: red;
+    font-weight: bold;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.md-block {
+    border-color: #3b96f8;
+}
+
+.navBardemoBasicUsage md-content .ext-content {
+    padding: 50px;
+    margin: 20px;
+    background-color: rgba(37, 235, 80, 0.418);
+}
+
+.cardMaterial {
+    width: 50%;
+    text-align: left;
+    margin-left: 15%;
+    /* float: left; */
+}
+
+.cardMaterial a:hover {
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.navbarhome {
+    width: 100%;
+    position: fixed;
+    text-align: left;
+    height: 7%;
+    background-color: #fafafa;
+}
+
+.md-padding {
+    position: absolute;
+    bottom: 0;
+    width: 71%;
+    left: 14%;
+}
+
+.md-subhead {
+    color: #000000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
+.approvalDesc {
+    color: #000000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
+p {
+    font-size: 20px;
+}
+
+#editor {
+    height: 300px;
+    width: 90%;
+}
+
+.ql-toolbar {
+    width: 90%;
+    height: 62px;
+}
+
+.registerPanel {
+    width: 100%;
+    left: 10%;
+}
+
+.loginPanel {
+    font-size: 15px;
+    border-width: 2px;
+    border-color: #3b96f8;
+    border-style: solid;
+    border-radius: 3px;
+    width: 26%;
+    margin-left: 39%;
+    margin-top: 12%;
+}
+
+.md-block {
+    left: 1%;
+    width: 97%;
+}
+
+.md-headline {
+    color: #3b96f8;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.notificationContent {
+    left: 15%;
+    width: 71%;
+}
+
+.registerSpan {
+    left: 50%;
+}
+
+.md-button.md-default-theme.md-accent,
+.md-button.md-accent {
+    color: #3b96f8;
+}
+
+md-nav-bar.md-default-theme md-nav-ink-bar,
+md-nav-bar md-nav-ink-bar {
+    background-color: #3b96f8;
+}
+
+md-card.md-default-theme md-card-header md-card-header-text .md-subhead,
+md-card md-card-header md-card-header-text .md-subhead,
+md-card.md-default-theme md-card-title md-card-title-text:not(:only-child) .md-subhead,
+md-card md-card-title md-card-title-text:not(:only-child) .md-subhead {
+    color: #000000;
+    font-size: 13px;
+}
+
+.actionButtons {
+    background-color: #3b96f8;
+    color: white;
+    font-size: 10px;
+}
+
+.actionButtons a:hover {
+    background-color: #3b96f8;
+}
+
+[ng-click] {
+    cursor: pointer;
+}
+
+.linearProgress {
+    width: 70%;
+}
+
+.titleInput {
+    left: 15%;
+    width: 70%;
+}
+
+.radioGroup {
+    margin-left: 38%;
+}
+
+.movie_buttons {
+    margin-right: 15%;
+}
+
+.sideBar {
+    float: right;
+    margin-right: 16%;
+    width: 17%;
+    height: auto;
+    color: black;
+    border-width: 2px;
+    border-color: #3b96f8;
+    border-style: solid;
+    border-radius: 3px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.inputlabel {
+    color: #3b96f8
+}
+
+ul {
+    font-size: 12px;
+    padding-left: 0px;
+    padding-top: 10px;
+}
+
+.logoTitle {
+    float: right;
+    margin-right: 22%;
+    margin-top: 11%;
+}
+
+.noDescription {
+    width: 71px;
+    margin-left: 94px;
+    margin-top: 4.5%;
+}
+
+
+/* Smartphones (portrait and landscape) ---------- */
+
+@media screen and (min-width: 320px) and (max-width: 500px) {
+    .sideBar {
+        float: none;
+        margin-right: 0%;
+        width: 88%;
+        height: auto;
+        color: black;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-left: 7%;
+    }
+    .navbarhome {
+        height: 7%;
+    }
+    .logoTitle {
+        margin-right: -23%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        text-align: left;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:501px) and (max-width:800px) {
+    .sideBar {
+        float: none;
+        margin-right: 0%;
+        width: 88%;
+        height: auto;
+        color: black;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        padding-top: 10px;
+        padding-left: 10px;
+        margin-left: 8%;
+    }
+    .navbarhome {
+        height: 8%;
+    }
+    .logoTitle {
+        margin-right: -18%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        text-align: left;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 801px) and (max-width:1100px) {
+    .sideBar {
+        width: 35%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 0%;
+    }
+    .navbarhome {
+        height: 7%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        width: 65%;
+        text-align: left;
+    }
+}
+
+@media screen and (min-width:1101px) and (max-width:1400px) {
+    .sideBar {
+        width: 32%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 2%;
+    }
+    .navbarhome {
+        height: 7%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        width: 65%;
+        text-align: left;
+    }
+    .logoTitle {
+        margin-right: 30%;
+        margin-top: 2%;
+    }
+}
+
+@media screen and (min-width:1401px) and (max-width:1700px) {
+    .logoTitle {
+        margin-right: 11%;
+        margin-top: 8%;
+    }
+    .cardMaterial {
+        margin-left: 0;
+        width: 63%;
+        text-align: left;
+    }
+    .sideBar {
+        width: 24%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 10%;
+    }
+}
+
+@media screen and (min-width:1701px) and (max-width:2000px) {
+    .logoTitle {
+        margin-right: 19%;
+        margin-top: 10%;
+    }
+    .cardMaterial {
+        margin-left: 3%;
+        width: 66%;
+        text-align: left;
+    }
+    .sideBar {
+        width: 19%;
+        float: right;
+        border-width: 2px;
+        border-color: #3b96f8;
+        border-style: solid;
+        border-radius: 3px;
+        margin-right: 10%;
+    }
+}
+
+.sidebarHome {
     width: 20%;
+    background-color: #000000;
     height: 100%;
 }
 
-/*body{
-	background-image: url('../img/login_background.jpg');
-}*/
+.detailsHome {
+    width: 82%;
+    background-color: white;
+    margin-left: 16%;
+    height: 100vh;
+}
+
+.adminpanelsidebar {
+    width: 14%;
+    height: 100vh;
+    background-color: #3b96f8;
+    border-radius: 3px;
+    float: left;
+}
+
+.md-button.md-default-theme.md-primary,
+.md-button.md-primary {
+    color: white;
+}
+
+.md-whiteframe-1dp {
+    background-color: #3b96f8;
+    margin-left: 21px;
+    margin-bottom: 21px;
+    height: 32%;
+    color: white
+}
+
+@media (min-width: 1280px) {
+    flex-gt-sm-35,
+    .layout-row>.flex-gt-sm-35 {
+        max-width: 15%;
+        max-height: 25%;
+        box-sizing: border-box;
+    }
+}
+
+.desc {
+    color: #000000;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}

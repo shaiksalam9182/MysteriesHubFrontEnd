@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
+</head>
+
+<body ng-controller="sendNotController">
+    <br><br>
+    <md-input-container class="titleInput">
+        <label>Title</label>
+        <input ng-model="title" required>
+    </md-input-container>
+    <br><br>
+
+    <md-input-container class="titleInput">
+        <label>Description</label>
+        <input ng-model="description" required>
+    </md-input-container>
+    <br><br>
+    <center>
+        <md-button class="md-raised md-primary" ng-click="sendNot()">Submit</md-button>
+    </center>
+</body>
+
+</html>
