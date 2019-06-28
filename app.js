@@ -29,6 +29,13 @@ helloModule.config(function($stateProvider, $urlRouterProvider, $locationProvide
         controller: 'showController'
     })
 
+    .state('Home.Privacy', {
+        name: 'Privacy',
+        url: '/Privacy',
+        templateUrl: 'privacy.html',
+        controller: 'privacyController'
+    })
+
     .state('Home.Aliens', {
         name: 'Aliens',
         url: '/Aliens',
@@ -1445,3 +1452,8 @@ function DialogController($scope, $mdDialog) {
         $mdDialog.hide(answer);
     };
 }
+
+
+helloModule.controller('privacyController', function($scope) {
+
+})
