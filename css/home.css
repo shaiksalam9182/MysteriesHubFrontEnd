@@ -250,8 +250,9 @@ ul {
         height: 7%;
     } */
     .logoTitle {
-        margin-right: -37%;
-        font-size: 13px;
+        margin-right: -41%;
+        font-size: 8px;
+        margin-top: 1%;
     }
     .noDescription {
         width: 72%;
@@ -284,7 +285,9 @@ ul {
         height: 8%;
     } */
     .logoTitle {
-        margin-right: -18%;
+        margin-right: 3%;
+        font-size: 10px;
+        margin-top: 1%;
     }
     .cardMaterial {
         margin-left: 0;
@@ -321,6 +324,11 @@ ul {
         margin-left: 23%;
         margin-top: 2%;
     }
+    .logoTitle {
+        margin-right: 31%;
+        font-size: 9px;
+        margin-top: 1%;
+    }
 }
 
 @media screen and (min-width:1101px) and (max-width:1400px) {
@@ -347,15 +355,17 @@ ul {
         margin-top: 2%;
     }
     .logoTitle {
-        margin-right: 30%;
-        margin-top: 2%;
+        margin-right: 31%;
+        font-size: 9px;
+        margin-top: 1%;
     }
 }
 
 @media screen and (min-width:1401px) and (max-width:1700px) {
     .logoTitle {
-        margin-right: 11%;
-        margin-top: 8%;
+        margin-right: 37%;
+        font-size: 13px;
+        margin-top: 1%;
     }
     .cardMaterial {
         margin-left: 0;
@@ -375,8 +385,8 @@ ul {
 
 @media screen and (min-width:1701px) and (max-width:2000px) {
     .logoTitle {
-        margin-right: 19%;
-        margin-top: 10%;
+        margin-right: 34%;
+        margin-top: -2%;
     }
     .cardMaterial {
         margin-left: 3%;
